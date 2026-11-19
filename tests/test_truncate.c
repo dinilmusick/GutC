@@ -123,6 +123,20 @@ int main(void) {
  memset(out, 'X', sizeof out);
  CHECK(gut_truncate_utf8("a", 8, "\xC0\xAF", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
  for (size_t i = 0; i < sizeof out; ++i) CHECK(out[i] == 'X');
+ /* Default omission mirrors GutTS truncate(value, maxLength) using U+2026. */
+ CHECK(gut_truncate_utf8_default("hello", 4, out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(strcmp(out, "hel\xE2\x80\xA6") == 0 && needed == 7);
+ CHECK(gut_truncate_utf8_default("hello", 0, out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(strcmp(out, "\xE2\x80\xA6") == 0 && needed == 4);
+ CHECK(gut_truncate_utf8_default("hello", 5, out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(strcmp(out, "hello") == 0 && needed == 6);
+ memset(out, 'D', sizeof out);
+ CHECK(gut_truncate_utf8_default("hello", 4, out, 6, &needed) == GUT_TRUNCATE_NOSPACE);
+ CHECK(needed == 7);
+ for (size_t i = 0; i < sizeof out; ++i) CHECK(out[i] == 'D');
+ CHECK(gut_truncate_utf8_default("hello", 4, NULL, 0, &needed) == GUT_TRUNCATE_NOSPACE);
+ CHECK(needed == 7);
+ CHECK(gut_truncate_utf8_default("\xC0\xAF", 4, out, sizeof out, NULL) == GUT_TRUNCATE_INVALID);
  puts("gut_truncate regression passed");
  return 0;
 }
