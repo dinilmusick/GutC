@@ -25,9 +25,9 @@ int main(void) {
  CHECK(gut_truncate_utf8("\xF4\x90\x80\x80",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
  CHECK(gut_truncate_utf8("\xE2\x82",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
  /* Truncated UTF-8 must not read past the terminating NUL. */
- CHECK(gut_truncate_utf8("\\xC2",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
- CHECK(gut_truncate_utf8("\\xE2",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
- CHECK(gut_truncate_utf8("\\xF0\\x9F",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8("\xC2",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8("\xE2",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8("\xF0\x9F",3,"!",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
  CHECK(gut_truncate_utf8("abc",2,"!",out,2,&needed)==GUT_TRUNCATE_NOSPACE);
  CHECK(needed==3);
  CHECK(gut_truncate_utf8("abc",2,"!",NULL,0,&needed)==GUT_TRUNCATE_NOSPACE);
