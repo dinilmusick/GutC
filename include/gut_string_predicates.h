@@ -12,6 +12,12 @@ int gut_is_nonblank_utf8(const char *value);
 /* Explicit-length validation of non-NUL-terminated spans; embedded NUL is invalid. */
 int gut_is_blank_utf8_n(const char *value, size_t length);
 int gut_is_nonblank_utf8_n(const char *value, size_t length);
+/* Returns 1 if any prefix/suffix matches, 0 if none, -1 for invalid UTF-8,
+ * NULL pointers, or a NULL candidate array with nonzero count.
+ * Empty candidates match every valid string, including the empty string.
+ * Explicit counts avoid sentinel-based array traversal. */
+int gut_starts_with_any_utf8(const char *value, const char *const *prefixes, size_t count);
+int gut_ends_with_any_utf8(const char *value, const char *const *suffixes, size_t count);
 #ifdef __cplusplus
 }
 #endif
