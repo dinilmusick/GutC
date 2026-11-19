@@ -119,6 +119,27 @@ int main(void) {
   CHECK(gut_truncate_utf8(valid_four[i], 1, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
   CHECK(strcmp(out, valid_four[i]) == 0 && needed == 5);
  }
+ /* Exhaustive four-byte lead/continuation matrix, including overlong and >U+10FFFF. */
+ for (unsigned int lead = 0xF0; lead <= 0xF4; ++lead) {
+  for (unsigned int second = 0x80; second <= 0xBF; ++second) {
+   for (unsigned int third = 0x80; third <= 0xBF; ++third) {
+    for (unsigned int fourth = 0x80; fourth <= 0xBF; ++fourth) {
+     char sample[5] = {(char)lead, (char)second, (char)third, (char)fourth, 0};
+     int valid = !(lead == 0xF0 && second < 0x90) &&
+                 !(lead == 0xF4 && second > 0x8F);
+     memset(out, 'V', sizeof out);
+     gut_truncate_status status = gut_truncate_utf8(sample, 1, "!", out, sizeof out, &needed);
+     if (valid) {
+      CHECK(status == GUT_TRUNCATE_OK);
+      CHECK(strcmp(out, sample) == 0 && needed == 5);
+     } else {
+      CHECK(status == GUT_TRUNCATE_INVALID);
+      for (size_t j = 0; j < sizeof out; ++j) CHECK(out[j] == 'V');
+     }
+    }
+   }
+  }
+ }
  /* Ensure invalid omission cannot bypass validation even when input fits. */
  memset(out, 'X', sizeof out);
  CHECK(gut_truncate_utf8("a", 8, "\xC0\xAF", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
