@@ -1,6 +1,7 @@
 #include "../include/gut_string_predicates.h"
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
 int main(void) {
  const char *spaces[] = {"", " \t\r\n", "\xC2\xA0", "\xE1\x9A\x80", "\xE2\x80\x83", "\xE2\x80\xAF", "\xE3\x80\x80", "\xEF\xBB\xBF"};
  for (size_t i = 0; i < sizeof spaces / sizeof spaces[0]; ++i) {
@@ -17,6 +18,18 @@ int main(void) {
  assert(gut_is_blank_utf8("\xE2\x82") == -1);
  assert(gut_is_blank_utf8(NULL) == -1);
  assert(gut_is_nonblank_utf8("\xE2\x82") == -1);
+ const char raw[] = {' ', '\t', 'x', ' '};
+ assert(gut_is_blank_utf8_n(raw, 2) == 1);
+ assert(gut_is_nonblank_utf8_n(raw, 4) == 1);
+ assert(gut_is_blank_utf8_n(raw, 4) == 0);
+ const char nul[] = {' ', 0, 'x'};
+ assert(gut_is_blank_utf8_n(nul, sizeof nul) == -1);
+ assert(gut_is_nonblank_utf8_n(nul, sizeof nul) == -1);
+ const char truncated[] = {(char)0xE2, (char)0x82, (char)0xAC};
+ assert(gut_is_nonblank_utf8_n(truncated, 2) == -1);
+ assert(gut_is_nonblank_utf8_n(truncated, 3) == 1);
+ assert(gut_is_blank_utf8_n(NULL, 0) == -1);
+ assert(gut_is_blank_utf8_n(raw, 0) == 1);
  puts("gut_string_predicates passed");
  return 0;
 }
