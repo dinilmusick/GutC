@@ -59,6 +59,28 @@ int main(void) {
   gut_truncate_status status = gut_truncate_utf8(sample, 1, "!", out, sizeof out, NULL);
   CHECK(status == ((continuation >= 0x80 && continuation <= 0xBF) ? GUT_TRUNCATE_OK : GUT_TRUNCATE_INVALID));
  }
+ /* Valid UTF-8 boundary scalars must be retained intact. */
+ const char *valid_scalars[] = {"\x7F", "\xC2\x80", "\xDF\xBF", "\xE0\xA0\x80",
+  "\xED\x9F\xBF", "\xEE\x80\x80", "\xEF\xBF\xBF", "\xF0\x90\x80\x80",
+  "\xF4\x8F\xBF\xBF"};
+ for (size_t i = 0; i < sizeof valid_scalars / sizeof valid_scalars[0]; ++i) {
+  CHECK(gut_truncate_utf8(valid_scalars[i], 1, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+  CHECK(strcmp(out, valid_scalars[i]) == 0);
+  CHECK(needed == strlen(valid_scalars[i]) + 1);
+ }
+ /* Invalid encodings must fail before writing to the output buffer. */
+ const char *invalid_scalars[] = {"\xC0\x80", "\xC1\xBF", "\xE0\x9F\xBF",
+  "\xED\xA0\x80", "\xF0\x8F\xBF\xBF", "\xF4\x90\x80\x80",
+  "\xF5\x80\x80\x80", "\x80", "\xBF", "\xE2\x82"};
+ for (size_t i = 0; i < sizeof invalid_scalars / sizeof invalid_scalars[0]; ++i) {
+  memset(out, 'Q', sizeof out);
+  CHECK(gut_truncate_utf8(invalid_scalars[i], 1, "!", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
+  for (size_t j = 0; j < sizeof out; ++j) CHECK(out[j] == 'Q');
+ }
+ memset(out, 'Z', sizeof out);
+ CHECK(gut_truncate_utf8("abcdef", 3, "!", out, 2, &needed) == GUT_TRUNCATE_NOSPACE);
+ CHECK(needed == 4);
+ for (size_t j = 0; j < sizeof out; ++j) CHECK(out[j] == 'Z');
  puts("gut_truncate regression passed");
  return 0;
 }
