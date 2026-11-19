@@ -158,6 +158,29 @@ int main(void) {
  CHECK(gut_truncate_utf8_default("hello", 4, NULL, 0, &needed) == GUT_TRUNCATE_NOSPACE);
  CHECK(needed == 7);
  CHECK(gut_truncate_utf8_default("\xC0\xAF", 4, out, sizeof out, NULL) == GUT_TRUNCATE_INVALID);
+ /* Bounded spans: no terminator, multibyte preservation and suffix behavior. */
+ const char bounded[] = {'a', (char)0xC3, (char)0xA9, 'b'};
+ const char omission[] = {'!'};
+ CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 2, omission, 1,
+                           out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(strcmp(out, "a!") == 0 && needed == 3);
+ CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 3, omission, 1,
+                           out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(strcmp(out, "a\\xC3\\xA9" "b") == 0 && needed == 5);
+ CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 2, omission, 1,
+                           NULL, 0, &needed) == GUT_TRUNCATE_NOSPACE && needed == 3);
+ const char embedded_nul[] = {'a', 0, 'b'};
+ memset(out, 'T', sizeof out);
+ CHECK(gut_truncate_utf8_n(embedded_nul, sizeof embedded_nul, 2, omission, 1,
+                           out, sizeof out, NULL) == GUT_TRUNCATE_INVALID);
+ CHECK(out[0] == 'T');
+ const char incomplete[] = {(char)0xE2, (char)0x82};
+ CHECK(gut_truncate_utf8_n(incomplete, sizeof incomplete, 2, omission, 1,
+                           out, sizeof out, NULL) == GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 2, incomplete, sizeof incomplete,
+                           out, sizeof out, NULL) == GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 2, omission, 1,
+                           out, 2, &needed) == GUT_TRUNCATE_NOSPACE && needed == 3);
  puts("gut_truncate regression passed");
  return 0;
 }
