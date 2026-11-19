@@ -166,7 +166,7 @@ int main(void) {
  CHECK(strcmp(out, "a!") == 0 && needed == 3);
  CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 3, omission, 1,
                            out, sizeof out, &needed) == GUT_TRUNCATE_OK);
- CHECK(strcmp(out, "a\\xC3\\xA9" "b") == 0 && needed == 5);
+ CHECK(memcmp(out, bounded, sizeof bounded) == 0 && out[sizeof bounded] == 0 && needed == 5);
  CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 2, omission, 1,
                            NULL, 0, &needed) == GUT_TRUNCATE_NOSPACE && needed == 3);
  const char embedded_nul[] = {'a', 0, 'b'};
