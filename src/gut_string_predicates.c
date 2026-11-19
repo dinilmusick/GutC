@@ -70,3 +70,27 @@ int gut_starts_with_any_utf8(const char *value, const char *const *prefixes, siz
 int gut_ends_with_any_utf8(const char *value, const char *const *suffixes, size_t count) {
  return match_any(value, suffixes, count, 1);
 }
+
+/* Bounded candidate spans permit embedded NUL rejection and nonterminated input. */
+static int match_any_n(const char *value, size_t length,
+                       const char *const *candidates, const size_t *sizes,
+                       size_t count, int from_end) {
+ if (!value || (count && (!candidates || !sizes))) return -1;
+ if (gut_is_blank_utf8_n(value, length) < 0) return -1;
+ int found = 0;
+ for (size_t i = 0; i < count; ++i) {
+  if (!candidates[i] || gut_is_blank_utf8_n(candidates[i], sizes[i]) < 0) return -1;
+  if (sizes[i] <= length &&
+      memcmp(value + (from_end ? length - sizes[i] : 0), candidates[i], sizes[i]) == 0)
+   found = 1;
+ }
+ return found;
+}
+int gut_starts_with_any_utf8_n(const char *value, size_t length,
+                               const char *const *prefixes, const size_t *sizes, size_t count) {
+ return match_any_n(value, length, prefixes, sizes, count, 0);
+}
+int gut_ends_with_any_utf8_n(const char *value, size_t length,
+                             const char *const *suffixes, const size_t *sizes, size_t count) {
+ return match_any_n(value, length, suffixes, sizes, count, 1);
+}
