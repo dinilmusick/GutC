@@ -6,15 +6,16 @@ static int whitespace(uint32_t c) {
         (c >= 0x2000 && c <= 0x200A) || c == 0x2028 || c == 0x2029 ||
         c == 0x202F || c == 0x205F || c == 0x3000 || c == 0xFEFF;
 }
-int gut_is_blank_utf8(const char *value) {
+int gut_is_blank_utf8_n(const char *value, size_t length) {
  if (!value) return -1;
  const unsigned char *s = (const unsigned char *)value;
- size_t length = strlen(value), i = 0;
+ size_t i = 0;
  int blank = 1;
  while (i < length) {
   unsigned char first = s[i];
   uint32_t cp;
   size_t width;
+  if (first == 0) return -1;
   if (first < 0x80) { cp = first; width = 1; }
   else if (first >= 0xC2 && first <= 0xDF) { cp = first & 0x1F; width = 2; }
   else if (first >= 0xE0 && first <= 0xEF) { cp = first & 0x0F; width = 3; }
@@ -33,7 +34,13 @@ int gut_is_blank_utf8(const char *value) {
  }
  return blank;
 }
-int gut_is_nonblank_utf8(const char *value) {
- int result = gut_is_blank_utf8(value);
+int gut_is_nonblank_utf8_n(const char *value, size_t length) {
+ int result = gut_is_blank_utf8_n(value, length);
  return result < 0 ? -1 : !result;
+}
+int gut_is_blank_utf8(const char *value) {
+ return value ? gut_is_blank_utf8_n(value, strlen(value)) : -1;
+}
+int gut_is_nonblank_utf8(const char *value) {
+ return value ? gut_is_nonblank_utf8_n(value, strlen(value)) : -1;
 }
