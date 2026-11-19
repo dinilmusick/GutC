@@ -39,3 +39,8 @@ gut_truncate_status gut_truncate_utf8(const char *input,size_t max_length,const 
  if(suf_bytes)memcpy(output+head_bytes,suffix,suf_bytes);
  output[total]=0;return GUT_TRUNCATE_OK;
 }
+
+/* GutTS uses U+2026 when omission is omitted. */
+gut_truncate_status gut_truncate_utf8_default(const char *input,size_t max_length,char *output,size_t capacity,size_t *required){
+ return gut_truncate_utf8(input,max_length,"\xE2\x80\xA6",output,capacity,required);
+}
