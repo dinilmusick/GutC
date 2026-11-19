@@ -16,6 +16,9 @@ gut_truncate_status gut_truncate_utf8_default(const char *input, size_t max_leng
 gut_truncate_status gut_truncate_utf8_n(const char *input, size_t input_bytes,
  size_t max_length, const char *suffix, size_t suffix_bytes,
  char *output, size_t capacity, size_t *required);
+/* Bounded-input convenience wrapper with the canonical U+2026 omission. */
+gut_truncate_status gut_truncate_utf8_n_default(const char *input, size_t input_bytes,
+ size_t max_length, char *output, size_t capacity, size_t *required);
 #ifdef __cplusplus
 }
 #endif
