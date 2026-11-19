@@ -29,7 +29,7 @@ gut_truncate_status gut_truncate_utf8(const char *input,size_t max_length,const 
  size_t in_count,in_bytes,suf_count,suf_bytes,head_bytes,total;
  if(!scan(input,&in_count,&in_bytes)||!scan(suffix,&suf_count,&suf_bytes))return GUT_TRUNCATE_INVALID;
  if(in_count<=max_length){head_bytes=in_bytes;suf_bytes=0;}
- else if(suf_count>=max_length){head_bytes=0;suf_bytes=prefix_bytes(suffix,max_length);}
+ else if(suf_count>=max_length){head_bytes=0;/* Lodash returns the entire omission when it cannot fit. */}
  else head_bytes=prefix_bytes(input,max_length-suf_count);
  if(head_bytes>SIZE_MAX-suf_bytes-1)return GUT_TRUNCATE_INVALID;
  total=head_bytes+suf_bytes;
