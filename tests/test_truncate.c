@@ -91,6 +91,34 @@ int main(void) {
    CHECK(strcmp(out, "!") == 0 && needed == 2);
   }
  }
+ /* Exhaust all legal three-byte UTF-8 scalar values and truncation boundaries. */
+ for (unsigned int lead = 0xE0; lead <= 0xEF; ++lead) {
+  for (unsigned int second = 0x80; second <= 0xBF; ++second) {
+   for (unsigned int third = 0x80; third <= 0xBF; ++third) {
+    char sample[4] = {(char)lead, (char)second, (char)third, 0};
+    int valid = !(lead == 0xE0 && second < 0xA0) &&
+                !(lead == 0xED && second >= 0xA0);
+    memset(out, 'R', sizeof out);
+    gut_truncate_status status = gut_truncate_utf8(sample, 1, "!", out, sizeof out, &needed);
+    if (valid) {
+     CHECK(status == GUT_TRUNCATE_OK);
+     CHECK(strcmp(out, sample) == 0 && needed == 4);
+     CHECK(gut_truncate_utf8(sample, 0, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+     CHECK(strcmp(out, "!") == 0 && needed == 2);
+    } else {
+     CHECK(status == GUT_TRUNCATE_INVALID);
+     for (size_t j = 0; j < sizeof out; ++j) CHECK(out[j] == 'R');
+    }
+   }
+  }
+ }
+ /* Four-byte UTF-8 boundary cases include the minimum and maximum planes. */
+ const char *valid_four[] = {"\\xF0\\x90\\x80\\x80", "\\xF1\\x80\\x80\\x80",
+  "\\xF3\\xBF\\xBF\\xBF", "\\xF4\\x8F\\xBF\\xBF"};
+ for (size_t i = 0; i < sizeof valid_four / sizeof valid_four[0]; ++i) {
+  CHECK(gut_truncate_utf8(valid_four[i], 1, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+  CHECK(strcmp(out, valid_four[i]) == 0 && needed == 5);
+ }
  /* Ensure invalid omission cannot bypass validation even when input fits. */
  memset(out, 'X', sizeof out);
  CHECK(gut_truncate_utf8("a", 8, "\xC0\xAF", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
