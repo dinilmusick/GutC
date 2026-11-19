@@ -44,3 +44,29 @@ int gut_is_blank_utf8(const char *value) {
 int gut_is_nonblank_utf8(const char *value) {
  return value ? gut_is_nonblank_utf8_n(value, strlen(value)) : -1;
 }
+
+/* A UTF-8 codepoint is never a proper byte-prefix of another valid codepoint.
+ * Thus byte comparisons of validated strings preserve JS startsWith/endsWith
+ * semantics without locale-dependent decoding or allocation. */
+static int match_any(const char *value, const char *const *candidates,
+                     size_t count, int from_end) {
+ if (!value || (count && !candidates)) return -1;
+ size_t length = strlen(value);
+ if (gut_is_blank_utf8_n(value, length) < 0) return -1;
+ int found = 0;
+ for (size_t i = 0; i < count; ++i) {
+  if (!candidates[i]) return -1;
+  size_t n = strlen(candidates[i]);
+  if (gut_is_blank_utf8_n(candidates[i], n) < 0) return -1;
+  if (n <= length &&
+      memcmp(value + (from_end ? length - n : 0), candidates[i], n) == 0)
+   found = 1;
+ }
+ return found;
+}
+int gut_starts_with_any_utf8(const char *value, const char *const *prefixes, size_t count) {
+ return match_any(value, prefixes, count, 0);
+}
+int gut_ends_with_any_utf8(const char *value, const char *const *suffixes, size_t count) {
+ return match_any(value, suffixes, count, 1);
+}
