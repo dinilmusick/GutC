@@ -1,0 +1,20 @@
+name: GutC C11 parity verification
+on:
+  push:
+    branches: [parity/gutts-truncate-c11-20261119]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  c11:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        build_type: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_C_FLAGS="-Wall -Wextra -Werror -pedantic"
+      - name: Build
+        run: cmake --build build --parallel
+      - name: Test
+        run: ctest --test-dir build --output-on-failure
