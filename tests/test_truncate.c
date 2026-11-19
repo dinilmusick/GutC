@@ -181,6 +181,19 @@ int main(void) {
                            out, sizeof out, NULL) == GUT_TRUNCATE_INVALID);
  CHECK(gut_truncate_utf8_n(bounded, sizeof bounded, 2, omission, 1,
                            out, 2, &needed) == GUT_TRUNCATE_NOSPACE && needed == 3);
+ /* Bounded default omission must preserve UTF-8 and capacity-query semantics. */
+ CHECK(gut_truncate_utf8_n_default(bounded, sizeof bounded, 2,
+                                  out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(strcmp(out, "a\\xE2\\x80\\xA6") == 0 && needed == 5);
+ CHECK(gut_truncate_utf8_n_default(bounded, sizeof bounded, 3,
+                                  out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+ CHECK(memcmp(out, bounded, sizeof bounded) == 0 && needed == sizeof bounded + 1);
+ CHECK(gut_truncate_utf8_n_default(bounded, sizeof bounded, 2,
+                                  NULL, 0, &needed) == GUT_TRUNCATE_NOSPACE && needed == 5);
+ memset(out, 'K', sizeof out);
+ CHECK(gut_truncate_utf8_n_default(incomplete, sizeof incomplete, 2,
+                                  out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
+ CHECK(out[0] == 'K');
  puts("gut_truncate regression passed");
  return 0;
 }
