@@ -93,7 +93,7 @@ int main(void) {
  }
  /* Ensure invalid omission cannot bypass validation even when input fits. */
  memset(out, 'X', sizeof out);
- CHECK(gut_truncate_utf8("a", 8, "\\xC0\\xAF", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8("a", 8, "\xC0\xAF", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
  for (size_t i = 0; i < sizeof out; ++i) CHECK(out[i] == 'X');
  puts("gut_truncate regression passed");
  return 0;
