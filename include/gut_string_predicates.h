@@ -18,6 +18,12 @@ int gut_is_nonblank_utf8_n(const char *value, size_t length);
  * Explicit counts avoid sentinel-based array traversal. */
 int gut_starts_with_any_utf8(const char *value, const char *const *prefixes, size_t count);
 int gut_ends_with_any_utf8(const char *value, const char *const *suffixes, size_t count);
+/* Bounded variants: explicit byte lengths for value and every candidate.
+ * Returns -1 for invalid UTF-8, embedded NUL or invalid pointers. */
+int gut_starts_with_any_utf8_n(const char *value, size_t length,
+                               const char *const *prefixes, const size_t *sizes, size_t count);
+int gut_ends_with_any_utf8_n(const char *value, size_t length,
+                             const char *const *suffixes, const size_t *sizes, size_t count);
 #ifdef __cplusplus
 }
 #endif
