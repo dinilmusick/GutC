@@ -51,6 +51,28 @@ int main(void) {
  assert(gut_starts_with_any_utf8(NULL, empty, 1) == -1);
  assert(gut_ends_with_any_utf8("abc", NULL, 1) == -1);
  assert(gut_starts_with_any_utf8("\xE2\x82", empty, 1) == -1);
+ const char value_span[] = {'x', (char)0xC3, (char)0xA9, 'z'};
+ const char prefix_span[] = {'x', (char)0xC3, (char)0xA9};
+ const char suffix_span[] = {(char)0xC3, (char)0xA9, 'z'};
+ const char *p_span[] = {prefix_span};
+ const char *s_span[] = {suffix_span};
+ const size_t p_size[] = {sizeof prefix_span};
+ const size_t s_size[] = {sizeof suffix_span};
+ assert(gut_starts_with_any_utf8_n(value_span, sizeof value_span, p_span, p_size, 1) == 1);
+ assert(gut_ends_with_any_utf8_n(value_span, sizeof value_span, s_span, s_size, 1) == 1);
+ assert(gut_starts_with_any_utf8_n(value_span, sizeof value_span, s_span, s_size, 1) == 0);
+ assert(gut_ends_with_any_utf8_n(value_span, sizeof value_span, p_span, p_size, 1) == 0);
+ assert(gut_starts_with_any_utf8_n(value_span, sizeof value_span, NULL, NULL, 0) == 0);
+ assert(gut_starts_with_any_utf8_n(value_span, sizeof value_span, p_span, NULL, 1) == -1);
+ const char nul_span[] = {'x', 0};
+ const char *bad_span[] = {nul_span};
+ const size_t bad_size[] = {sizeof nul_span};
+ assert(gut_starts_with_any_utf8_n(value_span, sizeof value_span, bad_span, bad_size, 1) == -1);
+ assert(gut_ends_with_any_utf8_n(nul_span, sizeof nul_span, s_span, s_size, 1) == -1);
+ const char truncated_span[] = {(char)0xE2, (char)0x82};
+ const char *truncated_candidates[] = {truncated_span};
+ const size_t truncated_size[] = {sizeof truncated_span};
+ assert(gut_starts_with_any_utf8_n(value_span, sizeof value_span, truncated_candidates, truncated_size, 1) == -1);
  puts("gut_string_predicates passed");
  return 0;
 }
