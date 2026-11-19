@@ -113,8 +113,8 @@ int main(void) {
   }
  }
  /* Four-byte UTF-8 boundary cases include the minimum and maximum planes. */
- const char *valid_four[] = {"\\xF0\\x90\\x80\\x80", "\\xF1\\x80\\x80\\x80",
-  "\\xF3\\xBF\\xBF\\xBF", "\\xF4\\x8F\\xBF\\xBF"};
+ const char *valid_four[] = {"\xF0\x90\x80\x80", "\xF1\x80\x80\x80",
+  "\xF3\xBF\xBF\xBF", "\xF4\x8F\xBF\xBF"};
  for (size_t i = 0; i < sizeof valid_four / sizeof valid_four[0]; ++i) {
   CHECK(gut_truncate_utf8(valid_four[i], 1, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
   CHECK(strcmp(out, valid_four[i]) == 0 && needed == 5);
