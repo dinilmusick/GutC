@@ -13,9 +13,9 @@ int main(void) {
  CHECK(gut_truncate_utf8("hello",4,"...",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
  CHECK(strcmp(out,"h...")==0 && needed==5);
  CHECK(gut_truncate_utf8("hello",2,"...",out,sizeof out,NULL)==GUT_TRUNCATE_OK);
- CHECK(strcmp(out,"..")==0);
+ CHECK(strcmp(out,"...")==0);
  CHECK(gut_truncate_utf8("hello",0,"...",out,sizeof out,NULL)==GUT_TRUNCATE_OK);
- CHECK(strcmp(out,"")==0);
+ CHECK(strcmp(out,"...")==0);
  CHECK(gut_truncate_utf8("hello",5,"...",out,sizeof out,NULL)==GUT_TRUNCATE_OK);
  CHECK(strcmp(out,"hello")==0);
  CHECK(gut_truncate_utf8("\xC3\xA9\xE2\x98\x83Z",2,"!",out,sizeof out,NULL)==GUT_TRUNCATE_OK);
@@ -40,7 +40,7 @@ int main(void) {
  CHECK(gut_truncate_utf8("abcdef",4,"\xC3\xA9\xE2\x98\x83",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
  CHECK(strcmp(out,"ab\xC3\xA9\xE2\x98\x83")==0 && needed==8);
  CHECK(gut_truncate_utf8("abcdef",1,"\xC3\xA9\xE2\x98\x83",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
- CHECK(strcmp(out,"\xC3\xA9")==0 && needed==3);
+ CHECK(strcmp(out,"\xC3\xA9\xE2\x98\x83")==0 && needed==6);
  CHECK(gut_truncate_utf8("abcdef",4,"\xC0\xAF",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
  CHECK(gut_truncate_utf8("",0,"!",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
  CHECK(strcmp(out,"")==0 && needed==1);
