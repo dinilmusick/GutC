@@ -30,10 +30,10 @@ int main(void) {
  assert(gut_is_nonblank_utf8_n(truncated, 3) == 1);
  assert(gut_is_blank_utf8_n(NULL, 0) == -1);
  assert(gut_is_blank_utf8_n(raw, 0) == 1);
- const char *prefixes[] = {"no", "\\xC3\\xA9", ""};
- const char *suffixes[] = {"\\xF0\\x9F\\x8C\\x8D", "no"};
- assert(gut_starts_with_any_utf8("\\xC3\\xA9" "clair", prefixes, 3) == 1);
- assert(gut_ends_with_any_utf8("hello \\xF0\\x9F\\x8C\\x8D", suffixes, 2) == 1);
+ const char *prefixes[] = {"no", "\xC3\xA9", ""};
+ const char *suffixes[] = {"\xF0\x9F\x8C\x8D", "no"};
+ assert(gut_starts_with_any_utf8("\xC3\xA9" "clair", prefixes, 3) == 1);
+ assert(gut_ends_with_any_utf8("hello \xF0\x9F\x8C\x8D", suffixes, 2) == 1);
  assert(gut_starts_with_any_utf8("abc", NULL, 0) == 0);
  assert(gut_ends_with_any_utf8("abc", NULL, 0) == 0);
  const char *empty[] = {""};
@@ -42,7 +42,7 @@ int main(void) {
  const char *missing[] = {"xyz"};
  assert(gut_starts_with_any_utf8("abc", missing, 1) == 0);
  assert(gut_ends_with_any_utf8("abc", missing, 1) == 0);
- const char *bad[] = {"\\xC0\\xAF"};
+ const char *bad[] = {"\xC0\xAF"};
  assert(gut_starts_with_any_utf8("abc", bad, 1) == -1);
  assert(gut_ends_with_any_utf8("abc", bad, 1) == -1);
  const char *with_null[] = {"abc", NULL};
@@ -50,7 +50,7 @@ int main(void) {
  assert(gut_ends_with_any_utf8("abc", with_null, 2) == -1);
  assert(gut_starts_with_any_utf8(NULL, empty, 1) == -1);
  assert(gut_ends_with_any_utf8("abc", NULL, 1) == -1);
- assert(gut_starts_with_any_utf8("\\xE2\\x82", empty, 1) == -1);
+ assert(gut_starts_with_any_utf8("\xE2\x82", empty, 1) == -1);
  puts("gut_string_predicates passed");
  return 0;
 }
