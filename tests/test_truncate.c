@@ -33,6 +33,17 @@ int main(void) {
  CHECK(gut_truncate_utf8("abc",2,"",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
  CHECK(strcmp(out,"ab")==0 && needed==3);
  CHECK(gut_truncate_utf8("abc",2,NULL,out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8("abcdef",4,"\xC3\xA9\xE2\x98\x83",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
+ CHECK(strcmp(out,"ab\xC3\xA9\xE2\x98\x83")==0 && needed==8);
+ CHECK(gut_truncate_utf8("abcdef",1,"\xC3\xA9\xE2\x98\x83",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
+ CHECK(strcmp(out,"\xC3\xA9")==0 && needed==3);
+ CHECK(gut_truncate_utf8("abcdef",4,"\xC0\xAF",out,sizeof out,NULL)==GUT_TRUNCATE_INVALID);
+ CHECK(gut_truncate_utf8("",0,"!",out,sizeof out,&needed)==GUT_TRUNCATE_OK);
+ CHECK(strcmp(out,"")==0 && needed==1);
+ CHECK(gut_truncate_utf8("abcdef",4,"!",out,4,&needed)==GUT_TRUNCATE_NOSPACE);
+ CHECK(needed==5);
+ CHECK(gut_truncate_utf8("abcdef",4,"!",out,5,&needed)==GUT_TRUNCATE_OK);
+ CHECK(strcmp(out,"abc!")==0);
  puts("gut_truncate regression passed");
  return 0;
 }
