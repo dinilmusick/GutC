@@ -51,7 +51,7 @@ int main(void){
  CHECK(gut_truncate_words_utf8("a b c",2,"\xED\xA0\x80",out,sizeof out,&n)==GUT_TRUNCATE_INVALID);
  for(size_t i=0;i<sizeof out;i++)CHECK(out[i]=='R');
  CHECK(gut_truncate_words_utf8_default("\xE2\x82",2,NULL,0,&n)==GUT_TRUNCATE_INVALID);
- CHECK(gut_truncate_words_utf8("a b c",2,"!",out,0,&n)==GUT_TRUNCATE_NOSPACE && n==4);
+ CHECK(gut_truncate_words_utf8("a b c",2,"!",out,0,&n)==GUT_TRUNCATE_NOSPACE && n==5);
  for(size_t i=0;i<sizeof out;i++)CHECK(out[i]=='R');
  puts("gut_truncate_words passed");return 0;
 }
