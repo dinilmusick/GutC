@@ -48,6 +48,17 @@ int main(void) {
  CHECK(needed==5);
  CHECK(gut_truncate_utf8("abcdef",4,"!",out,5,&needed)==GUT_TRUNCATE_OK);
  CHECK(strcmp(out,"abc!")==0);
+ /* Exercise every possible leading byte and every continuation byte at a NUL boundary. */
+ for (unsigned int lead = 0x80; lead <= 0xFF; ++lead) {
+  char sample[3] = {(char)lead, 0, 0};
+  gut_truncate_status status = gut_truncate_utf8(sample, 1, "!", out, sizeof out, NULL);
+  CHECK(status == GUT_TRUNCATE_INVALID);
+ }
+ for (unsigned int continuation = 0; continuation <= 0xFF; ++continuation) {
+  char sample[3] = {(char)0xC2, (char)continuation, 0};
+  gut_truncate_status status = gut_truncate_utf8(sample, 1, "!", out, sizeof out, NULL);
+  CHECK(status == ((continuation >= 0x80 && continuation <= 0xBF) ? GUT_TRUNCATE_OK : GUT_TRUNCATE_INVALID));
+ }
  puts("gut_truncate regression passed");
  return 0;
 }
