@@ -14,4 +14,13 @@ if(BUILD_TESTING)
  add_executable(gutc_string_predicates_test tests/test_string_predicates.c)
  target_link_libraries(gutc_string_predicates_test PRIVATE gutc_truncate)
  add_test(NAME gutc_string_predicates_test COMMAND gutc_string_predicates_test)
+ # C assert() disappears when NDEBUG is defined (e.g. Release builds).
+ # Keep regression checks executable in every CI build configuration.
+ foreach(test_target IN ITEMS gutc_truncate_test gutc_truncate_words_test gutc_string_predicates_test)
+  if(MSVC)
+   target_compile_options(${test_target} PRIVATE /UNDEBUG)
+  else()
+   target_compile_options(${test_target} PRIVATE -UNDEBUG)
+  endif()
+ endforeach()
 endif()
