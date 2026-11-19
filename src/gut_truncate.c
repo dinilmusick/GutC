@@ -90,3 +90,12 @@ gut_truncate_status gut_truncate_utf8_n(const char *input, size_t input_bytes,
  output[total] = 0;
  return GUT_TRUNCATE_OK;
 }
+
+/* Explicit-length counterpart of the default-ellipsis convenience API. */
+gut_truncate_status gut_truncate_utf8_n_default(const char *input, size_t input_bytes,
+ size_t max_length, char *output, size_t capacity, size_t *required) {
+ static const char ellipsis[] = "\xE2\x80\xA6";
+ return gut_truncate_utf8_n(input, input_bytes, max_length,
+                            ellipsis, sizeof ellipsis - 1,
+                            output, capacity, required);
+}
