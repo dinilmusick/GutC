@@ -81,6 +81,20 @@ int main(void) {
  CHECK(gut_truncate_utf8("abcdef", 3, "!", out, 2, &needed) == GUT_TRUNCATE_NOSPACE);
  CHECK(needed == 4);
  for (size_t j = 0; j < sizeof out; ++j) CHECK(out[j] == 'Z');
+ /* Exhaustively validate two-byte UTF-8 scalar boundaries and preservation. */
+ for (unsigned int lead = 0xC2; lead <= 0xDF; ++lead) {
+  for (unsigned int continuation = 0x80; continuation <= 0xBF; ++continuation) {
+   char sample[3] = {(char)lead, (char)continuation, 0};
+   CHECK(gut_truncate_utf8(sample, 1, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+   CHECK(strcmp(out, sample) == 0 && needed == 3);
+   CHECK(gut_truncate_utf8(sample, 0, "!", out, sizeof out, &needed) == GUT_TRUNCATE_OK);
+   CHECK(strcmp(out, "!") == 0 && needed == 2);
+  }
+ }
+ /* Ensure invalid omission cannot bypass validation even when input fits. */
+ memset(out, 'X', sizeof out);
+ CHECK(gut_truncate_utf8("a", 8, "\\xC0\\xAF", out, sizeof out, &needed) == GUT_TRUNCATE_INVALID);
+ for (size_t i = 0; i < sizeof out; ++i) CHECK(out[i] == 'X');
  puts("gut_truncate regression passed");
  return 0;
 }
