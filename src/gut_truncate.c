@@ -1,18 +1,19 @@
 #include "../include/gut_truncate.h"
 #include <stdint.h>
 #include <string.h>
-#include <stdint.h>
 static int scan(const char *s,size_t *count,size_t *bytes) {
- size_t n=0,i=0; const unsigned char *p=(const unsigned char *)s;
+ size_t n=0,i=0,len; const unsigned char *p=(const unsigned char *)s;
  if(!s)return 0;
- while(p[i]) {
+ len=strlen(s);
+ while(i<len) {
   uint32_t cp;size_t k;unsigned char a=p[i];
   if(a<0x80){cp=a;k=1;}
   else if(a>=0xC2&&a<=0xDF){cp=a&31;k=2;}
   else if(a>=0xE0&&a<=0xEF){cp=a&15;k=3;}
   else if(a>=0xF0&&a<=0xF4){cp=a&7;k=4;}
   else return 0;
-  for(size_t j=1;j<k;j++){if(!p[i+j]||(p[i+j]&0xC0)!=0x80)return 0;cp=(cp<<6)|(p[i+j]&63);}
+  if(k>len-i)return 0;
+  for(size_t j=1;j<k;j++){if((p[i+j]&0xC0)!=0x80)return 0;cp=(cp<<6)|(p[i+j]&63);}
   if((k==2&&cp<128)||(k==3&&cp<2048)||(k==4&&cp<65536)||cp>0x10FFFF||(cp>=0xD800&&cp<=0xDFFF))return 0;
   if(i>SIZE_MAX-k||n==SIZE_MAX)return 0;
   i+=k;n++;
