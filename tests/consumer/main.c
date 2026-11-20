@@ -27,6 +27,7 @@
 #include <gutc/portable_types.h>
 #include <gutc/model_operations.h>
 #include <gutc/luth_client.h>
+#include <gutc/s3_client.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -202,6 +203,14 @@ int main(void) {
     if(gutc_luth_client_get_session(&client,&session)!=GUTC_UNSUPPORTED)return 94;
     if(session)return 95;
     gutc_luth_client_destroy(&client);}
+  {gutc_s3_client s3;gutc_s3_result result={0};gutc_json_dom *input=NULL;
+    const char raw[]="{\"Bucket\":\"b\",\"Key\":\"k\"}";
+    gutc_s3_request request={GUTC_S3_GET_OBJECT,NULL,NULL,0};
+    if(gutc_s3_client_init(&s3,"us-east-1",9,NULL,0,NULL)!=GUTC_OK)return 96;
+    if(gutc_json_dom_parse((const uint8_t*)raw,sizeof raw-1,16,100,&input,NULL)!=GUTC_OK)return 97;
+    request.input=input;
+    if(gutc_s3_client_execute(&s3,&request,&result)!=GUTC_UNSUPPORTED)return 98;
+    gutc_s3_result_clear(&result);gutc_json_dom_free(input);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

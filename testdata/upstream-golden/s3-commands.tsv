@@ -1,0 +1,8 @@
+# Pinned GutTS src/storage/s3.ts external SDK reexport command names and native enum order
+GetObjectCommand	0
+HeadObjectCommand	1
+ListObjectsV2Command	2
+PutObjectCommand	3
+CopyObjectCommand	4
+DeleteObjectCommand	5
+DeleteObjectsCommand	6
