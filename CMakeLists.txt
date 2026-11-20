@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(GutC VERSION 0.1.0 LANGUAGES C)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-add_library(gutc STATIC src/gutc.c src/json.c src/json_dom.c src/api_definition.c src/api_registry.c src/api_dispatch.c src/api_dispatch_text.c src/fod_node.c src/semantic_deterministic.c src/url_query.c src/auth_contracts.c src/oauth_contracts.c src/string_case.c
+add_library(gutc STATIC src/gutc.c src/json.c src/json_dom.c src/api_definition.c src/api_registry.c src/model_registry.c src/api_dispatch.c src/api_dispatch_text.c src/fod_node.c src/semantic_deterministic.c src/url_query.c src/auth_contracts.c src/oauth_contracts.c src/string_case.c
   src/gutc_path.c src/trusted_api.c src/collections.c src/object_path.c src/safe_path.c src/identity.c
   src/gut_string_predicates.c src/gut_truncate.c src/gut_truncate_words.c)
 add_library(GutC::gutc ALIAS gutc)
@@ -95,6 +95,11 @@ if(BUILD_TESTING)
   target_compile_definitions(gutc_api_dispatch_test PRIVATE
     GUTC_API_DISPATCH_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/testdata/upstream-golden/api-dispatch.tsv")
   add_test(NAME gutc_api_dispatch COMMAND gutc_api_dispatch_test)
+  add_executable(gutc_model_registry_test tests/test_model_registry.c)
+  target_link_libraries(gutc_model_registry_test PRIVATE GutC::gutc)
+  target_compile_definitions(gutc_model_registry_test PRIVATE
+    GUTC_MODEL_CATALOG_PATH="${CMAKE_CURRENT_SOURCE_DIR}/testdata/upstream-golden/model-catalog.json")
+  add_test(NAME gutc_model_registry COMMAND gutc_model_registry_test)
   foreach(pair IN ITEMS "path;test_path.c" "trusted_api;trusted_api_test.c" "string_predicates;test_string_predicates.c" "truncate;test_truncate.c" "truncate_words;test_truncate_words.c")
     list(GET pair 0 name)
     list(GET pair 1 file)
@@ -102,7 +107,7 @@ if(BUILD_TESTING)
     target_link_libraries(gutc_${name}_test PRIVATE GutC::gutc)
     add_test(NAME gutc_${name} COMMAND gutc_${name}_test)
   endforeach()
-  foreach(check_target IN ITEMS gutc_api_dispatch_test gutc_api_registry_test gutc_fod_node_test gutc_semantic_test gutc_api_definition_test gutc_object_paths_test gutc_test gutc_json_test gutc_json_dom_test gutc_url_query_test gutc_auth_contracts_test gutc_oauth_contracts_test gutc_strings_test gutc_collections_test gutc_safe_path_test gutc_identity_test gutc_cross_language_test gutc_path_test
+  foreach(check_target IN ITEMS gutc_model_registry_test gutc_api_dispatch_test gutc_api_registry_test gutc_fod_node_test gutc_semantic_test gutc_api_definition_test gutc_object_paths_test gutc_test gutc_json_test gutc_json_dom_test gutc_url_query_test gutc_auth_contracts_test gutc_oauth_contracts_test gutc_strings_test gutc_collections_test gutc_safe_path_test gutc_identity_test gutc_cross_language_test gutc_path_test
       gutc_trusted_api_test gutc_string_predicates_test gutc_truncate_test gutc_truncate_words_test)
     if(MSVC)
       target_compile_options(${check_target} PRIVATE /UNDEBUG)

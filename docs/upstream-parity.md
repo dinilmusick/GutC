@@ -268,30 +268,30 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | --- | --- | --- | --- | --- |
 | `ModelResidency` | — | — | — | Host-dependent; native adapter not implemented |
 | `ModelLibrary` | — | — | — | Host-dependent; native adapter not implemented |
-| `guttsModelDefinitions` | — | — | — | Host-dependent; native adapter not implemented |
-| `guttsModelById` | — | — | — | Host-dependent; native adapter not implemented |
+| `guttsModelDefinitions` | `gutc_model_registry_list` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | All eight pinned model metadata definitions available; runtime loading/inference is host-dependent |
+| `guttsModelById` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | All eight pinned model metadata definitions available; runtime loading/inference is host-dependent |
 | `Needle3` | — | — | — | Host-dependent; native adapter not implemented |
 | `needle3CompleteApi` | — | — | — | Host-dependent; native adapter not implemented |
-| `needle3Metadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `needle3Metadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `SmolLM2` | — | — | — | Host-dependent; native adapter not implemented |
 | `smolLM2GenerateApi` | — | — | — | Host-dependent; native adapter not implemented |
-| `smolLM2Metadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `smolLM2Metadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `Whistle` | — | — | — | Host-dependent; native adapter not implemented |
 | `whistleTranscribeApi` | — | — | — | Host-dependent; native adapter not implemented |
-| `whistleMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `whistleMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `EttinReranker` | — | — | — | Host-dependent; native adapter not implemented |
 | `EttinReranker17M` | — | — | — | Host-dependent; native adapter not implemented |
 | `EttinReranker32M` | — | — | — | Host-dependent; native adapter not implemented |
 | `EttinReranker68M` | — | — | — | Host-dependent; native adapter not implemented |
 | `EttinReranker150M` | — | — | — | Host-dependent; native adapter not implemented |
 | `ettinRerankApi` | — | — | — | Host-dependent; native adapter not implemented |
-| `ettinReranker17MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
-| `ettinReranker32MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
-| `ettinReranker68MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
-| `ettinReranker150MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `ettinReranker17MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
+| `ettinReranker32MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
+| `ettinReranker68MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
+| `ettinReranker150MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `MiniLM` | — | — | — | Host-dependent; native adapter not implemented |
 | `miniLMSimilarityApi` | — | — | — | Host-dependent; native adapter not implemented |
-| `miniLML6Metadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `miniLML6Metadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 
 ### Semantic input: src/semantic-input/index.ts
 
