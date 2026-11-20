@@ -25,7 +25,7 @@ This file is an **in-progress** inventory, not a full parity certification. `tes
 | `strings.truncateWords` | `gut_truncate_words_utf8` | `src/gut_truncate_words.c` imported PR #4 | `tests/test_truncate_words.c` | Implemented for UTF-8 |
 | `arrays.compact` / `unique` / `flatten` / `last` | `gutc_array_compact` / `gutc_array_unique` / `gutc_array_flatten_once` / `gutc_array_last` | `src/collections.c` | `tests/test_collections.c` | Borrowed typed values; falsy filter, SameValueZero primitive and explicit reference identity; not JS arbitrary values |
 | `numbers.roundTo` / `isFiniteNumber` | `gutc_number_round_to` / `gutc_number_is_finite` | `src/collections.c` | `tests/test_collections.c` | Finite-only; roundTo 0–15 digits and difficult Lodash ties may differ |
-| `objects.hasOwn` / `pick` / `omit` | `gutc_object_has_direct` / `gutc_object_pick_direct` / `gutc_object_omit_direct` | `src/collections.c` | `tests/test_collections.c` | **Partial:** direct-key ordered maps only, nested paths not implemented |\n| `objects.isPlainObject` | — | — | — | Not implemented |
+| `objects.hasOwn` / `pick` / `omit` | `gutc_json_path_has` / `gutc_json_pick_paths` / `gutc_json_omit_paths` (+ direct-key borrowed value APIs) | `src/object_path.c`, `src/collections.c` | `tests/test_object_path.c`, `objects.tsv` | **Partial:** native JSON nested objects/array indexes/quoted bracket paths; no JS prototype, symbol keys, property descriptors or unsupported Lodash paths |\n| `objects.isPlainObject` | `gutc_json_is_plain_object` | `src/object_path.c` | `tests/test_object_path.c`, `objects.tsv` | Native JSON DOM object detection; does not model custom JavaScript prototypes |
 | `strings.isEmail/capitalize/camelCase/kebabCase/snakeCase` | `gutc_is_email_ascii` / `gutc_string_transform_ascii` | `src/string_case.c` | `tests/test_string_case.c`, `strings.tsv` | Partial: real standard ASCII email and Lodash case segmentation; Unicode/deburr and quoted addresses explicitly unsupported |
 | `urls.isUrl/getQueryParam/setQueryParam` | `gutc_url_is_http_url` / `gutc_url_get_query_param` / `gutc_url_set_query_param` | `src/url_query.c` | `tests/test_url_query.c` | Partial: HTTP(S) and strict valid UTF-8; not general WHATWG/IDNA, malformed percent rejects rather than replacement |
 | `json.parseJson/tryParseJson` | `gutc_json_validate` (syntax only) | `src/json.c` | `tests/test_json.c`, `testdata/upstream-golden/json.tsv` | **Partial:** validation, no parsed AST or exception semantics |
@@ -93,10 +93,10 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `hasOwn` | `gutc_object_has_direct` | src/collections.c | tests/test_collections.c | Partial: nested property paths omitted |
-| `pick` | `gutc_object_pick_direct` | src/collections.c | tests/test_collections.c | Partial: direct keys only |
-| `omit` | `gutc_object_omit_direct` | src/collections.c | tests/test_collections.c | Partial: direct keys only |
-| `isPlainObject` | — | — | — | Not implemented |
+| `hasOwn` | `gutc_json_path_has` | src/object_path.c | tests/test_object_path.c; objects.tsv | Partial: JSON deep-path support; no JS prototype or unusual syntax |
+| `pick` | `gutc_json_pick_paths` | src/object_path.c | tests/test_object_path.c; objects.tsv | Partial: JSON deep-path support; no JS prototype or unusual syntax |
+| `omit` | `gutc_json_omit_paths` | src/object_path.c | tests/test_object_path.c; objects.tsv | Partial: JSON deep-path support; no JS prototype or unusual syntax |
+| `isPlainObject` | `gutc_json_is_plain_object` | src/object_path.c | tests/test_object_path.c; objects.tsv | Native JSON DOM object kind; no prototype chain |
 
 ### Numbers: src/numbers/number-concepts.ts
 
