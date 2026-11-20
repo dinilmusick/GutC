@@ -130,9 +130,9 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `ApiSemantics` | — | — | — | Type-only; native representation not implemented |
 | `JsonSchema` | — | — | — | Type-only; native representation not implemented |
 | `defineApi` | `gutc_define_api` | src/api_definition.c | tests/test_api_definition.c; api-definition.tsv | Native owned JSON metadata definition and input schema, not API dispatch or model execution |
-| `guttsApiDefinitions` | — | — | — | Not implemented |
-| `guttsApiById` | — | — | — | Not implemented |
-| `guttsFodNodeDefinitions` | — | — | — | Not implemented |
+| `guttsApiDefinitions` | `gutc_api_registry_list` | src/api_registry.c | tests/test_api_registry.c; api-catalog.json | Full 38 pinned definitions metadata; FOD catalog computed; no model execution |
+| `guttsApiById` | `gutc_api_registry_lookup` | src/api_registry.c | tests/test_api_registry.c; api-catalog.json | Full 38 pinned definitions metadata; FOD catalog computed; no model execution |
+| `guttsFodNodeDefinitions` | `gutc_api_registry_fod_nodes` | src/api_registry.c | tests/test_api_registry.c; api-catalog.json | Full 38 pinned definitions metadata; FOD catalog computed; no model execution |
 | `guttsApiToFodNode` | `gutc_api_to_fod_node` | src/fod_node.c | tests/test_fod_node.c; fod.tsv | Native metadata-only, owned JSON DOM; no dispatch or host model runtime |
 | `executeGuttsApi` | — | — | — | Not implemented |
 
