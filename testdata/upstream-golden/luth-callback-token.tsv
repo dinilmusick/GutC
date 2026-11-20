@@ -1,0 +1,34 @@
+# Exact pinned GutTS hydrateLuthTokenFromUrl with host-provided canonical location: pathname<TAB>search<TAB>hash<TAB>stored-token-or-null<TAB>history-relative-url-or-null
+"/callback"	"?token=abc"	""	"abc"	"/callback"
+"/callback"	"?a=1&token=abc&b=2"	"#done"	"abc"	"/callback?a=1&b=2#done"
+"/callback"	"?token=one&token=two"	""	"one"	"/callback"
+"/callback"	"?token=%20abc%20"	""	"abc"	"/callback"
+"/callback"	"?token=%E2%9C%93"	""	"✓"	"/callback"
+"/callback"	"?token="	""	null	null
+"/callback"	"?token=%20"	""	null	null
+"/callback"	"?a=1"	""	null	null
+"/callback"	"?%74oken=abc"	""	"abc"	"/callback"
+"/callback"	"?TOKEN=abc"	""	null	null
+"/callback"	"?token=first+last"	""	"first last"	"/callback"
+"/callback"	"?token=x&x=two%20words"	""	"x"	"/callback?x=two+words"
+"/callback"	"?x=&token=t"	""	"t"	"/callback?x="
+"/callback"	"?token=t&x"	""	"t"	"/callback?x="
+"/"	"?token=t"	"#frag"	"t"	"/#frag"
+"/callback"	"?x=a%20b&token=t&y=%7E"	""	"t"	"/callback?x=a+b&y=%7E"
+"/callback"	"?token=t&x=1&x=2"	""	"t"	"/callback?x=1&x=2"
+"/callback"	"?%74oken=first&token=second"	""	"first"	"/callback"
+"/callback"	"?token=t&space=+"	""	"t"	"/callback?space=+"
+"/callback"	"?token=%C3%A9"	""	"é"	"/callback"
+"/callback"	"?token=t&a=%2F"	""	"t"	"/callback?a=%2F"
+"/callback"	"?token=t&plus=%2B"	""	"t"	"/callback?plus=%2B"
+"/callback"	"?token=t&empty"	""	"t"	"/callback?empty="
+"/callback"	""	""	null	null
+"/callback"	"?token=&token=second"	""	null	null
+"/callback"	"?token=0"	""	"0"	"/callback"
+"/callback"	"?toke%6E=x"	""	"x"	"/callback"
+"/callback"	"?token=t&%61=1"	""	"t"	"/callback?a=1"
+"/callback"	"?token=x&space=%20"	""	"x"	"/callback?space=+"
+"/callback"	"?token=x&arr=one&arr=two"	""	"x"	"/callback?arr=one&arr=two"
+"/callback"	"?&&token=t"	""	"t"	"/callback"
+"/callback"	"?token=%09hey%0A"	""	"hey"	"/callback"
+"/callback"	"?token=%F0%9F%98%80"	""	"😀"	"/callback"
