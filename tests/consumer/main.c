@@ -14,6 +14,7 @@
 #include <gutc/api_registry.h>
 #include <gutc/api_dispatch.h>
 #include <gutc/model_registry.h>
+#include <gutc/luth_origin.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -112,6 +113,12 @@ int main(void) {
     if(gutc_model_registry_list(&models)!=GUTC_OK)return 49;
     if(models->kind!=GUTC_JSON_ARRAY||models->as.array.count!=8)return 50;
     gutc_json_dom_free(model);gutc_json_dom_free(models);}
+  {char origin[128];size_t needed=0;gutc_luth_environment env;
+    if(gutc_luth_resolve_client_origin(" HTTPS://STAGING.EXAMPLE.ORG:443/callback ",NULL,
+                                      origin,sizeof(origin),&needed)!=GUTC_OK)return 51;
+    if(strcmp(origin,"https://staging.example.org"))return 52;
+    if(gutc_luth_resolve_client_environment(origin,&env)!=GUTC_OK)return 53;
+    if(env!=GUTC_LUTH_STAGING)return 54;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
