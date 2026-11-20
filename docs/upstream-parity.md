@@ -35,7 +35,7 @@ This file is an **in-progress** inventory, not a full parity certification. `tes
 | `auth.validateCapabilityDescriptor` | `gutc_validate_capability_descriptor_v1` | `src/auth_contracts.c` | `tests/test_auth_contracts.c`, `auth.tsv` | Native exact-key, schema version, scopes, params and privacy checks; not authorization |
 | `auth.validateScopedInvocation` | `gutc_validate_scoped_invocation_v1` | `src/auth_contracts.c` | `tests/test_auth_contracts.c`, `auth.tsv` | Native typed schema validation and admission guards; not principal authentication |
 | `auth.consumeInvocationRetry` | `gutc_invocation_budget_retry` | `src/identity.c` | `tests/test_identity.c` | Pure retry budget, not full invocation envelope |\n| `auth.validateInvocationAgainstDescriptor` | `gutc_match_invocation_descriptor_v1` | `src/auth_contracts.c` | `tests/test_auth_contracts.c`, `auth.tsv` | Native pure descriptor/revision/workspace matching; target must reauthorize |
-| `auth OAuth/client/session` structures and adapters | — | — | — | Not implemented; transport host-specific |
+| `auth OAuth client registration/redirect` | `gutc_validate_oauth_registration_v1` / `gutc_validate_oauth_redirect_v1` | `src/oauth_contracts.c` | `tests/test_oauth_contracts.c`, `oauth.tsv` | Pure client schema and canonical ASCII HTTP(S)/loopback redirect validation; not ownership verification, IDNA, or general WHATWG |\n| `auth Luth/session transport` | — | — | — | Not implemented; transport host-specific |
 | `models`, `semantic-input`, `engineering`, `api` published exports | — | — | — | Requires full export audit; runtime model adapters are host-specific |
 
 Additional native primitives with no exact GutTS exported counterpart: `gutc_utf8_validate`, `gutc_percent_encode`, `gutc_percent_decode`, `gutc_array_chunk_count`. Percent encoding matches JavaScript encodeURIComponent on **valid UTF-8** for unreserved bytes but binary inputs are an intentional C extension. Percent decoding is byte-oriented; malformed percent triplets fail, while arbitrary decoded binary remains permitted.
@@ -195,8 +195,8 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `contractId` | — | — | — | Not implemented |
 | `contractAppId` | — | — | — | Not implemented |
 | `contractExactKeys` | — | — | — | Not implemented |
-| `validateOAuthRedirectUri` | — | — | — | Not implemented |
-| `validateOAuthClientRegistration` | — | — | — | Not implemented |
+| `validateOAuthRedirectUri` | `gutc_validate_oauth_redirect_v1` | src/oauth_contracts.c | tests/test_oauth_contracts.c; oauth.tsv | Partial: canonical ASCII http(s), no WHATWG/IDNA generality |
+| `validateOAuthClientRegistration` | `gutc_validate_oauth_registration_v1` | src/oauth_contracts.c | tests/test_oauth_contracts.c; oauth.tsv | Pure schema/PKCE/callback shape; no ownership authorization |
 
 ### Capability contracts: src/auth/capabilityContract.ts
 
