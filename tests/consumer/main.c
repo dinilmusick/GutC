@@ -17,6 +17,7 @@
 #include <gutc/luth_origin.h>
 #include <gutc/contract_primitives.h>
 #include <gutc/semantic_rank.h>
+#include <gutc/runtime_app_url.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -129,6 +130,11 @@ int main(void) {
     size_t order[2]={99,99},required=0;
     if(gutc_semantic_rank_order(words,sim,rel,2,order,2,&required)!=GUTC_OK)return 57;
     if(required!=2||order[0]!=1||order[1]!=0)return 58;}
+  {char url[128];size_t needed=0;
+    if(gutc_resolve_runtime_app_url("  https://example.org/path  ",url,sizeof url,&needed)!=GUTC_OK)return 59;
+    if(strcmp(url,"https://example.org/path"))return 60;
+    if(gutc_resolve_server_runtime_app_url("  https://example.org  ",url,sizeof url,&needed)!=GUTC_OK)return 61;
+    if(strcmp(url,"https://example.org"))return 62;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

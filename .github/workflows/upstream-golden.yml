@@ -46,9 +46,10 @@ jobs:
           node gutc/scripts/verify-luth-origin.mjs
           node gutc/scripts/verify-contract-primitives.mjs
           node gutc/scripts/verify-semantic-rank.mjs
+          node gutc/scripts/verify-runtime-app-url.mjs
       - name: Run C fixture contract
         shell: bash
         run: |
           cmake -S gutc -B gutc-build -DCMAKE_BUILD_TYPE=Debug
           cmake --build gutc-build
-          ctest --test-dir gutc-build --output-on-failure -R "gutc_cross_language|gutc_auth_contracts|gutc_oauth_contracts|gutc_strings|gutc_object_paths|gutc_api_definition|gutc_semantic_deterministic|gutc_fod_node|gutc_api_registry|gutc_api_dispatch|gutc_model_registry|gutc_luth_origin|gutc_contract_primitives|gutc_semantic_rank"
+          ctest --test-dir gutc-build --output-on-failure -R "gutc_cross_language|gutc_auth_contracts|gutc_oauth_contracts|gutc_strings|gutc_object_paths|gutc_api_definition|gutc_semantic_deterministic|gutc_fod_node|gutc_api_registry|gutc_api_dispatch|gutc_model_registry|gutc_luth_origin|gutc_contract_primitives|gutc_semantic_rank|gutc_runtime_app_url"
