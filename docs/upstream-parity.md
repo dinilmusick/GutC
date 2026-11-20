@@ -187,14 +187,14 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `ULTRST_APP_CONTRACT_VERSION` | — | — | — | Type-only; native representation not implemented |
+| `ULTRST_APP_CONTRACT_VERSION` | `gutc_app_contract_version` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
 | `OAuthPlatform` | — | — | — | Type-only; native representation not implemented |
 | `OAuthClientRegistrationV1` | — | — | — | Type-only; native representation not implemented |
 | `ContractCheck` | — | — | — | Type-only; native representation not implemented |
-| `contractRecord` | — | — | — | Not implemented |
-| `contractId` | — | — | — | Not implemented |
-| `contractAppId` | — | — | — | Not implemented |
-| `contractExactKeys` | — | — | — | Not implemented |
+| `contractRecord` | `gutc_contract_record` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
+| `contractId` | `gutc_contract_id` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
+| `contractAppId` | `gutc_contract_app_id` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
+| `contractExactKeys` | `gutc_contract_exact_keys` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
 | `validateOAuthRedirectUri` | `gutc_validate_oauth_redirect_v1` | src/oauth_contracts.c | tests/test_oauth_contracts.c; oauth.tsv | Partial: canonical ASCII http(s), no WHATWG/IDNA generality |
 | `validateOAuthClientRegistration` | `gutc_validate_oauth_registration_v1` | src/oauth_contracts.c | tests/test_oauth_contracts.c; oauth.tsv | Pure schema/PKCE/callback shape; no ownership authorization |
 

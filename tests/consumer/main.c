@@ -15,6 +15,7 @@
 #include <gutc/api_dispatch.h>
 #include <gutc/model_registry.h>
 #include <gutc/luth_origin.h>
+#include <gutc/contract_primitives.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -119,6 +120,10 @@ int main(void) {
     if(strcmp(origin,"https://staging.example.org"))return 52;
     if(gutc_luth_resolve_client_environment(origin,&env)!=GUTC_OK)return 53;
     if(env!=GUTC_LUTH_STAGING)return 54;}
+  {gutc_json_dom *id=NULL;const char id_text[]="\"app_01\"";
+    if(gutc_json_dom_parse((const uint8_t*)id_text,strlen(id_text),8,100,&id,NULL)!=GUTC_OK)return 55;
+    if(!gutc_contract_id(id)||!gutc_contract_app_id(id)||gutc_app_contract_version()!=1u)return 56;
+    gutc_json_dom_free(id);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

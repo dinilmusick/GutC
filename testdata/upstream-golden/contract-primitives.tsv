@@ -1,0 +1,66 @@
+# actual GutTS oauthClientContract.ts helpers pinned 3e2cbc0; op<TAB>inputJSON<TAB>allowedJSON<TAB>boolean
+record	{}	[]	true
+record	{"a":1}	[]	true
+record	[]	[]	false
+record	null	[]	false
+record	2	[]	false
+record	"x"	[]	false
+id	"app-id"	[]	true
+id	"a.b"	[]	true
+id	"a:b"	[]	true
+id	"a/b"	[]	true
+id	"@"	[]	true
+id	"a\u0000b"	[]	true
+id	"é"	[]	true
+id	"🚀"	[]	true
+id	"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"	[]	true
+id	"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"	[]	false
+id	"x y"	[]	false
+id	" x"	[]	false
+id	"x "	[]	false
+id	"x\ny"	[]	false
+id	"x\\y"	[]	false
+id	"x y"	[]	false
+id	"x y"	[]	false
+id	"x﻿y"	[]	false
+id	""	[]	false
+id	[]	[]	false
+id	null	[]	false
+appId	"app_one"	[]	true
+appId	"a.b"	[]	true
+appId	"a-b"	[]	true
+appId	"abc"	[]	true
+appId	"123abc"	[]	true
+appId	"a:b"	[]	false
+appId	"a.b:foo"	[]	false
+appId	"a+z:"	[]	false
+appId	"a_b:foo"	[]	true
+appId	"1:a"	[]	true
+appId	"app/path"	[]	false
+appId	"https://example.com"	[]	false
+appId	"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"	[]	true
+appId	"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"	[]	false
+appId	"0"	[]	true
+appId	"_x"	[]	false
+appId	"a b"	[]	false
+appId	{}	[]	false
+keys	{}	[]	true
+keys	{"a":1}	["a"]	true
+keys	{"a":1,"b":2}	["a"]	false
+keys	{"a":1,"b":2}	["a","b"]	true
+keys	{"a":1,"b":2}	["b","a"]	true
+keys	{}	["__proto__"]	true
+keys	{"x":{"b":1}}	["x"]	true
+keys	{"x":{"b":1}}	["b"]	false
+keys	{"a":1}	[]	false
+keys	{}	["a"]	true
+keys	{"a":1}	["a","a"]	true
+keys	{"A":1}	["a"]	false
+keys	{"a":1}	["A"]	false
+keys	{}	[""]	true
+keys	{"":1}	[""]	true
+keys	{"x.y":1}	["x.y"]	true
+keys	[]	["0"]	true
+keys	[1]	["0"]	true
+keys	[1,2]	["0"]	false
+keys	[1,2]	["1","0"]	true
