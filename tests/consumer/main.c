@@ -19,6 +19,7 @@
 #include <gutc/semantic_rank.h>
 #include <gutc/runtime_app_url.h>
 #include <gutc/luth_callback_token.h>
+#include <gutc/application_auth.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -139,6 +140,11 @@ int main(void) {
   {int hydrated=1;
     if(gutc_luth_hydrate_callback_token("/cb","",NULL,NULL,&hydrated)!=GUTC_OK)return 63;
     if(hydrated)return 64;}
+  {gutc_application_auth_client client;const char *error=NULL;
+    if(gutc_application_auth_init(&client,"/api/auth/oidc",NULL,&error)!=GUTC_OK)return 65;
+    if(strcmp(client.base_path,"/api/auth/oidc"))return 66;
+    if(gutc_application_auth_start_sign_in(&client,"/",NULL,&error)!=GUTC_UNSUPPORTED)return 67;
+    if(!error||strcmp(error,"AUTH_NAVIGATION_UNAVAILABLE"))return 68;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
