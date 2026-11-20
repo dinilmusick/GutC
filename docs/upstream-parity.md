@@ -270,27 +270,27 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `ModelLibrary` | `gutc_model_library_init; gutc_model_library_invoke; gutc_model_library_destroy` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Source-matched load-operation-unload with actual host invocation, no inferred or generated model output |
 | `guttsModelDefinitions` | `gutc_model_registry_list` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | All eight pinned model metadata definitions available; runtime loading/inference is host-dependent |
 | `guttsModelById` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | All eight pinned model metadata definitions available; runtime loading/inference is host-dependent |
-| `Needle3` | — | — | — | Host-dependent; native adapter not implemented |
-| `needle3CompleteApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `Needle3` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `needle3CompleteApi` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
 | `needle3Metadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
-| `SmolLM2` | — | — | — | Host-dependent; native adapter not implemented |
-| `smolLM2GenerateApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `SmolLM2` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `smolLM2GenerateApi` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
 | `smolLM2Metadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
-| `Whistle` | — | — | — | Host-dependent; native adapter not implemented |
-| `whistleTranscribeApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `Whistle` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `whistleTranscribeApi` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
 | `whistleMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
-| `EttinReranker` | — | — | — | Host-dependent; native adapter not implemented |
-| `EttinReranker17M` | — | — | — | Host-dependent; native adapter not implemented |
-| `EttinReranker32M` | — | — | — | Host-dependent; native adapter not implemented |
-| `EttinReranker68M` | — | — | — | Host-dependent; native adapter not implemented |
-| `EttinReranker150M` | — | — | — | Host-dependent; native adapter not implemented |
-| `ettinRerankApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `EttinReranker` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `EttinReranker17M` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `EttinReranker32M` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `EttinReranker68M` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `EttinReranker150M` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `ettinRerankApi` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
 | `ettinReranker17MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `ettinReranker32MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `ettinReranker68MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 | `ettinReranker150MMetadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
-| `MiniLM` | — | — | — | Host-dependent; native adapter not implemented |
-| `miniLMSimilarityApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `MiniLM` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
+| `miniLMSimilarityApi` | `gutc_model_client_init/call/destroy; gutc_model_family` | src/model_operations.c | tests/test_model_operations.c; model-operations.tsv | Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required |
 | `miniLML6Metadata` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | Exact pinned metadata; no fake inference |
 
 ### Semantic input: src/semantic-input/index.ts

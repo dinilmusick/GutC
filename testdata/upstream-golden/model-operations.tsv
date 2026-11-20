@@ -1,0 +1,10 @@
+# Pinned GutTS model classes/method signatures and metadata ID order. Test-host values are non-inference fixtures.
+Needle3	model.cactus-needle3	complete	{"prompt":"make a plan"}	{"output":"test-host-only"}
+Needle3	model.cactus-needle3	embed	{"input":"hello"}	[0.2,0.8]
+SmolLM2	model.smollm2-135m-instruct	generate	{"prompt":"write","maxNewTokens":16}	"test-host-only"
+Whistle	model.cactus-whistle	transcribe	{"audio":[0,11,255],"language":"en"}	"test-host-only"
+EttinReranker17M	model.ettin-reranker-17m	rerank	{"query":"x","candidates":["alpha","beta"]}	[0.3,0.4]
+EttinReranker32M	model.ettin-reranker-32m	rerank	{"query":"x","candidates":["alpha","beta"]}	[0.3,0.4]
+EttinReranker68M	model.ettin-reranker-68m	rerank	{"query":"x","candidates":["alpha","beta"]}	[0.3,0.4]
+EttinReranker150M	model.ettin-reranker-150m	rerank	{"query":"x","candidates":["alpha","beta"]}	[0.3,0.4]
+MiniLM	model.minilm-l6-v2	similarity	{"left":"hello","right":"world"}	0.5
