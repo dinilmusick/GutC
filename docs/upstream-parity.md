@@ -26,7 +26,7 @@ This file is an **in-progress** inventory, not a full parity certification. `tes
 | `arrays.compact` / `unique` / `flatten` / `last` | `gutc_array_compact` / `gutc_array_unique` / `gutc_array_flatten_once` / `gutc_array_last` | `src/collections.c` | `tests/test_collections.c` | Borrowed typed values; falsy filter, SameValueZero primitive and explicit reference identity; not JS arbitrary values |
 | `numbers.roundTo` / `isFiniteNumber` | `gutc_number_round_to` / `gutc_number_is_finite` | `src/collections.c` | `tests/test_collections.c` | Finite-only; roundTo 0–15 digits and difficult Lodash ties may differ |
 | `objects.hasOwn` / `pick` / `omit` | `gutc_object_has_direct` / `gutc_object_pick_direct` / `gutc_object_omit_direct` | `src/collections.c` | `tests/test_collections.c` | **Partial:** direct-key ordered maps only, nested paths not implemented |\n| `objects.isPlainObject` | — | — | — | Not implemented |
-| `strings.isEmail/capitalize/camelCase/kebabCase/snakeCase` | — | — | — | Not implemented |
+| `strings.isEmail/capitalize/camelCase/kebabCase/snakeCase` | `gutc_is_email_ascii` / `gutc_string_transform_ascii` | `src/string_case.c` | `tests/test_string_case.c`, `strings.tsv` | Partial: real standard ASCII email and Lodash case segmentation; Unicode/deburr and quoted addresses explicitly unsupported |
 | `urls.isUrl/getQueryParam/setQueryParam` | `gutc_url_is_http_url` / `gutc_url_get_query_param` / `gutc_url_set_query_param` | `src/url_query.c` | `tests/test_url_query.c` | Partial: HTTP(S) and strict valid UTF-8; not general WHATWG/IDNA, malformed percent rejects rather than replacement |
 | `json.parseJson/tryParseJson` | `gutc_json_validate` (syntax only) | `src/json.c` | `tests/test_json.c`, `testdata/upstream-golden/json.tsv` | **Partial:** validation, no parsed AST or exception semantics |
 | `json.stringifyJson` | `gutc_json_quote_string` (strings only) | `src/json.c` | `tests/test_json.c` | **Partial:** no object/array serializer |
@@ -69,13 +69,13 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | --- | --- | --- | --- | --- |
 | `isBlank` | `gut_is_blank_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c | Native UTF-8; golden checked |
 | `isNonBlank` | `gut_is_nonblank_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c | Native UTF-8 |
-| `isEmail` | — | — | — | Not implemented |
+| `isEmail` | `gutc_is_email_ascii` | src/string_case.c | tests/test_string_case.c; strings.tsv | Partial ASCII subset; explicit Unicode/validator.js extensions unsupported |
 | `startsWithAny` | `gut_starts_with_any_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c; contracts.tsv | Native UTF-8; golden checked |
 | `endsWithAny` | `gut_ends_with_any_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c; contracts.tsv | Native UTF-8; golden checked |
-| `capitalize` | — | — | — | Not implemented |
-| `camelCase` | — | — | — | Not implemented |
-| `kebabCase` | — | — | — | Not implemented |
-| `snakeCase` | — | — | — | Not implemented |
+| `capitalize` | `gutc_string_transform_ascii` | src/string_case.c | tests/test_string_case.c; strings.tsv | Partial ASCII subset; explicit Unicode/validator.js extensions unsupported |
+| `camelCase` | `gutc_string_transform_ascii` | src/string_case.c | tests/test_string_case.c; strings.tsv | Partial ASCII subset; explicit Unicode/validator.js extensions unsupported |
+| `kebabCase` | `gutc_string_transform_ascii` | src/string_case.c | tests/test_string_case.c; strings.tsv | Partial ASCII subset; explicit Unicode/validator.js extensions unsupported |
+| `snakeCase` | `gutc_string_transform_ascii` | src/string_case.c | tests/test_string_case.c; strings.tsv | Partial ASCII subset; explicit Unicode/validator.js extensions unsupported |
 | `truncate` | `gut_truncate_utf8` | src/gut_truncate.c | tests/test_truncate.c | Partial: Lodash grapheme/UTF-16 segmentation |
 | `truncateWords` | `gut_truncate_words_utf8_default` | src/gut_truncate_words.c | tests/test_truncate_words.c; contracts.tsv | Native UTF-8; golden checked |
 

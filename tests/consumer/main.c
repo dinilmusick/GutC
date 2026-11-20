@@ -6,6 +6,7 @@
 #include <gutc/url_query.h>
 #include <gutc/auth_contracts.h>
 #include <gutc/oauth_contracts.h>
+#include <gutc/string_case.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -55,6 +56,10 @@ int main(void) {
     if(gutc_validate_oauth_registration_v1(registration,&reason)!=GUTC_INVALID_FORMAT)return 22;
     if(!reason||strcmp(reason,"INVALID_CLIENT_IDENTITY_OR_PKCE")!=0)return 23;
     gutc_json_dom_free(registration);}
+  {char transformed[32];size_t length=0;
+    if(gutc_string_transform_ascii("hello world",11,GUTC_CASE_CAMEL,
+      transformed,sizeof transformed,&length)!=GUTC_OK)return 24;
+    if(strcmp(transformed,"helloWorld")!=0)return 25;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

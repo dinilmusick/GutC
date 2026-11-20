@@ -1,0 +1,35 @@
+# Source GutTS strings/string-transform.ts and string-predicates.ts pinned 3e2cbc0; ASCII subset
+capitalize	HELLO WORLD	Hello world
+capitalize	foO bAR	Foo bar
+capitalize	hello-world	Hello-world
+capitalize	abc	Abc
+capitalize		
+camel	hello world	helloWorld
+camel	FooBar	fooBar
+camel	HTTPResponse	httpResponse
+camel	__FOO--bar__	fooBar
+camel	item_id	itemId
+camel	Hello-WORLD	helloWorld
+camel	alreadyCamelCase	alreadyCamelCase
+kebab	FooBar	foo-bar
+kebab	HTTPResponse	http-response
+kebab	hello world	hello-world
+kebab	__FOO_bar__	foo-bar
+kebab	Simple	simple
+snake	FooBar	foo_bar
+snake	hello world	hello_world
+snake	HTTPResponse	http_response
+snake	__FOO_bar__	foo_bar
+snake	item_id	item_id
+email	a@b.co	1
+email	john.doe+tag@example.co.uk	1
+email	USER@EXAMPLE.COM	1
+email	a..b@example.com	0
+email	bad@com	0
+email	a@-host.com	0
+email	a@host-.com	0
+email	a@host..com	0
+email	foo@exam_ple.com	0
+email	test @ex.com	0
+email	user@example.c	0
+email	no-at-symbol	0
