@@ -180,8 +180,8 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `resolveClientEnvironment` | `gutc_luth_resolve_client_environment` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
 | `DEFAULT_LUTH_URL` | `gutc_luth_default_url` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
 | `hydrateLuthTokenFromUrl` | `gutc_luth_hydrate_callback_token` | src/luth_callback_token.c | tests/test_luth_callback_token.c; luth-callback-token.tsv | Host-injected token store/history effects and 33 canonical URLSearchParams cases; malformed percent/UTF-8 replacement and arbitrary WHATWG location canonicalization require host |
-| `LuthAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
-| `createLuthAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
+| `LuthAuthClient` | `gutc_luth_client_init/register/get_session/refresh_session/sign_in_email/sign_up_email/sign_in_google/sign_out` | src/luth_client.c | tests/test_luth_client.c; luth-client.tsv | Partial: real trusted host HTTP contract, bounded failover and token store; requires external transport/TLS, no browser sessionStorage or live Luth deployment certification |
+| `createLuthAuthClient` | `gutc_luth_client_init/register/get_session/refresh_session/sign_in_email/sign_up_email/sign_in_google/sign_out` | src/luth_client.c | tests/test_luth_client.c; luth-client.tsv | Partial: real trusted host HTTP contract, bounded failover and token store; requires external transport/TLS, no browser sessionStorage or live Luth deployment certification |
 
 ### OAuth contracts: src/auth/oauthClientContract.ts
 

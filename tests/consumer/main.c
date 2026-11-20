@@ -26,6 +26,7 @@
 #include <gutc/auth_types.h>
 #include <gutc/portable_types.h>
 #include <gutc/model_operations.h>
+#include <gutc/luth_client.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -192,6 +193,15 @@ int main(void) {
     if(output)return 91;
     gutc_json_dom_free(input);
     if(gutc_model_client_destroy(&client)!=GUTC_OK)return 92;}
+  {gutc_luth_client client;gutc_json_dom *session=NULL;gutc_luth_auth_client_config config={0};
+    config.ecosystem_id=(gutc_auth_text){"eco",3};
+    config.application_id=(gutc_auth_text){"app",3};
+    config.origin=(gutc_auth_optional_text){1,{"https://app.example",19}};
+    config.auto_register=(gutc_auth_optional_boolean){1,0};
+    if(gutc_luth_client_init(&client,&config,NULL,NULL)!=GUTC_OK)return 93;
+    if(gutc_luth_client_get_session(&client,&session)!=GUTC_UNSUPPORTED)return 94;
+    if(session)return 95;
+    gutc_luth_client_destroy(&client);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
