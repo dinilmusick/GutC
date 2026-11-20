@@ -13,6 +13,7 @@
 #include <gutc/fod_node.h>
 #include <gutc/api_registry.h>
 #include <gutc/api_dispatch.h>
+#include <gutc/model_registry.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -104,6 +105,13 @@ int main(void) {
     if(gutc_execute_api("gutts.numbers.sum",strlen("gutts.numbers.sum"),args,NULL,&out,&defined)!=GUTC_OK)return 44;
     if(!defined||!out||out->kind!=GUTC_JSON_NUMBER||out->as.number!=6)return 45;
     gutc_json_dom_free(args);gutc_json_dom_free(out);}
+  {gutc_json_dom *models=NULL,*model=NULL;int found=0;
+    if(gutc_model_registry_count()!=8)return 46;
+    if(gutc_model_registry_lookup("model.cactus-needle3",strlen("model.cactus-needle3"),&model,&found)!=GUTC_OK)return 47;
+    if(!found||!model)return 48;
+    if(gutc_model_registry_list(&models)!=GUTC_OK)return 49;
+    if(models->kind!=GUTC_JSON_ARRAY||models->as.array.count!=8)return 50;
+    gutc_json_dom_free(model);gutc_json_dom_free(models);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
