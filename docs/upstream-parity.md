@@ -11,18 +11,18 @@ This file is an **in-progress** inventory, not a full parity certification. It i
 | `urls.joinUrl` trim outer slashes | `gutc_join_url` | `src/gutc.c` | `tests/test_gutc.c` | Covered for C strings |
 | `strings.startsWithAny` | `gutc_string_starts_with_any` | `src/gutc.c` | `tests/test_gutc.c` | UTF-8 byte-safe; non-normalizing |
 | `strings.endsWithAny` | `gutc_string_ends_with_any` | `src/gutc.c` | `tests/test_gutc.c` | UTF-8 byte-safe; non-normalizing |
-| `strings.isBlank` / `isNonBlank` | `gutc_string_blank_ascii` / negation | `src/gutc.c` | `tests/test_gutc.c` | **Partial:** ASCII whitespace; JS Unicode trim outstanding |
+| `strings.isBlank` / `isNonBlank` | `gut_is_blank_utf8` / `gut_is_nonblank_utf8` | `src/gut_string_predicates.c` (PR #4) | `tests/test_string_predicates.c` | Unicode JS whitespace supported; malformed UTF-8 error |
 | `numbers.clamp` | `gutc_number_clamp` | `src/gutc.c` | `tests/test_gutc.c` | Finite-only; nonfinite JS semantics outstanding |
 | `numbers.inRange` | `gutc_number_in_range` | `src/gutc.c` | `tests/test_gutc.c` | Half-open interval; finite-only |
 | `numbers.sum` | `gutc_number_sum` | `src/gutc.c` | `tests/test_gutc.c` | Finite-only / overflow detectable |
 | `arrays.chunk` | `gutc_array_chunk_count` | `src/gutc.c` | `tests/test_gutc.c` | **Partial:** chunk count only |
 | `auth.checkInvocationBudget` | `gutc_invocation_budget_check` | `src/gutc.c` | `tests/test_gutc.c` | **Partial:** pure budgets, not full envelope validation |
 | `auth.advanceInvocationBudget` | `gutc_invocation_budget_advance` | `src/gutc.c` | `tests/test_gutc.c` | **Partial:** remainingCalls only |
-| `urls.encodeSafePathSegments` | not on this branch; previous PR #1/#3 | — | — | Unmerged |
-| `urls.normalizeStoragePath` | prior GutC PR #1 | — | — | Unmerged |
-| `urls.resolveTrustedApiUrl` | prior GutC PR #3 | — | — | Unmerged |
-| `strings.truncate` | prior GutC PR #4 | — | — | Unmerged; Lodash grapheme mismatch |
-| `strings.truncateWords` | prior GutC PR #4 | — | — | Unmerged |
+| `urls.encodeSafePathSegments` | compose path normalize and percent encoder | `src/gutc_path.c`, `src/gutc.c` | `tests/test_path.c` | **Partial:** no integrated one-call API |
+| `urls.normalizeStoragePath` | `gutc_normalize_storage_path` | `src/gutc_path.c` imported PR #1 | `tests/test_path.c` | Implemented, distinct error status |
+| `urls.resolveTrustedApiUrl` | `gutc_resolve_trusted_api_url` | `src/trusted_api.c` imported PR #3 | `tests/trusted_api_test.c` | Partial WHATWG URL normalization |
+| `strings.truncate` | `gut_truncate_utf8` | `src/gut_truncate.c` imported PR #4 | `tests/test_truncate.c` | Partial: Lodash grapheme segmentation differs from scalar count |
+| `strings.truncateWords` | `gut_truncate_words_utf8` | `src/gut_truncate_words.c` imported PR #4 | `tests/test_truncate_words.c` | Implemented for UTF-8 |
 | `arrays.compact/unique/flatten/last` | — | — | — | Not implemented |
 | `numbers.roundTo`, `numbers.isFiniteNumber` | — | — | — | Not implemented |
 | `objects.hasOwn/pick/omit/isPlainObject` | — | — | — | Not implemented |
@@ -42,6 +42,6 @@ Additional native primitives with no exact GutTS exported counterpart: `gutc_utf
 
 ## Memory / failure contract
 
-All APIs are allocation-free, reentrant, immutable-input functions; the library has no initializer or cleanup. Every provided output buffer is caller-owned. Sizing calls pass `output=NULL, capacity=0` and collect `needed`. When a textual buffer is present, capacity must accommodate `needed+1` bytes, including NUL. `GUTC_NO_SPACE` does not write partially. Invalid arguments and malformed UTF-8/percent inputs return status errors; callers must not read output parameters unless the call succeeds (except `needed` after a valid sizing or capacity check). Native C cannot validate arbitrary invalid pointers. All C string inputs must be readable, NUL-terminated, and under 1 MiB. Aliased input/output buffers are unsupported.
+The core `gutc_` byte/span APIs are allocation-free and reentrant; `gutc_normalize_storage_path` allocates temporary per-segment buffers and frees them before returning. Imported utilities are reentrant; the library has no initializer or cleanup. Every provided output buffer is caller-owned. Sizing calls pass `output=NULL, capacity=0` and collect `needed`. When a textual buffer is present, capacity must accommodate `needed+1` bytes, including NUL. `GUTC_NO_SPACE` does not write partially. Invalid arguments and malformed UTF-8/percent inputs return status errors; callers must not read output parameters unless the call succeeds (except `needed` after a valid sizing or capacity check). Native C cannot validate arbitrary invalid pointers. All C string inputs must be readable, NUL-terminated, and under 1 MiB. Aliased input/output buffers are unsupported.
 
-**Open gates:** full exported-symbol inventory, native object/JSON implementations, end-to-end auth schema validation, source-executed cross-language fixtures, Windows/macOS proof, sanitizer and independent exact-head release, merging all relevant PRs, and canonical main consumer certification.
+**Open gates:** complete exported-symbol inventory, native object/JSON implementations, full authentication schema validation, actual source-executed cross-language golden fixtures, WHATWG URL normalization and Lodash grapheme segmentation. Existing PR #2 defines an incompatible `gutc_join_url` and duplicate percent codecs, so it is intentionally not imported; its branch is unchanged. Imported legacy APIs have distinct error and buffer sizing contracts (some include NUL in `required`); refer to individual headers.

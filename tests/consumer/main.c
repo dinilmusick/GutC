@@ -1,12 +1,23 @@
 #include <gutc/gutc.h>
+#include <gutc_path.h>
+#include <gutc_trusted_api.h>
+#include <gut_string_predicates.h>
+#include <gut_truncate_words.h>
 #include <stdio.h>
 #include <string.h>
 int main(void) {
   const char *parts[]={"users","44"};
-  char result[128];
+  char result[256];
   size_t needed=0;
   if(gutc_join_url("https://example.test/",parts,2,result,sizeof(result),&needed)!=GUTC_OK) return 1;
   if(strcmp(result,"https://example.test/users/44")!=0) return 2;
-  puts(result);
+  if(gutc_normalize_storage_path("/root/data//",result,sizeof(result))!=GUTC_PATH_OK) return 3;
+  if(strcmp(result,"root/data")!=0) return 4;
+  if(gutc_resolve_trusted_api_url("https://api.example.test","/v1/users",result,sizeof(result),&needed)!=0) return 5;
+  if(strcmp(result,"https://api.example.test/v1/users")!=0) return 6;
+  if(gut_is_blank_utf8("\xE3\x80\x80")!=1) return 7;
+  if(gut_truncate_words_utf8_default("alpha beta gamma",2,result,sizeof(result),&needed)!=GUT_TRUNCATE_OK) return 8;
+  if(strcmp(result,"alpha beta\xE2\x80\xA6")!=0) return 9;
+  puts("GutC multi-module installed consumer passed");
   return 0;
 }
