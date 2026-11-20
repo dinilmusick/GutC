@@ -186,7 +186,7 @@ static gutc_status starts_or_ends(const char *text,size_t len,
   if(!matched || (!text&&len) || (count&&!values)) return GUTC_INVALID_ARGUMENT;
   for(i=0;i<count;i++) {
     if(!string_length(values[i],&n)) return GUTC_INVALID_ARGUMENT;
-    if(n<=len && memcmp(text+(at_end ? len-n : 0),values[i],n)==0) {
+    if(n==0 || (text && n<=len && memcmp(text+(at_end ? len-n : 0),values[i],n)==0)) {
       *matched=1;return GUTC_OK;
     }
   }
@@ -228,19 +228,24 @@ gutc_status gutc_array_chunk_count(size_t count,size_t size,size_t *chunks) {
   if(!size) return GUTC_RANGE_ERROR;
   *chunks=count/size+(count%size!=0u);return GUTC_OK;
 }
+static int valid_id_cstr(const char *s) {
+  size_t n;
+  if(!s) return 0;
+  for(n=0;n<=256;n++) if(s[n]=='\0') return gutc_identity_id_valid(s,n);
+  return 0;
+}
 gutc_status gutc_invocation_budget_check(const gutc_invocation_budget *b,int64_t now) {
   size_t i;
   if(!b || !b->caller_app_id || !b->target_app_id || !b->audience_app_id ||
      !b->active_app_chain || !b->chain_length || b->chain_length>16 ||
      b->max_depth==0 || b->max_depth>16 || b->remaining_calls>1000 ||
      b->remaining_retries>20) return GUTC_INVALID_ARGUMENT;
-  if(!gutc_identity_id_valid(b->caller_app_id,strlen(b->caller_app_id)) ||
-     !gutc_identity_id_valid(b->target_app_id,strlen(b->target_app_id)) ||
-     !gutc_identity_id_valid(b->audience_app_id,strlen(b->audience_app_id)) ||
+  if(!valid_id_cstr(b->caller_app_id) ||
+     !valid_id_cstr(b->target_app_id) ||
+     !valid_id_cstr(b->audience_app_id) ||
      strcmp(b->audience_app_id,b->target_app_id)!=0) return GUTC_INVALID_ARGUMENT;
   for(i=0;i<b->chain_length;i++)
-    if(!b->active_app_chain[i] ||
-       !gutc_identity_id_valid(b->active_app_chain[i],strlen(b->active_app_chain[i])))
+    if(!valid_id_cstr(b->active_app_chain[i]))
       return GUTC_INVALID_ARGUMENT;
   if(strcmp(b->active_app_chain[b->chain_length-1],b->caller_app_id)!=0)
     return GUTC_INVALID_ARGUMENT;

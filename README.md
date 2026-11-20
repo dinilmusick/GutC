@@ -12,4 +12,4 @@ cmake --build consumer-build
 ```
 
 The install exports `GutC::gutc` from `find_package(GutC CONFIG REQUIRED)`.
-All utility functions are allocation-free and reentrant; see `include/gutc/gutc.h` for buffer ownership and status handling. The library is **not yet fully parity-certified**; see `docs/upstream-parity.md` and the existing open GutC PRs.
+JSON syntax validation and UTF-8 string quoting are exposed via `#include <gutc/json.h>`. All utility functions are allocation-free and reentrant; see `include/gutc/gutc.h` for buffer ownership and status handling. The library is **not yet fully parity-certified**; see `docs/upstream-parity.md` and the existing open GutC PRs.

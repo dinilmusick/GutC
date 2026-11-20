@@ -28,7 +28,9 @@ This file is an **in-progress** inventory, not a full parity certification. It i
 | `objects.hasOwn/pick/omit/isPlainObject` | — | — | — | Not implemented |
 | `strings.isEmail/capitalize/camelCase/kebabCase/snakeCase` | — | — | — | Not implemented |
 | `urls.isUrl/getQueryParam/setQueryParam` | — | — | — | Not implemented |
-| `json.parseJson/tryParseJson/stringifyJson/isJsonValue` | — | — | — | Not implemented |
+| `json.parseJson/tryParseJson` | `gutc_json_validate` (syntax only) | `src/json.c` | `tests/test_json.c`, `testdata/upstream-golden/json.tsv` | **Partial:** validation, no parsed AST or exception semantics |
+| `json.stringifyJson` | `gutc_json_quote_string` (strings only) | `src/json.c` | `tests/test_json.c` | **Partial:** no object/array serializer |
+| `json.isJsonValue` | — | — | — | Not implemented |
 | `auth.identityRef/parseIdentityRef/parseLegacyApplicationId` | — | — | — | Not implemented |
 | `auth.validateCapabilityDescriptor` | — | — | — | Not implemented |
 | `auth.validateScopedInvocation` | — | — | — | Not implemented |
