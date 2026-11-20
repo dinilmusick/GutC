@@ -26,3 +26,7 @@ redirect:desktop	"http://[::1]:51675/callback"	OK
 redirect:desktop	"http://127.0.0.1:51675/"	DESKTOP_REQUIRES_EXACT_LOOPBACK_CALLBACK
 redirect:desktop	"http://0.0.0.0:51675/cb"	DESKTOP_REQUIRES_EXACT_LOOPBACK_CALLBACK
 redirect:web	"https://app.example.com/a/../cb"	NON_CANONICAL_REDIRECT_URI
+redirect:web	"https://app.example.com/a/%2e%2e/cb"	NON_CANONICAL_REDIRECT_URI
+redirect:web	"https://app.example.com/%2e/cb"	NON_CANONICAL_REDIRECT_URI
+redirect:web	"https://app.example.com:00444/cb"	NON_CANONICAL_REDIRECT_URI
+redirect:desktop	"http://127.0.0.1:05167/callback"	NON_CANONICAL_REDIRECT_URI
