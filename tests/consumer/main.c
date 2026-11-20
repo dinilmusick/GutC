@@ -11,6 +11,7 @@
 #include <gutc/api_definition.h>
 #include <gutc/semantic_deterministic.h>
 #include <gutc/fod_node.h>
+#include <gutc/api_registry.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -89,6 +90,13 @@ int main(void) {
     if(gutc_api_to_fod_node(api,&node)!=GUTC_OK)return 36;
     if(!gutc_json_dom_get(node,"inputs",6))return 37;
     gutc_json_dom_free(api);gutc_json_dom_free(node);}
+  {gutc_json_dom *catalog=NULL,*api=NULL;int found=0;
+    if(gutc_api_registry_count()!=38)return 38;
+    if(gutc_api_registry_lookup("gutts.arrays.compact",20,&api,&found)!=GUTC_OK)return 39;
+    if(!found||!api)return 40;
+    if(gutc_api_registry_fod_nodes(&catalog)!=GUTC_OK)return 41;
+    if(catalog->kind!=GUTC_JSON_ARRAY||catalog->as.array.count!=38)return 42;
+    gutc_json_dom_free(catalog);gutc_json_dom_free(api);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
