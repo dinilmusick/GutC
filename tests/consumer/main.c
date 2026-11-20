@@ -24,6 +24,7 @@
 #include <gutc/engineering_types.h>
 #include <gutc/model_runtime.h>
 #include <gutc/auth_types.h>
+#include <gutc/portable_types.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -177,6 +178,12 @@ int main(void) {
     if(!gutc_auth_identity_kind_parse("application",11,&role)||role!=GUTC_AUTH_APPLICATION)return 82;
     if(!gutc_auth_identity_ref_valid(&ref))return 83;
     if(strcmp(gutc_auth_oauth_platform_name(GUTC_OAUTH_DESKTOP),"desktop"))return 84;}
+  {gutc_semantic_error_code code=GUTC_SEMANTIC_ABORTED;
+    gutc_semantic_schema schema={0};gutc_type_api_semantics semantics={1,1,0};
+    schema.type.bytes="string";schema.type.length=6;
+    if(!gutc_semantic_error_code_parse("EMPTY_INPUT",11,&code))return 85;
+    if(code!=GUTC_SEMANTIC_EMPTY_INPUT||schema.type.length!=6)return 86;
+    if(!semantics.deterministic||!semantics.pure||semantics.side_effects)return 87;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

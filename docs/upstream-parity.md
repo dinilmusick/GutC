@@ -55,9 +55,9 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `JsonPrimitive` | — | — | — | Type-only; native representation not implemented |
-| `JsonValue` | — | — | — | Type-only; native representation not implemented |
-| `JsonObject` | — | — | — | Type-only; native representation not implemented |
+| `JsonPrimitive` | `gutc_type_json_primitive; gutc_type_is_json_primitive` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `JsonValue` | `gutc_type_json_value; gutc_json_dom_is_json_value` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `JsonObject` | `gutc_type_json_object; gutc_type_is_json_object` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
 | `isJsonValue` | `gutc_json_dom_is_json_value` | src/json_dom.c | tests/test_json_dom.c; api-dispatch.tsv | Pure native JSON DOM value predicate; JS undefined and cyclic objects represented explicitly by host-specific constraints |
 | `parseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: owned tree; lone surrogate escapes rejected |
 | `tryParseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: C status contract, not JS undefined |
@@ -124,11 +124,11 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `ApiDefinition` | — | — | — | Type-only; native representation not implemented |
-| `ApiExample` | — | — | — | Type-only; native representation not implemented |
-| `ApiParameter` | — | — | — | Type-only; native representation not implemented |
-| `ApiSemantics` | — | — | — | Type-only; native representation not implemented |
-| `JsonSchema` | — | — | — | Type-only; native representation not implemented |
+| `ApiDefinition` | `gutc_type_api_definition` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `ApiExample` | `gutc_type_api_example` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `ApiParameter` | `gutc_type_api_parameter` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `ApiSemantics` | `gutc_type_api_semantics` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `JsonSchema` | `gutc_type_json_schema` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
 | `defineApi` | `gutc_define_api` | src/api_definition.c | tests/test_api_definition.c; api-definition.tsv | Native owned JSON metadata definition and input schema, not API dispatch or model execution |
 | `guttsApiDefinitions` | `gutc_api_registry_list` | src/api_registry.c | tests/test_api_registry.c; api-catalog.json | Full 38 pinned definitions metadata; FOD catalog computed; no model execution |
 | `guttsApiById` | `gutc_api_registry_lookup` | src/api_registry.c | tests/test_api_registry.c; api-catalog.json | Full 38 pinned definitions metadata; FOD catalog computed; no model execution |
@@ -297,24 +297,24 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `SemanticInputSchema` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputContext` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputErrorCode` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputRisk` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputProgress` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputEvent` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputModelPolicy` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputPolicy` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputProvenanceStore` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputProvenanceRecord` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputProvenance` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputCandidate` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputEvidence` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputClarification` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputResolution` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputSchema` | `gutc_semantic_schema` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputContext` | `gutc_semantic_context` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputErrorCode` | `gutc_semantic_error_code` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputRisk` | `gutc_semantic_risk` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputProgress` | `gutc_semantic_progress` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputEvent` | `gutc_semantic_event` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputModelPolicy` | `gutc_semantic_model_policy` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputPolicy` | `gutc_semantic_policy` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputProvenanceStore` | `gutc_semantic_provenance_store` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputProvenanceRecord` | `gutc_semantic_provenance_record` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputProvenance` | `gutc_semantic_provenance` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputCandidate` | `gutc_semantic_candidate` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputEvidence` | `gutc_semantic_evidence` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputClarification` | `gutc_semantic_clarification` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
+| `SemanticInputResolution` | `gutc_semantic_resolution` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
 | `SemanticInputCacheKey` | `const char *key, size_t length` | src/semantic_cache.c | tests/test_semantic_cache.c; semantic-cache.tsv | Explicit UTF-8 byte span with embedded NUL; JS lone-surrogate keys unsupported |
 | `SemanticInputCache` | `gutc_semantic_cache_init/set/get/clear/size/destroy` | src/semantic_cache.c | tests/test_semantic_cache.c; semantic-cache.tsv | Full LRU sequence behavior; C heap ownership and external synchronization instead of JS Map references |
-| `SemanticInputRequest` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputRequest` | `gutc_semantic_request` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
 | `resolveDeterministicSemanticInput` | `gutc_resolve_deterministic_semantic` | src/semantic_deterministic.c | tests/test_semantic_deterministic.c; semantic.tsv | Partial: deterministic enums, string format, booleans, numeric input; JS RegExp pattern unsupported, decimal locale subtleties |
 | `rankSemanticInputCandidates` | `gutc_semantic_rank_with_host` / `gutc_semantic_rank_order` | src/semantic_rank.c | tests/test_semantic_rank.c; semantic-rank.tsv | Partial: full stable scored-candidate comparator; real host MiniLM+Ettin callbacks required; non-simple ASCII collation tie explicitly unsupported |
 | `resolveSemanticInput` | — | — | — | Host-dependent; native adapter not implemented |
