@@ -317,7 +317,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `SemanticInputRequest` | `gutc_semantic_request` | include/gutc/portable_types.h; src/portable_types.c | tests/test_portable_types.c; portable-type-kinds.tsv | Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference |
 | `resolveDeterministicSemanticInput` | `gutc_resolve_deterministic_semantic` | src/semantic_deterministic.c | tests/test_semantic_deterministic.c; semantic.tsv | Partial: deterministic enums, string format, booleans, numeric input; JS RegExp pattern unsupported, decimal locale subtleties |
 | `rankSemanticInputCandidates` | `gutc_semantic_rank_with_host` / `gutc_semantic_rank_order` | src/semantic_rank.c | tests/test_semantic_rank.c; semantic-rank.tsv | Partial: full stable scored-candidate comparator; real host MiniLM+Ettin callbacks required; non-simple ASCII collation tie explicitly unsupported |
-| `resolveSemanticInput` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveSemanticInput` | `gutc_resolve_semantic_input` | src/semantic_resolver.c | tests/test_semantic_resolver.c; semantic-resolver.tsv | Partial: source-pinned deterministic input; real host MiniLM/Ettin/Needle completion, candidate ranking, ambiguity and errors; JS Promises, provenance/cache/events, locale/RegExp need host-specific support |
 
 ### Server adapters: src/server/auth.ts
 

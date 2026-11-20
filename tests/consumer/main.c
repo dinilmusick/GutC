@@ -28,6 +28,7 @@
 #include <gutc/model_operations.h>
 #include <gutc/luth_client.h>
 #include <gutc/s3_client.h>
+#include <gutc/semantic_resolver.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -211,6 +212,14 @@ int main(void) {
     request.input=input;
     if(gutc_s3_client_execute(&s3,&request,&result)!=GUTC_UNSUPPORTED)return 98;
     gutc_s3_result_clear(&result);gutc_json_dom_free(input);}
+  {gutc_json_dom *request=NULL,*response=NULL;
+    const char input[]="{\"input\":\"true\",\"schema\":{\"type\":\"boolean\"}}";
+    const gutc_json_dom *value;
+    if(gutc_json_dom_parse((const uint8_t*)input,sizeof input-1,16,100,&request,NULL)!=GUTC_OK)return 99;
+    if(gutc_resolve_semantic_input(request,NULL,&response)!=GUTC_OK)return 100;
+    value=gutc_json_dom_get(response,"value",5);
+    if(!value||value->kind!=GUTC_JSON_BOOLEAN||!value->as.boolean)return 101;
+    gutc_json_dom_free(response);gutc_json_dom_free(request);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
