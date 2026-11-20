@@ -21,6 +21,7 @@
 #include <gutc/luth_callback_token.h>
 #include <gutc/application_auth.h>
 #include <gutc/semantic_cache.h>
+#include <gutc/engineering_types.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -154,6 +155,13 @@ int main(void) {
     if(gutc_semantic_cache_get(&cache,"abc",3,&borrowed,&found)!=GUTC_OK)return 72;
     if(!found||!borrowed||borrowed->kind!=GUTC_JSON_NUMBER||borrowed->as.number!=42)return 73;
     gutc_semantic_cache_destroy(&cache);}
+  {gutc_eng_provider_kind provider=GUTC_ENG_CI;
+    gutc_eng_capability capability=GUTC_ENG_BROWSER_RUN;
+    gutc_eng_repository_ref repo={0};repo.id.bytes="id";repo.id.length=2;
+    repo.provider=GUTC_ENG_GITHUB;repo.name.bytes="sample";repo.name.length=6;
+    if(!gutc_eng_provider_parse("github",6,&provider)||provider!=GUTC_ENG_GITHUB)return 74;
+    if(!gutc_eng_capability_parse("repository.read",15,&capability)||capability!=GUTC_ENG_REPOSITORY_READ)return 75;
+    if(repo.name.length!=6)return 76;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
