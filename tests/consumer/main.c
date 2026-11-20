@@ -18,6 +18,7 @@
 #include <gutc/contract_primitives.h>
 #include <gutc/semantic_rank.h>
 #include <gutc/runtime_app_url.h>
+#include <gutc/luth_callback_token.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -135,6 +136,9 @@ int main(void) {
     if(strcmp(url,"https://example.org/path"))return 60;
     if(gutc_resolve_server_runtime_app_url("  https://example.org  ",url,sizeof url,&needed)!=GUTC_OK)return 61;
     if(strcmp(url,"https://example.org"))return 62;}
+  {int hydrated=1;
+    if(gutc_luth_hydrate_callback_token("/cb","",NULL,NULL,&hydrated)!=GUTC_OK)return 63;
+    if(hydrated)return 64;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
