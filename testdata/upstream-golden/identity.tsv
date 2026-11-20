@@ -1,0 +1,15 @@
+# GutTS src/auth/identityIds.ts ID_PATTERN, pinned 3e2cbc0; 1 valid, 0 invalid
+abc	1
+123	1
+app_42	1
+a.b:c-7	1
+A	1
+hello world	0
+-with-prefix	0
+_under	0
+http://site	0
+abc/def	0
+a?x=1	0
+abc#frag	0
+abc%20def	0
+	0

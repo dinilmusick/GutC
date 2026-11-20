@@ -1,0 +1,49 @@
+name: GutC C11 exact-head native CI
+on:
+  push:
+    branches: [main, "feat/**", "parity/**"]
+  pull_request:
+    branches: [main]
+jobs:
+  native:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            cc: gcc
+          - os: ubuntu-latest
+            cc: clang
+          - os: macos-latest
+            cc: clang
+          - os: windows-latest
+            cc: ""
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        shell: bash
+        run: |
+          if [ -n "${{ matrix.cc }}" ]; then export CC="${{ matrix.cc }}"; fi
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="$PWD/installed"
+      - name: Build
+        run: cmake --build build --config Debug
+      - name: Test
+        run: ctest --test-dir build -C Debug --output-on-failure
+      - name: Install
+        run: cmake --install build --config Debug
+      - name: External CMake consumer
+        shell: bash
+        run: |
+          cmake -S tests/consumer -B consumer-build -DCMAKE_PREFIX_PATH="$PWD/installed"
+          cmake --build consumer-build --config Debug
+          ctest --test-dir build -C Debug --output-on-failure
+  sanitizers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Address and undefined behavior sanitizers
+        run: |
+          cmake -S . -B asan -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer -fno-sanitize-recover=all"
+          cmake --build asan
+          ctest --test-dir asan --output-on-failure
