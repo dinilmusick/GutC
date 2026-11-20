@@ -329,14 +329,14 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `S3Client` | — | — | — | Host-dependent; native adapter not implemented |
-| `GetObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
-| `HeadObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
-| `ListObjectsV2Command` | — | — | — | Host-dependent; native adapter not implemented |
-| `PutObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
-| `CopyObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
-| `DeleteObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
-| `DeleteObjectsCommand` | — | — | — | Host-dependent; native adapter not implemented |
+| `S3Client` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `GetObjectCommand` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `HeadObjectCommand` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `ListObjectsV2Command` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `PutObjectCommand` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `CopyObjectCommand` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `DeleteObjectCommand` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
+| `DeleteObjectsCommand` | `gutc_s3_client_execute; gutc_s3_command` | src/s3_client.c | tests/test_s3_client.c; s3-commands.tsv | Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence |
 
 
 ### Published entrypoint and host-specific notes
