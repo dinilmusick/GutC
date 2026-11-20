@@ -32,9 +32,9 @@ This file is an **in-progress** inventory, not a full parity certification. `tes
 | `json.stringifyJson` | `gutc_json_quote_string` (strings only) | `src/json.c` | `tests/test_json.c` | **Partial:** no object/array serializer |
 | `json.isJsonValue` | `gutc_json_dom_is_json_value` | `src/json_dom.c` | `tests/test_json_dom.c` | Native structured owned DOM, finite-value enforcement |
 | `auth.identityRef/parseIdentityRef/parseLegacyApplicationId` | `gutc_identity_ref_parse` / `gutc_legacy_application_id` | `src/identity.c` | `tests/test_identity.c` | Borrowed tagged identity views and conflict-rejecting aliases; legacy requires explicit map entries |
-| `auth.validateCapabilityDescriptor` | — | — | — | Not implemented |
-| `auth.validateScopedInvocation` | — | — | — | Not implemented |
-| `auth.consumeInvocationRetry` | `gutc_invocation_budget_retry` | `src/identity.c` | `tests/test_identity.c` | Pure retry budget, not full invocation envelope |\n| `auth.validateInvocationAgainstDescriptor` | — | — | — | Not implemented |
+| `auth.validateCapabilityDescriptor` | `gutc_validate_capability_descriptor_v1` | `src/auth_contracts.c` | `tests/test_auth_contracts.c`, `auth.tsv` | Native exact-key, schema version, scopes, params and privacy checks; not authorization |
+| `auth.validateScopedInvocation` | `gutc_validate_scoped_invocation_v1` | `src/auth_contracts.c` | `tests/test_auth_contracts.c`, `auth.tsv` | Native typed schema validation and admission guards; not principal authentication |
+| `auth.consumeInvocationRetry` | `gutc_invocation_budget_retry` | `src/identity.c` | `tests/test_identity.c` | Pure retry budget, not full invocation envelope |\n| `auth.validateInvocationAgainstDescriptor` | `gutc_match_invocation_descriptor_v1` | `src/auth_contracts.c` | `tests/test_auth_contracts.c`, `auth.tsv` | Native pure descriptor/revision/workspace matching; target must reauthorize |
 | `auth OAuth/client/session` structures and adapters | — | — | — | Not implemented; transport host-specific |
 | `models`, `semantic-input`, `engineering`, `api` published exports | — | — | — | Requires full export audit; runtime model adapters are host-specific |
 
@@ -208,18 +208,18 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `StaticCapabilityV1` | — | — | — | Type-only; native representation not implemented |
 | `WorkflowPublicationV1` | — | — | — | Type-only; native representation not implemented |
 | `CapabilityDescriptorV1` | — | — | — | Type-only; native representation not implemented |
-| `validateCapabilityDescriptor` | — | — | — | Not implemented |
+| `validateCapabilityDescriptor` | `gutc_validate_capability_descriptor_v1` | src/auth_contracts.c | tests/test_auth_contracts.c; auth.tsv | Pure schema; not authorization |
 
 ### Invocation contracts: src/auth/invocationContract.ts
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
 | `ScopedInvocationV1` | `gutc_invocation_budget` | include/gutc/gutc.h | tests/test_gutc.c | Partial: budget subset of schema |
-| `validateScopedInvocation` | — | — | — | Not implemented |
+| `validateScopedInvocation` | `gutc_validate_scoped_invocation_v1` | src/auth_contracts.c | tests/test_auth_contracts.c; auth.tsv | Pure schema; not authentication |
 | `checkInvocationBudget` | `gutc_invocation_budget_check` | src/gutc.c | tests/test_gutc.c | Partial: budget subset, not full envelope |
 | `advanceInvocationBudget` | `gutc_invocation_budget_advance` | src/gutc.c | tests/test_gutc.c | Partial: remaining calls only |
 | `consumeInvocationRetry` | `gutc_invocation_budget_retry` | src/identity.c | tests/test_identity.c | Partial: remaining retries only |
-| `validateInvocationAgainstDescriptor` | — | — | — | Not implemented |
+| `validateInvocationAgainstDescriptor` | `gutc_match_invocation_descriptor_v1` | src/auth_contracts.c | tests/test_auth_contracts.c; auth.tsv | Pure version/workspace match; not authorization |
 
 ### Identity contracts: src/auth/identityIds.ts
 
