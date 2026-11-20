@@ -273,7 +273,7 @@ gutc_status gutc_resolve_semantic_input(const gutc_json_dom *req,
  gutc_json_dom *deterministic=NULL,*raw=NULL,*ranked=NULL,*result=NULL;
  gutc_json_text *candidates=NULL;
  double *sim=NULL,*rel=NULL,min_sim=0.65,min_margin=0.15;
- size_t *order=NULL,count=0,j,need=0,chosen=0;
+ size_t *order=NULL,count=0,j,need=0;
  int preserve=0,confirm=0,resolved=0;
  gutc_semantic_ranking_policy model_policy=GUTC_SEMANTIC_BALANCED;
  gutc_status rc=GUTC_INVALID_ARGUMENT;
