@@ -4,7 +4,8 @@
 #include <string.h>
 static gutc_json_dom *new_node(gutc_json_kind kind) {
   gutc_json_dom *v=(gutc_json_dom*)calloc(1,sizeof(*v));
-  if(v)v->kind=kind;return v;
+  if(v) v->kind=kind;
+  return v;
 }
 static const gutc_json_dom *get(const gutc_json_dom *o,const char *key) {
   return gutc_json_dom_get(o,key,strlen(key));
