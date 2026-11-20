@@ -1,0 +1,33 @@
+# Host supplied runtime location.origin or process.env.APP_URL, source JS trim semantics
+null	""
+""	""
+" "	""
+" \t\n "	""
+"http://localhost:3000/"	"http://localhost:3000/"
+"  https://example.com/path  "	"https://example.com/path"
+" https://example.org "	"https://example.org"
+"﻿https://example.org﻿"	"https://example.org"
+"　hello　"	"hello"
+"\t\nfoo\r\n"	"foo"
+" x "	"x"
+" x y "	"x y"
+"😀"	"😀"
+"​"	"​"
+" hello ​ "	"hello ​"
+"foo\nbar"	"foo\nbar"
+" APP_URL "	"APP_URL"
+"example.com/foo"	"example.com/foo"
+" x "	"x"
+" y "	"y"
+"  z "	"z"
+" data "	"data"
+"  ﻿ "	""
+"\n/a/b\n"	"/a/b"
+"https://api.workers.dev"	"https://api.workers.dev"
+"  \nfoo\tbar\r  "	"foo\tbar"
+"  A B C  "	"A B C"
+"x"	"x"
+"text with internal"	"text with internal"
+"0"	"0"
+" \r\n /query?token=hello \t "	"/query?token=hello"
+"https://EXAMPLE.COM:443/path"	"https://EXAMPLE.COM:443/path"

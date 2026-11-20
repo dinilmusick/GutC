@@ -58,7 +58,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `JsonPrimitive` | — | — | — | Type-only; native representation not implemented |
 | `JsonValue` | — | — | — | Type-only; native representation not implemented |
 | `JsonObject` | — | — | — | Type-only; native representation not implemented |
-| `isJsonValue` | — | — | — | Not implemented |
+| `isJsonValue` | `gutc_json_dom_is_json_value` | src/json_dom.c | tests/test_json_dom.c; api-dispatch.tsv | Pure native JSON DOM value predicate; JS undefined and cyclic objects represented explicitly by host-specific constraints |
 | `parseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: owned tree; lone surrogate escapes rejected |
 | `tryParseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: C status contract, not JS undefined |
 | `stringifyJson` | `gutc_json_dom_stringify` | src/json_dom.c | tests/test_json_dom.c | Partial: full structural JSON; JS shortest decimal formatting differs |
@@ -175,7 +175,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `resolveRuntimeAppUrl` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveRuntimeAppUrl` | `gutc_resolve_runtime_app_url` | src/runtime_app_url.c | tests/test_runtime_app_url.c; runtime-app-url.tsv | Host-injected location.origin / process.env.APP_URL, exact ECMAScript String.trim UTF-8; no ambient globals |
 | `resolveClientOrigin` | `gutc_luth_resolve_client_origin` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
 | `resolveClientEnvironment` | `gutc_luth_resolve_client_environment` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
 | `DEFAULT_LUTH_URL` | `gutc_luth_default_url` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
@@ -323,7 +323,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `resolveServerRuntimeAppUrl` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveServerRuntimeAppUrl` | `gutc_resolve_server_runtime_app_url` | src/runtime_app_url.c | tests/test_runtime_app_url.c; runtime-app-url.tsv | Host-injected location.origin / process.env.APP_URL, exact ECMAScript String.trim UTF-8; no ambient globals |
 
 ### Storage SDK reexports: src/storage/index.ts
 
