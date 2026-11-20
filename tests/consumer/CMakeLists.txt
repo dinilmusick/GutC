@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.16)
+project(GutCExternalConsumer C)
+find_package(GutC CONFIG REQUIRED)
+add_executable(gutc_external main.c)
+target_link_libraries(gutc_external PRIVATE GutC::gutc)
+enable_testing()
+add_test(NAME gutc_external_smoke COMMAND gutc_external)
