@@ -129,7 +129,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `ApiParameter` | — | — | — | Type-only; native representation not implemented |
 | `ApiSemantics` | — | — | — | Type-only; native representation not implemented |
 | `JsonSchema` | — | — | — | Type-only; native representation not implemented |
-| `defineApi` | — | — | — | Not implemented |
+| `defineApi` | `gutc_define_api` | src/api_definition.c | tests/test_api_definition.c; api-definition.tsv | Native owned JSON metadata definition and input schema, not API dispatch or model execution |
 | `guttsApiDefinitions` | — | — | — | Not implemented |
 | `guttsApiById` | — | — | — | Not implemented |
 | `guttsFodNodeDefinitions` | — | — | — | Not implemented |
