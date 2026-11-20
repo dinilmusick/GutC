@@ -18,7 +18,7 @@ This file is an **in-progress** inventory, not a full parity certification. It i
 | `arrays.chunk` | `gutc_array_chunks` | `src/collections.c` | `tests/test_collections.c` | Borrowed slice views with count and no copying |
 | `auth.checkInvocationBudget` | `gutc_invocation_budget_check` | `src/gutc.c` | `tests/test_gutc.c` | **Partial:** pure budgets, not full envelope validation |
 | `auth.advanceInvocationBudget` | `gutc_invocation_budget_advance` | `src/gutc.c` | `tests/test_gutc.c` | **Partial:** remainingCalls only |
-| `urls.encodeSafePathSegments` | compose path normalize and percent encoder | `src/gutc_path.c`, `src/gutc.c` | `tests/test_path.c` | **Partial:** no integrated one-call API |
+| `urls.encodeSafePathSegments` | `gutc_encode_safe_path_segments` | `src/safe_path.c` | `tests/test_safe_path.c` | Implemented for bounded UTF-8 with JS URI punctuation; nested encoding validated |
 | `urls.normalizeStoragePath` | `gutc_normalize_storage_path` | `src/gutc_path.c` imported PR #1 | `tests/test_path.c` | Implemented, distinct error status |
 | `urls.resolveTrustedApiUrl` | `gutc_resolve_trusted_api_url` | `src/trusted_api.c` imported PR #3 | `tests/trusted_api_test.c` | Partial WHATWG URL normalization |
 | `strings.truncate` | `gut_truncate_utf8` | `src/gut_truncate.c` imported PR #4 | `tests/test_truncate.c` | Partial: Lodash grapheme segmentation differs from scalar count |
@@ -31,10 +31,10 @@ This file is an **in-progress** inventory, not a full parity certification. It i
 | `json.parseJson/tryParseJson` | `gutc_json_validate` (syntax only) | `src/json.c` | `tests/test_json.c`, `testdata/upstream-golden/json.tsv` | **Partial:** validation, no parsed AST or exception semantics |
 | `json.stringifyJson` | `gutc_json_quote_string` (strings only) | `src/json.c` | `tests/test_json.c` | **Partial:** no object/array serializer |
 | `json.isJsonValue` | — | — | — | Not implemented |
-| `auth.identityRef/parseIdentityRef/parseLegacyApplicationId` | — | — | — | Not implemented |
+| `auth.identityRef/parseIdentityRef/parseLegacyApplicationId` | `gutc_identity_ref_parse` / `gutc_legacy_application_id` | `src/identity.c` | `tests/test_identity.c` | Borrowed tagged identity views and conflict-rejecting aliases; legacy requires explicit map entries |
 | `auth.validateCapabilityDescriptor` | — | — | — | Not implemented |
 | `auth.validateScopedInvocation` | — | — | — | Not implemented |
-| `auth.consumeInvocationRetry/validateInvocationAgainstDescriptor` | — | — | — | Not implemented |
+| `auth.consumeInvocationRetry` | `gutc_invocation_budget_retry` | `src/identity.c` | `tests/test_identity.c` | Pure retry budget, not full invocation envelope |\n| `auth.validateInvocationAgainstDescriptor` | — | — | — | Not implemented |
 | `auth OAuth/client/session` structures and adapters | — | — | — | Not implemented; transport host-specific |
 | `models`, `semantic-input`, `engineering`, `api` published exports | — | — | — | Requires full export audit; runtime model adapters are host-specific |
 
