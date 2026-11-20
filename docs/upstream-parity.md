@@ -312,8 +312,8 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `SemanticInputEvidence` | — | — | — | Type-only; native representation not implemented |
 | `SemanticInputClarification` | — | — | — | Type-only; native representation not implemented |
 | `SemanticInputResolution` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputCacheKey` | — | — | — | Type-only; native representation not implemented |
-| `SemanticInputCache` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputCacheKey` | `const char *key, size_t length` | src/semantic_cache.c | tests/test_semantic_cache.c; semantic-cache.tsv | Explicit UTF-8 byte span with embedded NUL; JS lone-surrogate keys unsupported |
+| `SemanticInputCache` | `gutc_semantic_cache_init/set/get/clear/size/destroy` | src/semantic_cache.c | tests/test_semantic_cache.c; semantic-cache.tsv | Full LRU sequence behavior; C heap ownership and external synchronization instead of JS Map references |
 | `SemanticInputRequest` | — | — | — | Type-only; native representation not implemented |
 | `resolveDeterministicSemanticInput` | `gutc_resolve_deterministic_semantic` | src/semantic_deterministic.c | tests/test_semantic_deterministic.c; semantic.tsv | Partial: deterministic enums, string format, booleans, numeric input; JS RegExp pattern unsupported, decimal locale subtleties |
 | `rankSemanticInputCandidates` | `gutc_semantic_rank_with_host` / `gutc_semantic_rank_order` | src/semantic_rank.c | tests/test_semantic_rank.c; semantic-rank.tsv | Partial: full stable scored-candidate comparator; real host MiniLM+Ettin callbacks required; non-simple ASCII collation tie explicitly unsupported |

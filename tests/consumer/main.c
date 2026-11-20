@@ -20,6 +20,7 @@
 #include <gutc/runtime_app_url.h>
 #include <gutc/luth_callback_token.h>
 #include <gutc/application_auth.h>
+#include <gutc/semantic_cache.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -145,6 +146,14 @@ int main(void) {
     if(strcmp(client.base_path,"/api/auth/oidc"))return 66;
     if(gutc_application_auth_start_sign_in(&client,"/",NULL,&error)!=GUTC_UNSUPPORTED)return 67;
     if(!error||strcmp(error,"AUTH_NAVIGATION_UNAVAILABLE"))return 68;}
+  {gutc_semantic_cache cache;const gutc_json_dom *borrowed=NULL;int found=0;
+    gutc_json_dom *value=NULL;const char input[]="42";
+    if(gutc_semantic_cache_init(&cache,2)!=GUTC_OK)return 69;
+    if(gutc_json_dom_parse((const uint8_t*)input,sizeof input-1,8,100,&value,NULL)!=GUTC_OK)return 70;
+    if(gutc_semantic_cache_set(&cache,"abc",3,value)!=GUTC_OK)return 71;
+    if(gutc_semantic_cache_get(&cache,"abc",3,&borrowed,&found)!=GUTC_OK)return 72;
+    if(!found||!borrowed||borrowed->kind!=GUTC_JSON_NUMBER||borrowed->as.number!=42)return 73;
+    gutc_semantic_cache_destroy(&cache);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
