@@ -138,7 +138,8 @@ gutc_status gutc_validate_oauth_redirect_v1(const gutc_json_dom *uri,
     return invalid(reason,"INVALID_REDIRECT_URI");
   if((http&&port==80u)||(https&&port==443u))
     return invalid(reason,"NON_CANONICAL_REDIRECT_URI");
-  if(end==t.length||t.bytes[end]!='/'||end+1<t.length && t.bytes[end+1]=='/')
+  if(end==t.length||t.bytes[end]!='/'||
+     (end+1<t.length && t.bytes[end+1]=='/'))
     return invalid(reason,"NON_CANONICAL_REDIRECT_URI");
   path_begin=end;
   for(i=path_begin;i<t.length;i++) {
