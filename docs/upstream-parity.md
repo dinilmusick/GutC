@@ -45,3 +45,303 @@ Additional native primitives with no exact GutTS exported counterpart: `gutc_utf
 The core `gutc_` byte/span APIs are allocation-free and reentrant; `gutc_normalize_storage_path` allocates temporary per-segment buffers and frees them before returning. Imported utilities are reentrant; the library has no initializer or cleanup. Every provided output buffer is caller-owned. Sizing calls pass `output=NULL, capacity=0` and collect `needed`. When a textual buffer is present, capacity must accommodate `needed+1` bytes, including NUL. `GUTC_NO_SPACE` does not write partially. Invalid arguments and malformed UTF-8/percent inputs return status errors; callers must not read output parameters unless the call succeeds (except `needed` after a valid sizing or capacity check). Native C cannot validate arbitrary invalid pointers. All C string inputs must be readable, NUL-terminated, and under 1 MiB. Aliased input/output buffers are unsupported.
 
 **Open gates:** complete exported-symbol inventory, native object/JSON implementations, full authentication schema validation, actual source-executed cross-language golden fixtures, WHATWG URL normalization and Lodash grapheme segmentation. Existing PR #2 defines an incompatible `gutc_join_url` and duplicate percent codecs, so it is intentionally not imported; its branch is unchanged. Imported legacy APIs have distinct error and buffer sizing contracts (some include NUL in `required`); refer to individual headers.
+
+
+## Pinned public export enumeration (mechanically transcribed)
+
+Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, package subpath entrypoints and the specific barrels listed below. **187 individually identified published symbol/type names** are enumerated; 17 are described below as natively implemented, 18 as partial with specific divergences, and 152 are type-only, host-adapter or unimplemented. These counts are an *inventory*, not an acceptance rate: naming a struct is not equivalent to meeting the JS contract. Some symbols are reexported by multiple entrypoints but counted once here. The type-only rows need wire layouts or explicit native exceptions. New exports introduced after the pinned reference are not in scope.
+
+### JSON: src/json/json-concepts.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `JsonPrimitive` | — | — | — | Type-only; native representation not implemented |
+| `JsonValue` | — | — | — | Type-only; native representation not implemented |
+| `JsonObject` | — | — | — | Type-only; native representation not implemented |
+| `isJsonValue` | — | — | — | Not implemented |
+| `parseJson` | `gutc_json_validate` | src/json.c | tests/test_json.c | Partial: syntax validation, no decoded tree |
+| `tryParseJson` | `gutc_json_validate` | src/json.c | tests/test_json.c | Partial: success/failure only |
+| `stringifyJson` | `gutc_json_quote_string` | src/json.c | tests/test_json.c | Partial: strings only |
+
+### Strings: src/strings/string-concepts.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `isBlank` | `gut_is_blank_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c | Native UTF-8; golden checked |
+| `isNonBlank` | `gut_is_nonblank_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c | Native UTF-8 |
+| `isEmail` | — | — | — | Not implemented |
+| `startsWithAny` | `gut_starts_with_any_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c; contracts.tsv | Native UTF-8; golden checked |
+| `endsWithAny` | `gut_ends_with_any_utf8` | src/gut_string_predicates.c | tests/test_string_predicates.c; contracts.tsv | Native UTF-8; golden checked |
+| `capitalize` | — | — | — | Not implemented |
+| `camelCase` | — | — | — | Not implemented |
+| `kebabCase` | — | — | — | Not implemented |
+| `snakeCase` | — | — | — | Not implemented |
+| `truncate` | `gut_truncate_utf8` | src/gut_truncate.c | tests/test_truncate.c | Partial: Lodash grapheme/UTF-16 segmentation |
+| `truncateWords` | `gut_truncate_words_utf8_default` | src/gut_truncate_words.c | tests/test_truncate_words.c; contracts.tsv | Native UTF-8; golden checked |
+
+### Arrays: src/arrays/array-concepts.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `compact` | `gutc_array_compact` | src/collections.c | tests/test_collections.c | Native tagged values; JS reference constraints |
+| `unique` | `gutc_array_unique` | src/collections.c | tests/test_collections.c; contracts.tsv | Native SameValueZero tagged values; golden checked |
+| `chunk` | `gutc_array_chunks` | src/collections.c | tests/test_collections.c | Native zero-copy borrowed views |
+| `flatten` | `gutc_array_flatten_once` | src/collections.c | tests/test_collections.c | Native one-level borrowed values |
+| `last` | `gutc_array_last` | src/collections.c | tests/test_collections.c | Native optional output/found flag |
+
+### Objects: src/objects/object-concepts.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `hasOwn` | `gutc_object_has_direct` | src/collections.c | tests/test_collections.c | Partial: nested property paths omitted |
+| `pick` | `gutc_object_pick_direct` | src/collections.c | tests/test_collections.c | Partial: direct keys only |
+| `omit` | `gutc_object_omit_direct` | src/collections.c | tests/test_collections.c | Partial: direct keys only |
+| `isPlainObject` | — | — | — | Not implemented |
+
+### Numbers: src/numbers/number-concepts.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `clamp` | `gutc_number_clamp` | src/gutc.c | tests/test_gutc.c; contracts.tsv | Partial: C finite-only; golden checked |
+| `inRange` | `gutc_number_in_range` | src/gutc.c | tests/test_gutc.c; contracts.tsv | Partial: C finite-only; golden checked |
+| `roundTo` | `gutc_number_round_to` | src/collections.c | tests/test_collections.c | Partial: difficult IEEE-754/Lodash ties |
+| `isFiniteNumber` | `gutc_number_is_finite` | src/collections.c | tests/test_collections.c | Partial: C double, not JS unknown type |
+| `sum` | `gutc_number_sum` | src/gutc.c | tests/test_gutc.c; contracts.tsv | Native finite-only; golden checked |
+
+### URLs: src/urls/url-concepts.ts and path-safety.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `isUrl` | — | — | — | Not implemented |
+| `joinUrl` | `gutc_join_url` | src/gutc.c | tests/test_gutc.c; contracts.tsv | Native bounded strings; golden checked |
+| `getQueryParam` | — | — | — | Not implemented |
+| `setQueryParam` | — | — | — | Not implemented |
+| `normalizeStoragePath` | `gutc_normalize_storage_path` | src/gutc_path.c | tests/test_path.c | Native validation; legacy errors |
+| `encodeSafePathSegments` | `gutc_encode_safe_path_segments` | src/safe_path.c | tests/test_safe_path.c; contracts.tsv | Native bounded UTF-8; golden checked |
+| `resolveTrustedApiUrl` | `gutc_resolve_trusted_api_url` | src/trusted_api.c | tests/trusted_api_test.c | Partial: WHATWG URL normalization |
+
+### API: src/api/index.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `ApiDefinition` | — | — | — | Type-only; native representation not implemented |
+| `ApiExample` | — | — | — | Type-only; native representation not implemented |
+| `ApiParameter` | — | — | — | Type-only; native representation not implemented |
+| `ApiSemantics` | — | — | — | Type-only; native representation not implemented |
+| `JsonSchema` | — | — | — | Type-only; native representation not implemented |
+| `defineApi` | — | — | — | Not implemented |
+| `guttsApiDefinitions` | — | — | — | Not implemented |
+| `guttsApiById` | — | — | — | Not implemented |
+| `guttsFodNodeDefinitions` | — | — | — | Not implemented |
+| `guttsApiToFodNode` | — | — | — | Not implemented |
+| `executeGuttsApi` | — | — | — | Not implemented |
+
+### Engineering: src/engineering/index.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `Identifier` | — | — | — | Type-only; native representation not implemented |
+| `ProviderKind` | — | — | — | Type-only; native representation not implemented |
+| `RepositoryRef` | — | — | — | Type-only; native representation not implemented |
+| `WorkspaceRef` | — | — | — | Type-only; native representation not implemented |
+| `ExecutionRequest` | — | — | — | Type-only; native representation not implemented |
+| `ExecutionResult` | — | — | — | Type-only; native representation not implemented |
+| `VerificationCheck` | — | — | — | Type-only; native representation not implemented |
+| `VerificationReport` | — | — | — | Type-only; native representation not implemented |
+| `ArtifactRef` | — | — | — | Type-only; native representation not implemented |
+| `EngineeringCapability` | — | — | — | Type-only; native representation not implemented |
+| `CapabilityGrant` | — | — | — | Type-only; native representation not implemented |
+| `EngineeringOperationContext` | — | — | — | Type-only; native representation not implemented |
+| `ProvenanceRecord` | — | — | — | Type-only; native representation not implemented |
+
+### Auth types: src/auth/luthAuthTypes.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `DeploymentEnvironment` | — | — | — | Type-only; native representation not implemented |
+| `LuthDeploymentRecord` | — | — | — | Type-only; native representation not implemented |
+| `LuthAuthClientConfig` | — | — | — | Type-only; native representation not implemented |
+| `LuthAuthTokenStore` | — | — | — | Type-only; native representation not implemented |
+| `RegisterApplicationResult` | — | — | — | Type-only; native representation not implemented |
+| `LuthUser` | — | — | — | Type-only; native representation not implemented |
+| `LuthSession` | — | — | — | Type-only; native representation not implemented |
+| `LuthSessionResult` | — | — | — | Type-only; native representation not implemented |
+| `EmailSignInCredentials` | — | — | — | Type-only; native representation not implemented |
+| `EmailSignUpData` | — | — | — | Type-only; native representation not implemented |
+| `GoogleSignInOptions` | — | — | — | Type-only; native representation not implemented |
+| `LuthAuthError` | — | — | — | Type-only; native representation not implemented |
+
+### Auth client: src/auth/luthAuthClient.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `resolveRuntimeAppUrl` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveClientOrigin` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveClientEnvironment` | — | — | — | Host-dependent; native adapter not implemented |
+| `DEFAULT_LUTH_URL` | — | — | — | Host-dependent; native adapter not implemented |
+| `hydrateLuthTokenFromUrl` | — | — | — | Host-dependent; native adapter not implemented |
+| `LuthAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
+| `createLuthAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
+
+### OAuth contracts: src/auth/oauthClientContract.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `ULTRST_APP_CONTRACT_VERSION` | — | — | — | Type-only; native representation not implemented |
+| `OAuthPlatform` | — | — | — | Type-only; native representation not implemented |
+| `OAuthClientRegistrationV1` | — | — | — | Type-only; native representation not implemented |
+| `ContractCheck` | — | — | — | Type-only; native representation not implemented |
+| `contractRecord` | — | — | — | Not implemented |
+| `contractId` | — | — | — | Not implemented |
+| `contractAppId` | — | — | — | Not implemented |
+| `contractExactKeys` | — | — | — | Not implemented |
+| `validateOAuthRedirectUri` | — | — | — | Not implemented |
+| `validateOAuthClientRegistration` | — | — | — | Not implemented |
+
+### Capability contracts: src/auth/capabilityContract.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `CapabilityParameterKind` | — | — | — | Type-only; native representation not implemented |
+| `CapabilityParameterV1` | — | — | — | Type-only; native representation not implemented |
+| `CapabilityBaseV1` | — | — | — | Type-only; native representation not implemented |
+| `StaticCapabilityV1` | — | — | — | Type-only; native representation not implemented |
+| `WorkflowPublicationV1` | — | — | — | Type-only; native representation not implemented |
+| `CapabilityDescriptorV1` | — | — | — | Type-only; native representation not implemented |
+| `validateCapabilityDescriptor` | — | — | — | Not implemented |
+
+### Invocation contracts: src/auth/invocationContract.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `ScopedInvocationV1` | `gutc_invocation_budget` | include/gutc/gutc.h | tests/test_gutc.c | Partial: budget subset of schema |
+| `validateScopedInvocation` | — | — | — | Not implemented |
+| `checkInvocationBudget` | `gutc_invocation_budget_check` | src/gutc.c | tests/test_gutc.c | Partial: budget subset, not full envelope |
+| `advanceInvocationBudget` | `gutc_invocation_budget_advance` | src/gutc.c | tests/test_gutc.c | Partial: remaining calls only |
+| `consumeInvocationRetry` | `gutc_invocation_budget_retry` | src/identity.c | tests/test_identity.c | Partial: remaining retries only |
+| `validateInvocationAgainstDescriptor` | — | — | — | Not implemented |
+
+### Identity contracts: src/auth/identityIds.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `IDENTITY_KINDS` | `gutc_identity_kind_valid` | src/gutc.c | tests/test_gutc.c | Six published tag strings |
+| `IdentityKind` | — | — | — | Type-only; native representation not implemented |
+| `IdentityId` | — | — | — | Type-only; native representation not implemented |
+| `ApplicationId` | — | — | — | Type-only; native representation not implemented |
+| `DeploymentId` | — | — | — | Type-only; native representation not implemented |
+| `OAuthClientId` | — | — | — | Type-only; native representation not implemented |
+| `UserId` | — | — | — | Type-only; native representation not implemented |
+| `WorkspaceId` | — | — | — | Type-only; native representation not implemented |
+| `UiSessionId` | — | — | — | Type-only; native representation not implemented |
+| `IdentityRef` | `gutc_identity_ref` | include/gutc/identity.h | tests/test_identity.c | Borrowed struct; no JSON serializer |
+| `isIdentityKind` | `gutc_identity_kind_valid` | src/gutc.c | tests/test_gutc.c | Six published tags |
+| `parseIdentityId` | `gutc_identity_id_valid` | src/gutc.c | identity.tsv; contracts.tsv | Validation only; golden checked |
+| `requireIdentityId` | `gutc_identity_ref_parse` | src/identity.c | tests/test_identity.c | Partial: C status instead of JS throw |
+| `identityRef` | `gutc_identity_ref_parse` | src/identity.c | tests/test_identity.c | Borrowed tagged ref |
+| `parseIdentityRef` | `gutc_identity_ref_parse` | src/identity.c | tests/test_identity.c | Partial: direct typed spans, not arbitrary map |
+| `parseLegacyApplicationId` | `gutc_legacy_application_id` | src/identity.c | tests/test_identity.c | Native explicit map; conflict rejection |
+
+### Auth façade: src/auth/applicationAuthClient.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `ApplicationAuthClientConfig` | — | — | — | Host-dependent; native adapter not implemented |
+| `ApplicationAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
+| `createApplicationAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
+
+### Model types: src/models/model-types.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `ModelSize` | — | — | — | Type-only; native representation not implemented |
+| `ModelMetadata` | — | — | — | Type-only; native representation not implemented |
+| `ModelLoadContext` | — | — | — | Type-only; native representation not implemented |
+| `ModelRuntime` | — | — | — | Type-only; native representation not implemented |
+| `ModelLease` | — | — | — | Type-only; native representation not implemented |
+| `ModelLoader` | — | — | — | Type-only; native representation not implemented |
+| `ModelUnloader` | — | — | — | Type-only; native representation not implemented |
+
+### Model index: src/models/index.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `ModelResidency` | — | — | — | Host-dependent; native adapter not implemented |
+| `ModelLibrary` | — | — | — | Host-dependent; native adapter not implemented |
+| `guttsModelDefinitions` | — | — | — | Host-dependent; native adapter not implemented |
+| `guttsModelById` | — | — | — | Host-dependent; native adapter not implemented |
+| `Needle3` | — | — | — | Host-dependent; native adapter not implemented |
+| `needle3CompleteApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `needle3Metadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `SmolLM2` | — | — | — | Host-dependent; native adapter not implemented |
+| `smolLM2GenerateApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `smolLM2Metadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `Whistle` | — | — | — | Host-dependent; native adapter not implemented |
+| `whistleTranscribeApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `whistleMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `EttinReranker` | — | — | — | Host-dependent; native adapter not implemented |
+| `EttinReranker17M` | — | — | — | Host-dependent; native adapter not implemented |
+| `EttinReranker32M` | — | — | — | Host-dependent; native adapter not implemented |
+| `EttinReranker68M` | — | — | — | Host-dependent; native adapter not implemented |
+| `EttinReranker150M` | — | — | — | Host-dependent; native adapter not implemented |
+| `ettinRerankApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `ettinReranker17MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `ettinReranker32MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `ettinReranker68MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `ettinReranker150MMetadata` | — | — | — | Host-dependent; native adapter not implemented |
+| `MiniLM` | — | — | — | Host-dependent; native adapter not implemented |
+| `miniLMSimilarityApi` | — | — | — | Host-dependent; native adapter not implemented |
+| `miniLML6Metadata` | — | — | — | Host-dependent; native adapter not implemented |
+
+### Semantic input: src/semantic-input/index.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `SemanticInputSchema` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputContext` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputErrorCode` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputRisk` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputProgress` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputEvent` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputModelPolicy` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputPolicy` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputProvenanceStore` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputProvenanceRecord` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputProvenance` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputCandidate` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputEvidence` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputClarification` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputResolution` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputCacheKey` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputCache` | — | — | — | Type-only; native representation not implemented |
+| `SemanticInputRequest` | — | — | — | Type-only; native representation not implemented |
+| `resolveDeterministicSemanticInput` | — | — | — | Not implemented |
+| `rankSemanticInputCandidates` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveSemanticInput` | — | — | — | Host-dependent; native adapter not implemented |
+
+### Server adapters: src/server/auth.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `resolveServerRuntimeAppUrl` | — | — | — | Host-dependent; native adapter not implemented |
+
+### Storage SDK reexports: src/storage/index.ts
+
+| GutTS export | Native C API | Implementation | Test/fixture | Parity result |
+| --- | --- | --- | --- | --- |
+| `S3Client` | — | — | — | Host-dependent; native adapter not implemented |
+| `GetObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
+| `HeadObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
+| `ListObjectsV2Command` | — | — | — | Host-dependent; native adapter not implemented |
+| `PutObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
+| `CopyObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
+| `DeleteObjectCommand` | — | — | — | Host-dependent; native adapter not implemented |
+| `DeleteObjectsCommand` | — | — | — | Host-dependent; native adapter not implemented |
+
+
+### Published entrypoint and host-specific notes
+
+`./browser` and `./worker` reexport portions of the common core; no additional symbols were counted. `./server`, `./server/auth`, `./server/models`, `./server/storage`, `./storage`, `./storage/s3` and `./storage/google-drive` expose deployment/SDK-bound adapters. AWS SDK command classes, Google APIs modules, model inference loaders and a live Luth HTTP client are not pure C utility contracts: implementing them requires explicit host/transport callbacks and compatible vendor runtime dependencies. Do not claim they are fully implemented just because their metadata types exist. `./gutts.manifest.json` publishes registry metadata, not a callable utility.
+
+The `semantic-input` deterministic resolution path is potentially portable but is not yet implemented; ranking/model inference paths require native model/runtime adapters. `api` metadata and FOD dispatch are portable structured contracts but remain unimplemented. Host exceptions do not justify omitting the portable descriptor/metadata parts.
+
