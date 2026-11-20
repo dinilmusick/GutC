@@ -5,6 +5,7 @@
 #include <gutc/json_dom.h>
 #include <gutc/url_query.h>
 #include <gutc/auth_contracts.h>
+#include <gutc/oauth_contracts.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -47,6 +48,13 @@ int main(void) {
     if(gutc_validate_scoped_invocation_v1(contract,&reason)!=GUTC_INVALID_FORMAT)return 19;
     if(!reason||strcmp(reason,"INVALID_INVOCATION_IDENTITY_OR_AUDIENCE")!=0)return 20;
     gutc_json_dom_free(contract);}
+  {gutc_json_dom *registration=NULL;size_t at=0;
+    const unsigned char bad[]="{\"schemaVersion\":1}";
+    const char *reason=NULL;
+    if(gutc_json_dom_parse(bad,sizeof(bad)-1,8,32,&registration,&at)!=GUTC_OK)return 21;
+    if(gutc_validate_oauth_registration_v1(registration,&reason)!=GUTC_INVALID_FORMAT)return 22;
+    if(!reason||strcmp(reason,"INVALID_CLIENT_IDENTITY_OR_PKCE")!=0)return 23;
+    gutc_json_dom_free(registration);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
