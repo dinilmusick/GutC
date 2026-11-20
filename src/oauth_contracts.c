@@ -92,6 +92,40 @@ static int parse_port(const char *s,size_t n,unsigned *result) {
 static int hex(char c) {
   return (c>='0'&&c<='9')||(c>='a'&&c<='f')||(c>='A'&&c<='F');
 }
+/* Defend strict callback comparison against WHATWG dot-segment normalization.
+ * A decoded slash/backslash or nested escape is rejected more conservatively
+ * than the JavaScript URL constructor, so an encoded path cannot retarget the
+ * callback or become a different path during downstream interpretation. */
+static int canonical_segment(const char *src,size_t n) {
+  char first[2049],second[2049];
+  size_t len=n,depth;
+  if(!src||n>2048)return 0;
+  memcpy(first,src,len);
+  for(depth=0;depth<8;depth++) {
+    size_t i,j=0;
+    int escaped=0;
+    if((len==1&&first[0]=='.')||
+       (len==2&&first[0]=='.'&&first[1]=='.'))return 0;
+    for(i=0;i<len;i++) {
+      unsigned char c=(unsigned char)first[i];
+      if(c=='%') {
+        int hi,lo;
+        if(len-i<3||!hex(first[i+1])||!hex(first[i+2]))return 0;
+        hi=first[i+1]<='9'?first[i+1]-'0':
+          (first[i+1]<='F'?first[i+1]-'A'+10:first[i+1]-'a'+10);
+        lo=first[i+2]<='9'?first[i+2]-'0':
+          (first[i+2]<='F'?first[i+2]-'A'+10:first[i+2]-'a'+10);
+        c=(unsigned char)((hi<<4)|lo);
+        i+=2;escaped=1;
+      }
+      if(c<32u||c==127u||c=='/'||c=='\\'||c=='?'||c=='#')return 0;
+      second[j++]=(char)c;
+    }
+    if(!escaped)return 1;
+    memcpy(first,second,j);len=j;
+  }
+  return 0;
+}
 gutc_status gutc_validate_oauth_redirect_v1(const gutc_json_dom *uri,
                                               gutc_oauth_platform platform,
                                               const gutc_json_dom *verified,
@@ -134,6 +168,8 @@ gutc_status gutc_validate_oauth_redirect_v1(const gutc_json_dom *uri,
     if(colon<end)port_begin=colon+1;
     if(!good_host(host))return invalid(reason,"NON_CANONICAL_REDIRECT_URI");
   }
+  if(port_begin && end-port_begin>1 && t.bytes[port_begin]=='0')
+    return invalid(reason,"NON_CANONICAL_REDIRECT_URI");
   if(port_begin && !parse_port(t.bytes+port_begin,end-port_begin,&port))
     return invalid(reason,"INVALID_REDIRECT_URI");
   if((http&&port==80u)||(https&&port==443u))
@@ -155,8 +191,7 @@ gutc_status gutc_validate_oauth_redirect_v1(const gutc_json_dom *uri,
     size_t next=i+1,n;
     while(next<t.length&&t.bytes[next]!='/')next++;
     n=next-i-1;
-    if((n==1&&t.bytes[i+1]=='.')||
-       (n==2&&t.bytes[i+1]=='.'&&t.bytes[i+2]=='.'))
+    if(n && !canonical_segment(t.bytes+i+1,n))
       return invalid(reason,"NON_CANONICAL_REDIRECT_URI");
     i=next;
   }
