@@ -11,5 +11,5 @@ cmake -S tests/consumer -B consumer-build -DCMAKE_PREFIX_PATH=/tmp/gutc
 cmake --build consumer-build
 ```
 
-The install exports `GutC::gutc` from `find_package(GutC CONFIG REQUIRED)`.
+The pinned cross-language corpus in `testdata/upstream-golden/contracts.tsv` is independently executed by a Node build of the exact GutTS commit and a CTest runner. The install exports `GutC::gutc` from `find_package(GutC CONFIG REQUIRED)`.
 Borrowed primitive/reference collections and ordered-map direct key selection are exposed via `<gutc/collections.h>`. JSON syntax validation and UTF-8 string quoting are exposed via `#include <gutc/json.h>`. The core byte-span API is allocation-free and reentrant (imported path normalization allocates temporary memory); see `include/gutc/gutc.h` for buffer ownership and status handling. Safe storage-relative URI encoding and borrowed identity/legacy mapping are also available via `<gutc/safe_path.h>` and `<gutc/identity.h>`. Existing URL security and Unicode helper implementations from PRs #1, #3, and #4 are integrated. The library is **not yet fully parity-certified**; see `docs/upstream-parity.md` and the existing open GutC PRs.

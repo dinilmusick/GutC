@@ -1,0 +1,40 @@
+name: GutC pinned GutTS golden differential
+on:
+  push:
+    branches: [main, "feat/**", "parity/**"]
+  pull_request:
+    branches: [main]
+jobs:
+  pinned-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: gutc
+      - uses: actions/checkout@v4
+        with:
+          repository: dinilmusick/GutTS
+          ref: 3e2cbc0990ba29830ce91c5d1a1d552675d5334c
+          path: upstream
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Verify pinned exact source and dependencies
+        shell: bash
+        run: |
+          test "$(git -C upstream rev-parse HEAD)" = "3e2cbc0990ba29830ce91c5d1a1d552675d5334c"
+          corepack enable
+          cd upstream
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+          corepack pnpm run build
+      - name: Execute actual GutTS fixture contract
+        shell: bash
+        env:
+          GUTTS_DIST: ${{ github.workspace }}/upstream/dist
+        run: node gutc/scripts/verify-gutts-golden.mjs
+      - name: Run C fixture contract
+        shell: bash
+        run: |
+          cmake -S gutc -B gutc-build -DCMAKE_BUILD_TYPE=Debug
+          cmake --build gutc-build
+          ctest --test-dir gutc-build --output-on-failure -R gutc_cross_language

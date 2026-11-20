@@ -1,0 +1,22 @@
+# GutTS pinned 3e2cbc0990ba29830ce91c5d1a1d552675d5334c; op<TAB>input<TAB>argument<TAB>expected
+identity	app_1	-	1
+identity	slash/id	-	0
+blank	 	-	1
+blank	　	-	1
+blank	 x 	-	0
+starts	café	caf	1
+starts	café	é	0
+ends	café	é	1
+ends	café	cat	0
+join	https://example.com///	/api/	https://example.com/api
+safePath	dir/a b	-	dir/a%20b
+safePath	a%20b	-	a%2520b
+safePath	a!b	-	a!b
+words	alpha beta gamma	2	alpha beta…
+words	one two	3	one two
+words	one two	0	…
+inRange	2	1:3	1
+inRange	3	1:3	0
+clamp	12	0:10	10
+sum	1,2,3	-	6
+unique	1,1,2	-	1,2

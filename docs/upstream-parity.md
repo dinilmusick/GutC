@@ -2,7 +2,7 @@
 
 Pinned upstream: `dinilmusick/GutTS@3e2cbc0990ba29830ce91c5d1a1d552675d5334c`.
 
-This file is an **in-progress** inventory, not a full parity certification. It is derived from the public barrel `src/index.ts` plus the implementations listed below. Every row requires behavioral comparison and a passing C fixture before being upgraded to full parity.
+This file is an **in-progress** inventory, not a full parity certification. `testdata/upstream-golden/contracts.tsv` is executed independently against **both** the pinned, compiled original GutTS source (`scripts/verify-gutts-golden.mjs`) and the C implementations (`tests/test_cross_language.c`), under the dedicated GitHub Actions golden workflow. It is derived from the public barrel `src/index.ts` plus the implementations listed below. Every row requires behavioral comparison and a passing C fixture before being upgraded to full parity.
 
 | Upstream export / behavior | Native C API | Implementation | Test / fixture | Result |
 | --- | --- | --- | --- | --- |
