@@ -30,7 +30,7 @@ This file is an **in-progress** inventory, not a full parity certification. `tes
 | `urls.isUrl/getQueryParam/setQueryParam` | — | — | — | Not implemented |
 | `json.parseJson/tryParseJson` | `gutc_json_validate` (syntax only) | `src/json.c` | `tests/test_json.c`, `testdata/upstream-golden/json.tsv` | **Partial:** validation, no parsed AST or exception semantics |
 | `json.stringifyJson` | `gutc_json_quote_string` (strings only) | `src/json.c` | `tests/test_json.c` | **Partial:** no object/array serializer |
-| `json.isJsonValue` | — | — | — | Not implemented |
+| `json.isJsonValue` | `gutc_json_dom_is_json_value` | `src/json_dom.c` | `tests/test_json_dom.c` | Native structured owned DOM, finite-value enforcement |
 | `auth.identityRef/parseIdentityRef/parseLegacyApplicationId` | `gutc_identity_ref_parse` / `gutc_legacy_application_id` | `src/identity.c` | `tests/test_identity.c` | Borrowed tagged identity views and conflict-rejecting aliases; legacy requires explicit map entries |
 | `auth.validateCapabilityDescriptor` | — | — | — | Not implemented |
 | `auth.validateScopedInvocation` | — | — | — | Not implemented |
@@ -59,9 +59,9 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `JsonValue` | — | — | — | Type-only; native representation not implemented |
 | `JsonObject` | — | — | — | Type-only; native representation not implemented |
 | `isJsonValue` | — | — | — | Not implemented |
-| `parseJson` | `gutc_json_validate` | src/json.c | tests/test_json.c | Partial: syntax validation, no decoded tree |
-| `tryParseJson` | `gutc_json_validate` | src/json.c | tests/test_json.c | Partial: success/failure only |
-| `stringifyJson` | `gutc_json_quote_string` | src/json.c | tests/test_json.c | Partial: strings only |
+| `parseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: owned tree; lone surrogate escapes rejected |
+| `tryParseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: C status contract, not JS undefined |
+| `stringifyJson` | `gutc_json_dom_stringify` | src/json_dom.c | tests/test_json_dom.c | Partial: full structural JSON; JS shortest decimal formatting differs |
 
 ### Strings: src/strings/string-concepts.ts
 
