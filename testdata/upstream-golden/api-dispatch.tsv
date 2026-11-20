@@ -1,0 +1,50 @@
+# Source-pinned GutTS executeGuttsApi pure utility differential; model operations deliberately excluded without host inference
+gutts.arrays.compact	{"values":[0,1,false,true,"","x",null,[],{}]}	[1,true,"x",[],{}]
+gutts.arrays.compact	{"values":[]}	[]
+gutts.arrays.unique	{"values":[1,1,0,0,null,null,"a","a",{},{}]}	[1,0,null,"a",{},{}]
+gutts.arrays.unique	{"values":["a","b","a","c"]}	["a","b","c"]
+gutts.arrays.chunk	{"values":[1,2,3,4,5],"size":2}	[[1,2],[3,4],[5]]
+gutts.arrays.chunk	{"values":[],"size":5}	[]
+gutts.arrays.flatten	{"values":[1,[2,3],[[4]],5]}	[1,2,3,[4],5]
+gutts.arrays.flatten	{"values":[[1,2],[],[3]]}	[1,2,3]
+gutts.arrays.last	{"values":[1,2]}	2
+gutts.arrays.last	{"values":[]}	_
+gutts.json.isJsonValue	{"value":{"ok":[1,"x",null]}}	true
+gutts.json.parseJson	{"text":"{\"x\":1,\"y\":[2,3]}"}	{"x":1,"y":[2,3]}
+gutts.json.tryParseJson	{"text":"{bad"}	_
+gutts.json.stringifyJson	{"value":{"x":1,"y":[2,3]}}	"{\"x\":1,\"y\":[2,3]}"
+gutts.numbers.clamp	{"value":15,"min":0,"max":10}	10
+gutts.numbers.clamp	{"value":-2,"min":0,"max":10}	0
+gutts.numbers.inRange	{"value":10,"min":0,"max":10}	false
+gutts.numbers.inRange	{"value":0,"min":0,"max":10}	true
+gutts.numbers.roundTo	{"value":3.14159,"decimals":2}	3.14
+gutts.numbers.roundTo	{"value":18.6}	19
+gutts.numbers.isFiniteNumber	{"value":"3"}	false
+gutts.numbers.isFiniteNumber	{"value":9}	true
+gutts.numbers.sum	{"values":[1,2.5,3]}	6.5
+gutts.objects.hasOwn	{"value":{"profile":{"name":"Ada"}},"key":"profile.name"}	true
+gutts.objects.hasOwn	{"value":{"profile":{}},"key":"profile.name"}	false
+gutts.objects.pick	{"value":{"profile":{"name":"Ada","active":true},"keep":1},"keys":["profile.name"]}	{"profile":{"name":"Ada"}}
+gutts.objects.omit	{"value":{"a":1,"b":2},"keys":["a"]}	{"b":2}
+gutts.objects.isPlainObject	{"value":{"a":1}}	true
+gutts.objects.isPlainObject	{"value":[1]}	false
+gutts.strings.isBlank	{"value":"  \t "}	true
+gutts.strings.isBlank	{"value":"hello"}	false
+gutts.strings.isNonBlank	{"value":" hello "}	true
+gutts.strings.isEmail	{"value":"a@b.co"}	true
+gutts.strings.isEmail	{"value":"not-mail"}	false
+gutts.strings.startsWithAny	{"value":"hello","prefixes":["x","he"]}	true
+gutts.strings.startsWithAny	{"value":"hello","prefixes":[]}	false
+gutts.strings.endsWithAny	{"value":"hello","suffixes":["xx","lo"]}	true
+gutts.strings.capitalize	{"value":"hELLO WORLD"}	"Hello world"
+gutts.strings.camelCase	{"value":"HTTPResponse"}	"httpResponse"
+gutts.strings.kebabCase	{"value":"FooBar"}	"foo-bar"
+gutts.strings.snakeCase	{"value":"FooBar"}	"foo_bar"
+gutts.strings.truncate	{"value":"abcdef","maxLength":4,"suffix":".."}	"ab.."
+gutts.strings.truncateWords	{"value":"one two three","maxWords":2,"suffix":"..."}	"one two..."
+gutts.urls.isUrl	{"value":"https://example.com/path"}	true
+gutts.urls.isUrl	{"value":"not-a-url"}	false
+gutts.urls.joinUrl	{"base":"https://example.com/","parts":["/one/","/two"]}	"https://example.com/one/two"
+gutts.urls.getQueryParam	{"url":"https://example.com/?x=1","key":"x"}	"1"
+gutts.urls.getQueryParam	{"url":"https://example.com/?x=1","key":"z"}	null
+gutts.urls.setQueryParam	{"url":"https://example.com/?x=1","key":"x","value":"two words"}	"https://example.com/?x=two+words"
