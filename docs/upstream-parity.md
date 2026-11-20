@@ -254,20 +254,20 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `ModelSize` | — | — | — | Type-only; native representation not implemented |
-| `ModelMetadata` | — | — | — | Type-only; native representation not implemented |
-| `ModelLoadContext` | — | — | — | Type-only; native representation not implemented |
-| `ModelRuntime` | — | — | — | Type-only; native representation not implemented |
-| `ModelLease` | — | — | — | Type-only; native representation not implemented |
-| `ModelLoader` | — | — | — | Type-only; native representation not implemented |
-| `ModelUnloader` | — | — | — | Type-only; native representation not implemented |
+| `ModelSize` | `gutc_model_size` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
+| `ModelMetadata` | `gutc_model_registry_lookup; gutc_model_library.metadata` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
+| `ModelLoadContext` | `gutc_model_load_context` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
+| `ModelRuntime` | `gutc_model_runtime_host` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
+| `ModelLease` | `gutc_model_lease` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
+| `ModelLoader` | `gutc_model_loader` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
+| `ModelUnloader` | `gutc_model_unloader` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
 
 ### Model index: src/models/index.ts
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `ModelResidency` | — | — | — | Host-dependent; native adapter not implemented |
-| `ModelLibrary` | — | — | — | Host-dependent; native adapter not implemented |
+| `ModelResidency` | `gutc_model_residency_acquire; gutc_model_lease_release` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Synchronous nested leases, real host load/unload; JS async promise dedup requires host adapter |
+| `ModelLibrary` | `gutc_model_library_init; gutc_model_library_invoke; gutc_model_library_destroy` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Source-matched load-operation-unload with actual host invocation, no inferred or generated model output |
 | `guttsModelDefinitions` | `gutc_model_registry_list` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | All eight pinned model metadata definitions available; runtime loading/inference is host-dependent |
 | `guttsModelById` | `gutc_model_registry_lookup` | src/model_registry.c | tests/test_model_registry.c; model-catalog.json | All eight pinned model metadata definitions available; runtime loading/inference is host-dependent |
 | `Needle3` | — | — | — | Host-dependent; native adapter not implemented |
