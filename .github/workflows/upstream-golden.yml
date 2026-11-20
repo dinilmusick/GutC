@@ -36,9 +36,10 @@ jobs:
           node gutc/scripts/verify-auth-contracts.mjs
           node gutc/scripts/verify-oauth-contracts.mjs
           node gutc/scripts/verify-strings-golden.mjs
+          node gutc/scripts/verify-objects-golden.mjs
       - name: Run C fixture contract
         shell: bash
         run: |
           cmake -S gutc -B gutc-build -DCMAKE_BUILD_TYPE=Debug
           cmake --build gutc-build
-          ctest --test-dir gutc-build --output-on-failure -R "gutc_cross_language|gutc_auth_contracts|gutc_oauth_contracts|gutc_strings"
+          ctest --test-dir gutc-build --output-on-failure -R "gutc_cross_language|gutc_auth_contracts|gutc_oauth_contracts|gutc_strings|gutc_object_paths"
