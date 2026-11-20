@@ -133,7 +133,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `guttsApiDefinitions` | — | — | — | Not implemented |
 | `guttsApiById` | — | — | — | Not implemented |
 | `guttsFodNodeDefinitions` | — | — | — | Not implemented |
-| `guttsApiToFodNode` | — | — | — | Not implemented |
+| `guttsApiToFodNode` | `gutc_api_to_fod_node` | src/fod_node.c | tests/test_fod_node.c; fod.tsv | Native metadata-only, owned JSON DOM; no dispatch or host model runtime |
 | `executeGuttsApi` | — | — | — | Not implemented |
 
 ### Engineering: src/engineering/index.ts

@@ -10,6 +10,7 @@
 #include <gutc/object_path.h>
 #include <gutc/api_definition.h>
 #include <gutc/semantic_deterministic.h>
+#include <gutc/fod_node.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -82,6 +83,12 @@ int main(void) {
     if(gutc_resolve_deterministic_semantic("true",4,schema,&resolved,&found)!=GUTC_OK)return 33;
     if(!found||!resolved)return 34;
     gutc_json_dom_free(schema);gutc_json_dom_free(resolved);}
+  {gutc_json_dom *api=NULL,*node=NULL;size_t at=0;
+    const unsigned char input[]="{\"id\":\"sample\",\"name\":\"sample\",\"category\":\"test\",\"description\":\"test\",\"parameters\":[],\"output\":{},\"semantics\":{}}";
+    if(gutc_json_dom_parse(input,sizeof(input)-1,8,100,&api,&at)!=GUTC_OK)return 35;
+    if(gutc_api_to_fod_node(api,&node)!=GUTC_OK)return 36;
+    if(!gutc_json_dom_get(node,"inputs",6))return 37;
+    gutc_json_dom_free(api);gutc_json_dom_free(node);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
