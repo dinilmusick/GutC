@@ -1,4 +1,5 @@
-#include <gutc/gutc.h>\n#include <gutc/collections.h>
+#include <gutc/gutc.h>
+#include <gutc/collections.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -18,6 +19,9 @@ int main(void) {
   if(gut_is_blank_utf8("\xE3\x80\x80")!=1) return 7;
   if(gut_truncate_words_utf8_default("alpha beta gamma",2,result,sizeof(result),&needed)!=GUT_TRUNCATE_OK) return 8;
   if(strcmp(result,"alpha beta\xE2\x80\xA6")!=0) return 9;
-  { gutc_value values[2]={{.kind=GUTC_VALUE_NUMBER,.as.number=1.0},{.kind=GUTC_VALUE_NUMBER,.as.number=2.0}};\n    gutc_chunk_view view[2];\n    if(gutc_array_chunks(values,2,1,view,2,&needed)!=GUTC_OK||needed!=2)return 10; }\n  puts("GutC multi-module installed consumer passed");
+  { gutc_value values[2]={{.kind=GUTC_VALUE_NUMBER,.as.number=1.0},{.kind=GUTC_VALUE_NUMBER,.as.number=2.0}};
+    gutc_chunk_view view[2];
+    if(gutc_array_chunks(values,2,1,view,2,&needed)!=GUTC_OK||needed!=2)return 10; }
+  puts("GutC multi-module installed consumer passed");
   return 0;
 }
