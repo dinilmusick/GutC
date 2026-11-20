@@ -108,7 +108,7 @@ static gutc_status request(
  const char *suffix,const char *body,
  int *status,gutc_json_dom **response,const char **error) {
   char url[320];
-  size_t prefix;
+  size_t prefix,suffix_len;
   gutc_status rc;
   if(!client||!status||!response)return GUTC_INVALID_ARGUMENT;
   *response=NULL;*status=0;
@@ -116,7 +116,9 @@ static gutc_status request(
   prefix=strlen(client->base_path);
   if(prefix<2||prefix>=256)return GUTC_INVALID_ARGUMENT;
   memcpy(url,client->base_path,prefix);
-  strcpy(url+prefix,suffix);
+  suffix_len=strlen(suffix);
+  if(suffix_len>sizeof(url)-prefix-1)return GUTC_RANGE_ERROR;
+  memcpy(url+prefix,suffix,suffix_len+1);
   rc=client->host.request(client->host.context,verb,url,body,1,1,status,response);
   if(rc!=GUTC_OK&&error)
     *error=!strcmp(suffix,"/logout")?"AUTH_LOGOUT_UNAVAILABLE":"AUTH_SESSION_UNAVAILABLE";
