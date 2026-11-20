@@ -176,9 +176,9 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
 | `resolveRuntimeAppUrl` | — | — | — | Host-dependent; native adapter not implemented |
-| `resolveClientOrigin` | — | — | — | Host-dependent; native adapter not implemented |
-| `resolveClientEnvironment` | — | — | — | Host-dependent; native adapter not implemented |
-| `DEFAULT_LUTH_URL` | — | — | — | Host-dependent; native adapter not implemented |
+| `resolveClientOrigin` | `gutc_luth_resolve_client_origin` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
+| `resolveClientEnvironment` | `gutc_luth_resolve_client_environment` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
+| `DEFAULT_LUTH_URL` | `gutc_luth_default_url` | src/luth_origin.c | tests/test_luth_origin.c; luth-origin.tsv | Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected |
 | `hydrateLuthTokenFromUrl` | — | — | — | Host-dependent; native adapter not implemented |
 | `LuthAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
 | `createLuthAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
