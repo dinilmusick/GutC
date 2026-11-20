@@ -2,6 +2,7 @@
 #include <gutc/collections.h>
 #include <gutc/safe_path.h>
 #include <gutc/identity.h>
+#include <gutc/json_dom.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -29,6 +30,11 @@ int main(void) {
   {gutc_identity_ref ref;
     gutc_string_view kind={"user",4},id={"user_1",6};
     if(gutc_identity_ref_parse(kind,id,&ref)!=GUTC_OK)return 13;}
+  {gutc_json_dom *dom=NULL;size_t consumed=0;
+    const unsigned char document[]="{\"ok\":true}";
+    if(gutc_json_dom_parse(document,sizeof(document)-1,12,100,&dom,&consumed)!=GUTC_OK)return 14;
+    if(!gutc_json_dom_get(dom,"ok",2))return 15;
+    gutc_json_dom_free(dom);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

@@ -17,7 +17,7 @@ typedef enum gutc_status {
   GUTC_OK=0, GUTC_INVALID_ARGUMENT, GUTC_INVALID_ENCODING,
   GUTC_INVALID_FORMAT, GUTC_RANGE_ERROR, GUTC_OVERFLOW,
   GUTC_NO_SPACE, GUTC_DEADLINE_EXCEEDED, GUTC_MAX_DEPTH,
-  GUTC_CYCLE, GUTC_BUDGET_EXHAUSTED
+  GUTC_CYCLE, GUTC_BUDGET_EXHAUSTED, GUTC_NO_MEMORY
 } gutc_status;
 const char *gutc_status_name(gutc_status status);
 gutc_status gutc_utf8_validate(const uint8_t *bytes, size_t length, size_t *codepoints);

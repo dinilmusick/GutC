@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(GutC VERSION 0.1.0 LANGUAGES C)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-add_library(gutc STATIC src/gutc.c src/json.c
+add_library(gutc STATIC src/gutc.c src/json.c src/json_dom.c
   src/gutc_path.c src/trusted_api.c src/collections.c src/safe_path.c src/identity.c
   src/gut_string_predicates.c src/gut_truncate.c src/gut_truncate_words.c)
 add_library(GutC::gutc ALIAS gutc)
@@ -44,6 +44,9 @@ if(BUILD_TESTING)
   target_compile_definitions(gutc_cross_language_test PRIVATE
     GUTC_GOLDEN_FIXTURE_PATH="${CMAKE_CURRENT_SOURCE_DIR}/testdata/upstream-golden/contracts.tsv")
   add_test(NAME gutc_cross_language COMMAND gutc_cross_language_test)
+  add_executable(gutc_json_dom_test tests/test_json_dom.c)
+  target_link_libraries(gutc_json_dom_test PRIVATE GutC::gutc)
+  add_test(NAME gutc_json_dom COMMAND gutc_json_dom_test)
   foreach(pair IN ITEMS "path;test_path.c" "trusted_api;trusted_api_test.c" "string_predicates;test_string_predicates.c" "truncate;test_truncate.c" "truncate_words;test_truncate_words.c")
     list(GET pair 0 name)
     list(GET pair 1 file)
@@ -51,7 +54,7 @@ if(BUILD_TESTING)
     target_link_libraries(gutc_${name}_test PRIVATE GutC::gutc)
     add_test(NAME gutc_${name} COMMAND gutc_${name}_test)
   endforeach()
-  foreach(check_target IN ITEMS gutc_test gutc_json_test gutc_collections_test gutc_safe_path_test gutc_identity_test gutc_cross_language_test gutc_path_test
+  foreach(check_target IN ITEMS gutc_test gutc_json_test gutc_json_dom_test gutc_collections_test gutc_safe_path_test gutc_identity_test gutc_cross_language_test gutc_path_test
       gutc_trusted_api_test gutc_string_predicates_test gutc_truncate_test gutc_truncate_words_test)
     if(MSVC)
       target_compile_options(${check_target} PRIVATE /UNDEBUG)

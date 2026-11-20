@@ -35,7 +35,7 @@ static gutc_status output_check(void *output,size_t capacity,size_t needed,int t
 const char *gutc_status_name(gutc_status s) {
   static const char *const names[]={
     "OK","INVALID_ARGUMENT","INVALID_ENCODING","INVALID_FORMAT","RANGE_ERROR",
-    "OVERFLOW","NO_SPACE","DEADLINE_EXCEEDED","MAX_DEPTH","CYCLE","BUDGET_EXHAUSTED"
+    "OVERFLOW","NO_SPACE","DEADLINE_EXCEEDED","MAX_DEPTH","CYCLE","BUDGET_EXHAUSTED","NO_MEMORY"
   };
   return (unsigned)s < sizeof(names)/sizeof(names[0]) ? names[s] : "UNKNOWN_STATUS";
 }
