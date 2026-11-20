@@ -16,6 +16,7 @@
 #include <gutc/model_registry.h>
 #include <gutc/luth_origin.h>
 #include <gutc/contract_primitives.h>
+#include <gutc/semantic_rank.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -124,6 +125,10 @@ int main(void) {
     if(gutc_json_dom_parse((const uint8_t*)id_text,strlen(id_text),8,100,&id,NULL)!=GUTC_OK)return 55;
     if(!gutc_contract_id(id)||!gutc_contract_app_id(id)||gutc_app_contract_version()!=1u)return 56;
     gutc_json_dom_free(id);}
+  {gutc_json_text words[]={{"blue",4},{"red",3}};double sim[]={0.9,0.2},rel[]={0.1,0.9};
+    size_t order[2]={99,99},required=0;
+    if(gutc_semantic_rank_order(words,sim,rel,2,order,2,&required)!=GUTC_OK)return 57;
+    if(required!=2||order[0]!=1||order[1]!=0)return 58;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

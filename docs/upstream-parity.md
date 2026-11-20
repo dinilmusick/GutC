@@ -316,7 +316,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `SemanticInputCache` | — | — | — | Type-only; native representation not implemented |
 | `SemanticInputRequest` | — | — | — | Type-only; native representation not implemented |
 | `resolveDeterministicSemanticInput` | `gutc_resolve_deterministic_semantic` | src/semantic_deterministic.c | tests/test_semantic_deterministic.c; semantic.tsv | Partial: deterministic enums, string format, booleans, numeric input; JS RegExp pattern unsupported, decimal locale subtleties |
-| `rankSemanticInputCandidates` | — | — | — | Host-dependent; native adapter not implemented |
+| `rankSemanticInputCandidates` | `gutc_semantic_rank_with_host` / `gutc_semantic_rank_order` | src/semantic_rank.c | tests/test_semantic_rank.c; semantic-rank.tsv | Partial: full stable scored-candidate comparator; real host MiniLM+Ettin callbacks required; non-simple ASCII collation tie explicitly unsupported |
 | `resolveSemanticInput` | — | — | — | Host-dependent; native adapter not implemented |
 
 ### Server adapters: src/server/auth.ts
