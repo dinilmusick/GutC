@@ -9,6 +9,7 @@
 #include <gutc/string_case.h>
 #include <gutc/object_path.h>
 #include <gutc/api_definition.h>
+#include <gutc/semantic_deterministic.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -75,6 +76,12 @@ int main(void) {
     if(gutc_define_api(api,&defined)!=GUTC_OK)return 30;
     if(!gutc_json_dom_get(defined,"inputSchema",11))return 31;
     gutc_json_dom_free(api);gutc_json_dom_free(defined);}
+  {gutc_json_dom *schema=NULL,*resolved=NULL;size_t at=0;int found=0;
+    const unsigned char input[]="{\"type\":\"boolean\"}";
+    if(gutc_json_dom_parse(input,sizeof(input)-1,8,100,&schema,&at)!=GUTC_OK)return 32;
+    if(gutc_resolve_deterministic_semantic("true",4,schema,&resolved,&found)!=GUTC_OK)return 33;
+    if(!found||!resolved)return 34;
+    gutc_json_dom_free(schema);gutc_json_dom_free(resolved);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

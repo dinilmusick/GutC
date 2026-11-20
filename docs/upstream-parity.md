@@ -315,7 +315,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `SemanticInputCacheKey` | — | — | — | Type-only; native representation not implemented |
 | `SemanticInputCache` | — | — | — | Type-only; native representation not implemented |
 | `SemanticInputRequest` | — | — | — | Type-only; native representation not implemented |
-| `resolveDeterministicSemanticInput` | — | — | — | Not implemented |
+| `resolveDeterministicSemanticInput` | `gutc_resolve_deterministic_semantic` | src/semantic_deterministic.c | tests/test_semantic_deterministic.c; semantic.tsv | Partial: deterministic enums, string format, booleans, numeric input; JS RegExp pattern unsupported, decimal locale subtleties |
 | `rankSemanticInputCandidates` | — | — | — | Host-dependent; native adapter not implemented |
 | `resolveSemanticInput` | — | — | — | Host-dependent; native adapter not implemented |
 
@@ -343,5 +343,5 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 `./browser` and `./worker` reexport portions of the common core; no additional symbols were counted. `./server`, `./server/auth`, `./server/models`, `./server/storage`, `./storage`, `./storage/s3` and `./storage/google-drive` expose deployment/SDK-bound adapters. AWS SDK command classes, Google APIs modules, model inference loaders and a live Luth HTTP client are not pure C utility contracts: implementing them requires explicit host/transport callbacks and compatible vendor runtime dependencies. Do not claim they are fully implemented just because their metadata types exist. `./gutts.manifest.json` publishes registry metadata, not a callable utility.
 
-The `semantic-input` deterministic resolution path is potentially portable but is not yet implemented; ranking/model inference paths require native model/runtime adapters. `api` metadata and FOD dispatch are portable structured contracts but remain unimplemented. Host exceptions do not justify omitting the portable descriptor/metadata parts.
+The `semantic-input` deterministic resolution path has native subset coverage and 35 pinned GutTS fixtures; pattern and model-backed paths remain unavailable; ranking/model inference paths require native model/runtime adapters. `api` metadata and FOD dispatch are portable structured contracts but remain unimplemented. Host exceptions do not justify omitting the portable descriptor/metadata parts.
 
