@@ -158,18 +158,18 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `DeploymentEnvironment` | — | — | — | Type-only; native representation not implemented |
-| `LuthDeploymentRecord` | — | — | — | Type-only; native representation not implemented |
-| `LuthAuthClientConfig` | — | — | — | Type-only; native representation not implemented |
-| `LuthAuthTokenStore` | — | — | — | Type-only; native representation not implemented |
-| `RegisterApplicationResult` | — | — | — | Type-only; native representation not implemented |
-| `LuthUser` | — | — | — | Type-only; native representation not implemented |
-| `LuthSession` | — | — | — | Type-only; native representation not implemented |
-| `LuthSessionResult` | `gutc_application_auth_get_session` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Runtime-validated owned JSON DOM for authenticated or 401 unauthenticated result |
-| `EmailSignInCredentials` | — | — | — | Type-only; native representation not implemented |
-| `EmailSignUpData` | — | — | — | Type-only; native representation not implemented |
-| `GoogleSignInOptions` | — | — | — | Type-only; native representation not implemented |
-| `LuthAuthError` | `gutc_application_auth_get_session; const char **error` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Static native error codes for invalid session, auth path and logout outcomes |
+| `DeploymentEnvironment` | `gutc_luth_environment` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthDeploymentRecord` | `gutc_luth_deployment_record` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthAuthClientConfig` | `gutc_luth_auth_client_config` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthAuthTokenStore` | `gutc_luth_auth_token_store` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `RegisterApplicationResult` | `gutc_luth_registration_result` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthUser` | `gutc_luth_user` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthSession` | `gutc_luth_session` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthSessionResult` | `gutc_luth_session_result` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed native fields supplement source-verified application-session validator |
+| `EmailSignInCredentials` | `gutc_luth_email_sign_in` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `EmailSignUpData` | `gutc_luth_email_sign_up` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `GoogleSignInOptions` | `gutc_luth_google_sign_in` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `LuthAuthError` | `gutc_luth_auth_error` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed native fields supplement source-verified application-session validator |
 
 ### Auth client: src/auth/luthAuthClient.ts
 
@@ -188,9 +188,9 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
 | `ULTRST_APP_CONTRACT_VERSION` | `gutc_app_contract_version` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
-| `OAuthPlatform` | — | — | — | Type-only; native representation not implemented |
-| `OAuthClientRegistrationV1` | — | — | — | Type-only; native representation not implemented |
-| `ContractCheck` | — | — | — | Type-only; native representation not implemented |
+| `OAuthPlatform` | `gutc_oauth_platform` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `OAuthClientRegistrationV1` | `gutc_auth_oauth_registration_v1` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `ContractCheck` | `gutc_auth_contract_check` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
 | `contractRecord` | `gutc_contract_record` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
 | `contractId` | `gutc_contract_id` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
 | `contractAppId` | `gutc_contract_app_id` | src/contract_primitives.c | tests/test_contract_primitives.c; contract-primitives.tsv | Source-matched portable JSON DOM predicate, no target authentication or grant authorization |
@@ -202,12 +202,12 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `CapabilityParameterKind` | — | — | — | Type-only; native representation not implemented |
-| `CapabilityParameterV1` | — | — | — | Type-only; native representation not implemented |
-| `CapabilityBaseV1` | — | — | — | Type-only; native representation not implemented |
-| `StaticCapabilityV1` | — | — | — | Type-only; native representation not implemented |
-| `WorkflowPublicationV1` | — | — | — | Type-only; native representation not implemented |
-| `CapabilityDescriptorV1` | — | — | — | Type-only; native representation not implemented |
+| `CapabilityParameterKind` | `gutc_auth_parameter_kind` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `CapabilityParameterV1` | `gutc_auth_capability_parameter_v1` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `CapabilityBaseV1` | `gutc_auth_capability_base_v1` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `StaticCapabilityV1` | `gutc_auth_static_capability_v1` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `WorkflowPublicationV1` | `gutc_auth_workflow_publication_v1` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `CapabilityDescriptorV1` | `gutc_auth_capability_descriptor_v1` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
 | `validateCapabilityDescriptor` | `gutc_validate_capability_descriptor_v1` | src/auth_contracts.c | tests/test_auth_contracts.c; auth.tsv | Pure schema; not authorization |
 
 ### Invocation contracts: src/auth/invocationContract.ts
@@ -226,15 +226,15 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
 | `IDENTITY_KINDS` | `gutc_identity_kind_valid` | src/gutc.c | tests/test_gutc.c | Six published tag strings |
-| `IdentityKind` | — | — | — | Type-only; native representation not implemented |
-| `IdentityId` | — | — | — | Type-only; native representation not implemented |
-| `ApplicationId` | — | — | — | Type-only; native representation not implemented |
-| `DeploymentId` | — | — | — | Type-only; native representation not implemented |
-| `OAuthClientId` | — | — | — | Type-only; native representation not implemented |
-| `UserId` | — | — | — | Type-only; native representation not implemented |
-| `WorkspaceId` | — | — | — | Type-only; native representation not implemented |
-| `UiSessionId` | — | — | — | Type-only; native representation not implemented |
-| `IdentityRef` | `gutc_identity_ref` | include/gutc/identity.h | tests/test_identity.c | Borrowed struct; no JSON serializer |
+| `IdentityKind` | `gutc_auth_identity_kind` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `IdentityId` | `gutc_auth_identity_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `ApplicationId` | `gutc_auth_application_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `DeploymentId` | `gutc_auth_deployment_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `OAuthClientId` | `gutc_auth_oauth_client_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `UserId` | `gutc_auth_user_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `WorkspaceId` | `gutc_auth_workspace_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `UiSessionId` | `gutc_auth_ui_session_id` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
+| `IdentityRef` | `gutc_auth_identity_ref` | include/gutc/auth_types.h; src/auth_types.c | tests/test_auth_types.c; auth-types.tsv | Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin |
 | `isIdentityKind` | `gutc_identity_kind_valid` | src/gutc.c | tests/test_gutc.c | Six published tags |
 | `parseIdentityId` | `gutc_identity_id_valid` | src/gutc.c | identity.tsv; contracts.tsv | Validation only; golden checked |
 | `requireIdentityId` | `gutc_identity_ref_parse` | src/identity.c | tests/test_identity.c | Partial: C status instead of JS throw |

@@ -23,6 +23,7 @@
 #include <gutc/semantic_cache.h>
 #include <gutc/engineering_types.h>
 #include <gutc/model_runtime.h>
+#include <gutc/auth_types.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -171,6 +172,11 @@ int main(void) {
     if(output)return 80;
     gutc_json_dom_free(input);
     if(gutc_model_library_destroy(&library)!=GUTC_OK)return 81;}
+  {gutc_auth_identity_kind role=GUTC_AUTH_UI_SESSION;
+    gutc_auth_identity_ref ref={GUTC_AUTH_APPLICATION,{{"app_1",5}}};
+    if(!gutc_auth_identity_kind_parse("application",11,&role)||role!=GUTC_AUTH_APPLICATION)return 82;
+    if(!gutc_auth_identity_ref_valid(&ref))return 83;
+    if(strcmp(gutc_auth_oauth_platform_name(GUTC_OAUTH_DESKTOP),"desktop"))return 84;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
