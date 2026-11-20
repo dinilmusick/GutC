@@ -140,19 +140,19 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `Identifier` | — | — | — | Type-only; native representation not implemented |
-| `ProviderKind` | — | — | — | Type-only; native representation not implemented |
-| `RepositoryRef` | — | — | — | Type-only; native representation not implemented |
-| `WorkspaceRef` | — | — | — | Type-only; native representation not implemented |
-| `ExecutionRequest` | — | — | — | Type-only; native representation not implemented |
-| `ExecutionResult` | — | — | — | Type-only; native representation not implemented |
-| `VerificationCheck` | — | — | — | Type-only; native representation not implemented |
-| `VerificationReport` | — | — | — | Type-only; native representation not implemented |
-| `ArtifactRef` | — | — | — | Type-only; native representation not implemented |
-| `EngineeringCapability` | — | — | — | Type-only; native representation not implemented |
-| `CapabilityGrant` | — | — | — | Type-only; native representation not implemented |
-| `EngineeringOperationContext` | — | — | — | Type-only; native representation not implemented |
-| `ProvenanceRecord` | — | — | — | Type-only; native representation not implemented |
+| `Identifier` | `gutc_eng_identifier` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `ProviderKind` | `gutc_eng_provider_kind` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `RepositoryRef` | `gutc_eng_repository_ref` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `WorkspaceRef` | `gutc_eng_workspace_ref` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `ExecutionRequest` | `gutc_eng_execution_request` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `ExecutionResult` | `gutc_eng_execution_result` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `VerificationCheck` | `gutc_eng_verification_check` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `VerificationReport` | `gutc_eng_verification_report` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `ArtifactRef` | `gutc_eng_artifact_ref` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `EngineeringCapability` | `gutc_eng_capability` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `CapabilityGrant` | `gutc_eng_capability_grant` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `EngineeringOperationContext` | `gutc_eng_operation_context` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
+| `ProvenanceRecord` | `gutc_eng_provenance_record` | include/gutc/engineering_types.h; src/engineering_types.c | tests/test_engineering_types.c; engineering-kinds.tsv | Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization |
 
 ### Auth types: src/auth/luthAuthTypes.ts
 
