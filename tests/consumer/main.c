@@ -12,6 +12,7 @@
 #include <gutc/semantic_deterministic.h>
 #include <gutc/fod_node.h>
 #include <gutc/api_registry.h>
+#include <gutc/api_dispatch.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -97,6 +98,12 @@ int main(void) {
     if(gutc_api_registry_fod_nodes(&catalog)!=GUTC_OK)return 41;
     if(catalog->kind!=GUTC_JSON_ARRAY||catalog->as.array.count!=38)return 42;
     gutc_json_dom_free(catalog);gutc_json_dom_free(api);}
+  {gutc_json_dom *args=NULL,*out=NULL;size_t at=0;int defined=0;
+    const unsigned char input[]="{\"values\":[1,2,3]}";
+    if(gutc_json_dom_parse(input,sizeof(input)-1,8,100,&args,&at)!=GUTC_OK)return 43;
+    if(gutc_execute_api("gutts.numbers.sum",strlen("gutts.numbers.sum"),args,NULL,&out,&defined)!=GUTC_OK)return 44;
+    if(!defined||!out||out->kind!=GUTC_JSON_NUMBER||out->as.number!=6)return 45;
+    gutc_json_dom_free(args);gutc_json_dom_free(out);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
