@@ -1,0 +1,13 @@
+# Pinned GutTS resolveSemanticInput deterministic branch: request JSON, status, value JSON or _, requiresConfirmation 0/1
+{"input":"true","schema":{"type":"boolean"}}	resolved	true	0
+{"input":"FALSE","schema":{"type":"boolean"}}	resolved	false	0
+{"input":"42","schema":{"type":"integer"}}	resolved	42	0
+{"input":"3.5","schema":{"type":"number"}}	resolved	3.5	0
+{"input":" a@example.org ","schema":{"type":"string","format":"email"}}	resolved	"a@example.org"	0
+{"input":"https://example.org","schema":{"type":"string","format":"uri"}}	resolved	"https://example.org"	0
+{"input":"2026-11-20","schema":{"type":"string","format":"date"}}	resolved	"2026-11-20"	0
+{"input":"  choice ","schema":{"type":"string","enum":["choice","other"]}}	resolved	"choice"	0
+{"input":"2026-11-20T12:00:00Z","schema":{"type":"string","format":"date-time"},"policy":{"risk":"high"}}	resolved	"2026-11-20T12:00:00Z"	1
+{"input":" false ","schema":{"type":"boolean"},"policy":{"requireConfirmation":true}}	resolved	false	1
+{"input":"   ","schema":{"type":"string"}}	invalid	_	0
+{"input":"","schema":{"type":"integer"},"preserveRawInput":true}	invalid	_	0
