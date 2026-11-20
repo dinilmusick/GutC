@@ -1,0 +1,36 @@
+# Pinned GutTS semantic-input/index.ts deterministic branch; input JSON<TAB>schema JSON<TAB>JSON.stringify(result), _ denotes undefined
+" true "	{"type":"boolean"}	{"status":"resolved","value":true,"candidates":[],"modelOutput":true}
+"false"	{"type":"boolean"}	{"status":"resolved","value":false,"candidates":[],"modelOutput":false}
+"TrUe"	{"type":"boolean"}	{"status":"resolved","value":true,"candidates":[],"modelOutput":true}
+" FALSE "	{"type":"boolean"}	{"status":"resolved","value":false,"candidates":[],"modelOutput":false}
+"yes"	{"type":"boolean"}	_
+" "	{"type":"boolean"}	_
+"17"	{"type":"number"}	{"status":"resolved","value":17,"candidates":[],"modelOutput":17}
+"-8"	{"type":"number"}	{"status":"resolved","value":-8,"candidates":[],"modelOutput":-8}
+" +3 "	{"type":"number"}	{"status":"resolved","value":3,"candidates":[],"modelOutput":3}
+"1e3"	{"type":"number"}	{"status":"resolved","value":1000,"candidates":[],"modelOutput":1000}
+"0x10"	{"type":"number"}	{"status":"resolved","value":16,"candidates":[],"modelOutput":16}
+"0b101"	{"type":"number"}	{"status":"resolved","value":5,"candidates":[],"modelOutput":5}
+"0o17"	{"type":"number"}	{"status":"resolved","value":15,"candidates":[],"modelOutput":15}
+".5"	{"type":"number"}	{"status":"resolved","value":0.5,"candidates":[],"modelOutput":0.5}
+"1."	{"type":"number"}	{"status":"resolved","value":1,"candidates":[],"modelOutput":1}
+"-0"	{"type":"number"}	{"status":"resolved","value":0,"candidates":[],"modelOutput":0}
+"Infinity"	{"type":"number"}	_
+"1_000"	{"type":"number"}	_
+"2.0"	{"type":"integer"}	{"status":"resolved","value":2,"candidates":[],"modelOutput":2}
+"3.5"	{"type":"integer"}	_
+"2e3"	{"type":"integer"}	{"status":"resolved","value":2000,"candidates":[],"modelOutput":2000}
+"orange"	{"type":"string","enum":["red","orange"]}	{"status":"resolved","value":"orange","candidates":[],"modelOutput":"orange"}
+" green "	{"type":"string","enum":["red","orange"]}	_
+" red "	{"type":"object","enum":["red","orange"]}	{"status":"resolved","value":"red","candidates":[],"modelOutput":"red"}
+"  a@b.co "	{"type":"string","format":"email"}	{"status":"resolved","value":"a@b.co","candidates":[],"modelOutput":"a@b.co"}
+"bad-email"	{"type":"string","format":"email"}	_
+"a@b..co"	{"type":"string","format":"email"}	{"status":"resolved","value":"a@b..co","candidates":[],"modelOutput":"a@b..co"}
+" HTTPS://example.org/path "	{"type":"string","format":"uri"}	{"status":"resolved","value":"HTTPS://example.org/path","candidates":[],"modelOutput":"HTTPS://example.org/path"}
+"ftp://example.org"	{"type":"string","format":"uri"}	_
+"2026-13-99"	{"type":"string","format":"date"}	{"status":"resolved","value":"2026-13-99","candidates":[],"modelOutput":"2026-13-99"}
+"2026-03-19T"	{"type":"string","format":"date-time"}	{"status":"resolved","value":"2026-03-19T","candidates":[],"modelOutput":"2026-03-19T"}
+"2026-03-19"	{"type":"string","format":"date-time"}	_
+"plain"	{"type":"string"}	_
+"　café　"	{"type":"string","enum":["café"]}	{"status":"resolved","value":"café","candidates":[],"modelOutput":"café"}
+""	{"type":"integer"}	_
