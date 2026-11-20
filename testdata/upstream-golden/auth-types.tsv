@@ -1,0 +1,26 @@
+# Source pinned GutTS auth / identity literal unions in schema order
+identity	application	0
+identity	deployment	1
+identity	oauth_client	2
+identity	user	3
+identity	workspace	4
+identity	ui_session	5
+environment	production	0
+environment	staging	1
+environment	preview	2
+environment	development	3
+oauth-platform	web	0
+oauth-platform	ios	1
+oauth-platform	android	2
+oauth-platform	desktop	3
+parameter	string	0
+parameter	number	1
+parameter	integer	2
+parameter	boolean	3
+parameter	object	4
+parameter	array	5
+capability-kind	backend	0
+capability-kind	frontend	1
+capability-kind	workflow	2
+permission	inspect	0
+permission	act	1
