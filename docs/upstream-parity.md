@@ -165,11 +165,11 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `RegisterApplicationResult` | — | — | — | Type-only; native representation not implemented |
 | `LuthUser` | — | — | — | Type-only; native representation not implemented |
 | `LuthSession` | — | — | — | Type-only; native representation not implemented |
-| `LuthSessionResult` | — | — | — | Type-only; native representation not implemented |
+| `LuthSessionResult` | `gutc_application_auth_get_session` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Runtime-validated owned JSON DOM for authenticated or 401 unauthenticated result |
 | `EmailSignInCredentials` | — | — | — | Type-only; native representation not implemented |
 | `EmailSignUpData` | — | — | — | Type-only; native representation not implemented |
 | `GoogleSignInOptions` | — | — | — | Type-only; native representation not implemented |
-| `LuthAuthError` | — | — | — | Type-only; native representation not implemented |
+| `LuthAuthError` | `gutc_application_auth_get_session; const char **error` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Static native error codes for invalid session, auth path and logout outcomes |
 
 ### Auth client: src/auth/luthAuthClient.ts
 
@@ -246,9 +246,9 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `ApplicationAuthClientConfig` | — | — | — | Host-dependent; native adapter not implemented |
-| `ApplicationAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
-| `createApplicationAuthClient` | — | — | — | Host-dependent; native adapter not implemented |
+| `ApplicationAuthClientConfig` | `gutc_app_auth_host; gutc_application_auth_init` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Host-injected config preserves first-party fetch/navigation requirements |
+| `ApplicationAuthClient` | `gutc_application_auth_client` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Real callback-driven GET session, POST logout, verification and navigation; host deployment not exercised |
+| `createApplicationAuthClient` | `gutc_application_auth_init` | src/application_auth.c | tests/test_application_auth.c; application-auth.tsv | Partial: Caller-owned native client initialization, no ambient browser environment |
 
 ### Model types: src/models/model-types.ts
 
