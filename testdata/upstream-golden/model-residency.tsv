@@ -1,0 +1,6 @@
+# GutTS ModelResidency and ModelLibrary observable host callback order (sequential and nested, never real inference)
+sequential	load,operation,unload,load,operation,unload
+nested	load,outer,operation,unload
+operation-failure	load,operation,unload
+load-failure	load
+library	load,operation,unload

@@ -22,6 +22,7 @@
 #include <gutc/application_auth.h>
 #include <gutc/semantic_cache.h>
 #include <gutc/engineering_types.h>
+#include <gutc/model_runtime.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -162,6 +163,14 @@ int main(void) {
     if(!gutc_eng_provider_parse("github",6,&provider)||provider!=GUTC_ENG_GITHUB)return 74;
     if(!gutc_eng_capability_parse("repository.read",15,&capability)||capability!=GUTC_ENG_REPOSITORY_READ)return 75;
     if(repo.name.length!=6)return 76;}
+  {gutc_model_library library;gutc_json_dom *input=NULL,*output=NULL;const char json[]="{}";
+    if(gutc_model_library_init(&library,"model.cactus-needle3",
+                              strlen("model.cactus-needle3"),NULL)!=GUTC_OK)return 77;
+    if(gutc_json_dom_parse((const uint8_t*)json,sizeof json-1,8,100,&input,NULL)!=GUTC_OK)return 78;
+    if(gutc_model_library_invoke(&library,"complete",input,&output)!=GUTC_UNSUPPORTED)return 79;
+    if(output)return 80;
+    gutc_json_dom_free(input);
+    if(gutc_model_library_destroy(&library)!=GUTC_OK)return 81;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
