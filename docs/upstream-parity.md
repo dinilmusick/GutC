@@ -27,7 +27,7 @@ This file is an **in-progress** inventory, not a full parity certification. `tes
 | `numbers.roundTo` / `isFiniteNumber` | `gutc_number_round_to` / `gutc_number_is_finite` | `src/collections.c` | `tests/test_collections.c` | Finite-only; roundTo 0–15 digits and difficult Lodash ties may differ |
 | `objects.hasOwn` / `pick` / `omit` | `gutc_object_has_direct` / `gutc_object_pick_direct` / `gutc_object_omit_direct` | `src/collections.c` | `tests/test_collections.c` | **Partial:** direct-key ordered maps only, nested paths not implemented |\n| `objects.isPlainObject` | — | — | — | Not implemented |
 | `strings.isEmail/capitalize/camelCase/kebabCase/snakeCase` | — | — | — | Not implemented |
-| `urls.isUrl/getQueryParam/setQueryParam` | — | — | — | Not implemented |
+| `urls.isUrl/getQueryParam/setQueryParam` | `gutc_url_is_http_url` / `gutc_url_get_query_param` / `gutc_url_set_query_param` | `src/url_query.c` | `tests/test_url_query.c` | Partial: HTTP(S) and strict valid UTF-8; not general WHATWG/IDNA, malformed percent rejects rather than replacement |
 | `json.parseJson/tryParseJson` | `gutc_json_validate` (syntax only) | `src/json.c` | `tests/test_json.c`, `testdata/upstream-golden/json.tsv` | **Partial:** validation, no parsed AST or exception semantics |
 | `json.stringifyJson` | `gutc_json_quote_string` (strings only) | `src/json.c` | `tests/test_json.c` | **Partial:** no object/array serializer |
 | `json.isJsonValue` | `gutc_json_dom_is_json_value` | `src/json_dom.c` | `tests/test_json_dom.c` | Native structured owned DOM, finite-value enforcement |
@@ -112,10 +112,10 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `isUrl` | — | — | — | Not implemented |
+| `isUrl` | `gutc_url_is_http_url` | src/url_query.c | tests/test_url_query.c | Partial: HTTP(S) absolute only, not WHATWG URL constructor |
 | `joinUrl` | `gutc_join_url` | src/gutc.c | tests/test_gutc.c; contracts.tsv | Native bounded strings; golden checked |
-| `getQueryParam` | — | — | — | Not implemented |
-| `setQueryParam` | — | — | — | Not implemented |
+| `getQueryParam` | `gutc_url_get_query_param` | src/url_query.c | tests/test_url_query.c | Partial: HTTP(S) + UTF-8; strict malformed percent errors |
+| `setQueryParam` | `gutc_url_set_query_param` | src/url_query.c | tests/test_url_query.c | Partial: URLSearchParams form encoding, but raw URL origin not WHATWG canonicalized |
 | `normalizeStoragePath` | `gutc_normalize_storage_path` | src/gutc_path.c | tests/test_path.c | Native validation; legacy errors |
 | `encodeSafePathSegments` | `gutc_encode_safe_path_segments` | src/safe_path.c | tests/test_safe_path.c; contracts.tsv | Native bounded UTF-8; golden checked |
 | `resolveTrustedApiUrl` | `gutc_resolve_trusted_api_url` | src/trusted_api.c | tests/trusted_api_test.c | Partial: WHATWG URL normalization |

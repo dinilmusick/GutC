@@ -3,6 +3,7 @@
 #include <gutc/safe_path.h>
 #include <gutc/identity.h>
 #include <gutc/json_dom.h>
+#include <gutc/url_query.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -35,6 +36,9 @@ int main(void) {
     if(gutc_json_dom_parse(document,sizeof(document)-1,12,100,&dom,&consumed)!=GUTC_OK)return 14;
     if(!gutc_json_dom_get(dom,"ok",2))return 15;
     gutc_json_dom_free(dom);}
+  {int found=0;char value[16];size_t count=0;
+    if(gutc_url_get_query_param("https://example.com/?n=12","n",value,sizeof(value),&count,&found)!=GUTC_OK)return 16;
+    if(!found || strcmp(value,"12")!=0)return 17;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
