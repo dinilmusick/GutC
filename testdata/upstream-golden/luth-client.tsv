@@ -1,0 +1,8 @@
+# Source-pinned GutTS LuthAuthClient REST method / path / body, autoRegister=false
+register	POST	/api/registry/register	{"ecosystemId":"eco","applicationId":"app","origin":"https://app.example","environment":"production"}
+session	GET	/api/session	_
+signin	POST	/api/auth/sign-in/email	{"email":"e@example.org","password":"pa\\ss\"123"}
+signup	POST	/api/auth/sign-up/email	{"email":"e@example.org","password":"password2","name":"A Woman"}
+google	POST	/api/auth/sign-in/social	{"provider":"google","callbackURL":"https://app.example"}
+signout	POST	/api/auth/sign-out	{}
+session-after-signout	GET	/api/session	_
