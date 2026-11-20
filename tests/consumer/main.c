@@ -25,6 +25,7 @@
 #include <gutc/model_runtime.h>
 #include <gutc/auth_types.h>
 #include <gutc/portable_types.h>
+#include <gutc/model_operations.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -184,6 +185,13 @@ int main(void) {
     if(!gutc_semantic_error_code_parse("EMPTY_INPUT",11,&code))return 85;
     if(code!=GUTC_SEMANTIC_EMPTY_INPUT||schema.type.length!=6)return 86;
     if(!semantics.deterministic||!semantics.pure||semantics.side_effects)return 87;}
+  {gutc_model_client client;gutc_json_dom *input=NULL,*output=NULL;const char json[]="{\"left\":\"a\",\"right\":\"b\"}";
+    if(gutc_model_client_init(&client,GUTC_MODEL_MINILM,NULL)!=GUTC_OK)return 88;
+    if(gutc_json_dom_parse((const uint8_t*)json,sizeof json-1,16,100,&input,NULL)!=GUTC_OK)return 89;
+    if(gutc_model_client_call(&client,"similarity",input,&output)!=GUTC_UNSUPPORTED)return 90;
+    if(output)return 91;
+    gutc_json_dom_free(input);
+    if(gutc_model_client_destroy(&client)!=GUTC_OK)return 92;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
