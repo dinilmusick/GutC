@@ -8,6 +8,7 @@
 #include <gutc/oauth_contracts.h>
 #include <gutc/string_case.h>
 #include <gutc/object_path.h>
+#include <gutc/api_definition.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -68,6 +69,12 @@ int main(void) {
     if(gutc_json_pick_paths(document,keys,1,&picked)!=GUTC_OK)return 27;
     if(!gutc_json_dom_get(picked,"profile",7))return 28;
     gutc_json_dom_free(document);gutc_json_dom_free(picked);}
+  {gutc_json_dom *api=NULL,*defined=NULL;size_t at=0;
+    const unsigned char input[]="{\"name\":\"echo\",\"parameters\":[]}";
+    if(gutc_json_dom_parse(input,sizeof(input)-1,8,100,&api,&at)!=GUTC_OK)return 29;
+    if(gutc_define_api(api,&defined)!=GUTC_OK)return 30;
+    if(!gutc_json_dom_get(defined,"inputSchema",11))return 31;
+    gutc_json_dom_free(api);gutc_json_dom_free(defined);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
