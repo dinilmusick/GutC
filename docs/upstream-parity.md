@@ -49,7 +49,7 @@ The core `gutc_` byte/span APIs are allocation-free and reentrant; `gutc_normali
 
 ## Pinned public export enumeration (mechanically transcribed)
 
-Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, package subpath entrypoints and the specific barrels listed below. **187 individually identified published symbol/type names** are enumerated; 17 are described below as natively implemented, 18 as partial with specific divergences, and 152 are type-only, host-adapter or unimplemented. These counts are an *inventory*, not an acceptance rate: naming a struct is not equivalent to meeting the JS contract. Some symbols are reexported by multiple entrypoints but counted once here. The type-only rows need wire layouts or explicit native exceptions. New exports introduced after the pinned reference are not in scope.
+Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, package subpath entrypoints and the specific barrels listed below. **195 individually identified published symbol/type or entrypoint obligations** are enumerated; 17 are described below as natively implemented, 20 as partial with specific divergences, and 158 are type-only, host-specific exceptions or unimplemented. These counts are an *inventory*, not an acceptance rate: naming a struct is not equivalent to meeting the JS contract. Some symbols are reexported by multiple entrypoints but counted once here. The type-only rows need wire layouts or explicit native exceptions. New exports introduced after the pinned reference are not in scope.
 
 ### JSON: src/json/json-concepts.ts
 
@@ -254,7 +254,6 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 | GutTS export | Native C API | Implementation | Test/fixture | Parity result |
 | --- | --- | --- | --- | --- |
-| `ModelSize` | `gutc_model_size` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
 | `ModelMetadata` | `gutc_model_registry_lookup; gutc_model_library.metadata` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
 | `ModelLoadContext` | `gutc_model_load_context` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
 | `ModelRuntime` | `gutc_model_runtime_host` | include/gutc/model_runtime.h; src/model_runtime.c | tests/test_model_runtime.c; model-residency.tsv | Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime |
@@ -345,3 +344,22 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 
 The `semantic-input` deterministic resolution path has native subset coverage and 35 pinned GutTS fixtures; pattern and model-backed paths remain unavailable; ranking/model inference paths require native model/runtime adapters. `api` metadata and FOD dispatch are portable structured contracts but remain unimplemented. Host exceptions do not justify omitting the portable descriptor/metadata parts.
 
+
+
+## Additional pinned host and entrypoint inventory (2026-11-21)
+
+The independently compared GutRS source-pinned inventory contains 195 individually identified entries. The earlier GutC enumeration had 187 entries but included `ModelSize`, which is defined within `src/models/model-types.ts` **without being re-exported** by the public `src/models/index.ts` or a published model-types subpath. The published-surface enumeration therefore removes that internal type and explicitly adds the following nine host/entrypoint contracts. The four `*Exports` rows represent *entrypoint-composition obligations*, not invented JS variables.
+
+| GutTS export / entrypoint obligation | Native C API / exception | Native source | Executable test | Classification and missing behavior |
+| --- | --- | --- | --- | --- |
+| `GoogleApisModule` | none (Node-only googleapis module shape) | none | none | Platform-specific exception: TypeScript-only GoogleApisModule type/SDK boundary; no portable C JavaScript SDK module |
+| `loadGoogleApis` | none (Node dynamic import) | none | none | Platform-specific exception: Node dynamic import does not exist in C11; integration requires explicit host Google Drive provider |
+| `createGoogleDriveClient` | none (host must provide Drive operations) | none | none | Unimplemented native Google Drive SDK client; exact GutTS `googleapis` adapter cannot be represented as an implemented C host callback |
+| `nodeCactusNeedle3Runtime` | gutc_model_client_init/call/destroy (host-injected) | src/model_operations.c | tests/test_model_operations.c | Partial: true host-native Needle3 provider must be wired, loaded and independently executed; C callback is not model inference |
+| `nodeCactusWhistleRuntime` | gutc_model_client_init/call/destroy (host-injected) | src/model_operations.c | tests/test_model_operations.c | Partial: true host-native Whistle provider must be wired, loaded and independently executed; C callback is not transcription |
+| `rootExports` | GutC::gutc | CMakeLists.txt | tests/installed-consumer | Platform-specific exception: source entrypoint composition row, not a named runtime symbol; C11 installed package/headers substitute JS root bundling |
+| `browserExports` | none (no browser DOM/Web APIs in native C11) | none | none | Platform-specific exception: source entrypoint composition row; native C11 does not emulate browser APIs |
+| `workerExports` | none (no Cloudflare JS Worker runtime in native C11) | none | none | Platform-specific exception: source entrypoint composition row; no Worker JS execution claimed |
+| `serverExports` | GutC::gutc with explicit host adapters | CMakeLists.txt; src/luth_client.c; src/s3_client.c | tests/installed-consumer | Platform-specific exception: source entrypoint composition row, not a named runtime symbol; C11 host adapters are separate and require real providers |
+
+The complete 195-row source-pinned matrix is in `docs/wave1-contract-matrix.json`. **Mapped ≠ behaviourally equivalent**: nonexecutable type declarations and callbacks remain partial or native-platform exceptions. The nine additional entries do not confer full runtime parity. Immutable reference `GutTS@3e2cbc0990ba29830ce91c5d1a1d552675d5334c`.
