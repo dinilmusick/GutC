@@ -31,7 +31,7 @@ jobs:
         shell: bash
         run: |
           cmake -S . -B build-icu -DGUTC_ENABLE_ICU_GRAPHEME=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="$PWD/installed"
-          cmake --build build-icu --target gutc_icu_truncate_test gutc_icu_truncate_runner --parallel 2
+          cmake --build build-icu --parallel 2
           ctest --test-dir build-icu --output-on-failure -R gutc_icu_graphemes
           cmake --install build-icu
       - name: Verify separately installed C11 ICU consumer target
