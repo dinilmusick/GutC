@@ -1,0 +1,65 @@
+name: GutC native ICU Unicode and original GutTS Lodash differential
+on:
+  pull_request:
+  push:
+    branches: [main, "wave/**"]
+permissions:
+  contents: read
+jobs:
+  icu-grapheme:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install optional ICU development package
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            sudo apt-get update
+            sudo apt-get install -y libicu-dev
+            root=/usr
+          else
+            brew install icu4c
+            root="$(brew --prefix icu4c)"
+          fi
+          echo "CMAKE_PREFIX_PATH=$root" >> "$GITHUB_ENV"
+      - name: Build and test opt-in ICU C11 adapter
+        shell: bash
+        run: |
+          cmake -S . -B build-icu -DGUTC_ENABLE_ICU_GRAPHEME=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="$PWD/installed"
+          cmake --build build-icu --target gutc_icu_truncate_test gutc_icu_truncate_runner --parallel 2
+          ctest --test-dir build-icu --output-on-failure -R gutc_icu_graphemes
+          cmake --install build-icu
+      - name: Verify separately installed C11 ICU consumer target
+        shell: bash
+        run: |
+          cmake -S tests/icu-consumer -B build-consumer -DCMAKE_PREFIX_PATH="$PWD/installed:$CMAKE_PREFIX_PATH"
+          cmake --build build-consumer
+          ctest --test-dir build-consumer --output-on-failure
+      - uses: actions/checkout@v4
+        with:
+          repository: dinilmusick/GutTS
+          ref: 3e2cbc0990ba29830ce91c5d1a1d552675d5334c
+          path: .upstream
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Compile immutable original TypeScript Lodash implementation
+        shell: bash
+        run: |
+          test "$(git -C .upstream rev-parse HEAD)" = "3e2cbc0990ba29830ce91c5d1a1d552675d5334c"
+          corepack enable
+          cd .upstream
+          corepack pnpm install --frozen-lockfile --ignore-scripts
+          corepack pnpm run build
+      - name: 660 pinned real Lodash versus ICU differential comparisons
+        shell: bash
+        env:
+          GUTTS_DIST: ${{ github.workspace }}/.upstream/dist
+          GUTC_ICU_RUNNER: ${{ github.workspace }}/build-icu/gutc_icu_truncate_runner
+        run: node scripts/verify-icu-truncate.mjs
