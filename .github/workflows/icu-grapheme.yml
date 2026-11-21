@@ -32,7 +32,7 @@ jobs:
         run: |
           cmake -S . -B build-icu -DGUTC_ENABLE_ICU_GRAPHEME=ON -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX="$PWD/installed"
           cmake --build build-icu --parallel 2
-          ctest --test-dir build-icu --output-on-failure -R gutc_icu_graphemes
+          ctest --test-dir build-icu --output-on-failure -R 'gutc_icu_graphemes|gutc_lodash_symbols'
           cmake --install build-icu
       - name: Verify separately installed C11 ICU consumer target
         shell: bash
@@ -63,3 +63,9 @@ jobs:
           GUTTS_DIST: ${{ github.workspace }}/.upstream/dist
           GUTC_ICU_RUNNER: ${{ github.workspace }}/build-icu/gutc_icu_truncate_runner
         run: node scripts/verify-icu-truncate.mjs
+      - name: Strict original Lodash Unicode symbol compatibility cross-language differential
+        shell: bash
+        env:
+          GUTTS_DIST: ${{ github.workspace }}/.upstream/dist
+          GUTC_LODASH_RUNNER: ${{ github.workspace }}/build-icu/gutc_lodash_icu_runner
+        run: node scripts/verify-lodash-icu-source.mjs
