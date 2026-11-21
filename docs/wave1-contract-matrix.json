@@ -218,14 +218,13 @@
     {
       "upstream_symbol": "truncate",
       "upstream_source": "src/strings/string-concepts.ts",
-      "native_symbol": "`gut_truncate_utf8`",
-      "native_source": "src/gut_truncate.c",
-      "executable_test": "tests/test_truncate.c",
+      "native_symbol": "gut_truncate_utf8 (scalar default); gut_truncate_graphemes_icu (UAX29); gut_truncate_lodash_icu (opt-in pinned source compatible)",
+      "native_source": "src/gut_truncate.c; src/icu_truncate.c; src/lodash_icu_truncate.c",
+      "executable_test": "tests/test_truncate.c; tests/test_icu_truncate.c; tests/test_lodash_icu_truncate.c; scripts/verify-lodash-icu-source.mjs",
       "classification": "partially_implemented",
-      "missing_or_limit": "Partial: Lodash grapheme/UTF-16 segmentation",
+      "missing_or_limit": "Optional ICU-backed Lodash 4.18.1 Unicode symbol regex adapter added, independent from existing UAX29 grapheme and scalar variants. Needs successful exact pinned GutTS wide-language differential, native optional ICU Windows packaging and independent verification; no claim of universal source parity from finite tests.",
       "evidence": [
-        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
-        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+        "https://github.com/dinilmusick/GutC/actions/workflows/icu-grapheme.yml"
       ]
     },
     {
