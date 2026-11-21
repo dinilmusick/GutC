@@ -1,5 +1,6 @@
 #include "gutc/json_dom.h"
 #include "gutc/json.h"
+#include "gutc/js_number_format.h"
 #include <errno.h>
 #include <math.h>
 #include <stdio.h>
@@ -321,8 +322,6 @@ static void quoted(writer *w,const char *s,size_t n) {
 }
 static gutc_status serialize(const gutc_json_dom *v,writer *w,unsigned depth) {
   size_t i,points=0;
-  char buf[64];
-  int n;
   gutc_status rc;
   if(!v)return GUTC_INVALID_ARGUMENT;
   if(depth>128)return GUTC_RANGE_ERROR;
@@ -331,11 +330,15 @@ static gutc_status serialize(const gutc_json_dom *v,writer *w,unsigned depth) {
     case GUTC_JSON_BOOLEAN:
       emit(w,v->as.boolean?"true":"false",v->as.boolean?4:5);return GUTC_OK;
     case GUTC_JSON_NUMBER:
-      if(!isfinite(v->as.number)){emit(w,"null",4);return GUTC_OK;}
-      if(v->as.number==0){emit(w,"0",1);return GUTC_OK;}
-      n=snprintf(buf,sizeof(buf),"%.17g",v->as.number);
-      if(n<0 || (size_t)n>=sizeof(buf))return GUTC_OVERFLOW;
-      emit(w,buf,(size_t)n);return GUTC_OK;
+      {
+        char json_number[384];
+        size_t number_length=0;
+        rc=gutc_js_number_format(v->as.number,json_number,sizeof json_number,
+                                 &number_length);
+        if(rc!=GUTC_OK)return rc;
+        emit(w,json_number,number_length);
+        return GUTC_OK;
+      }
     case GUTC_JSON_STRING:
       rc=gutc_utf8_validate((const uint8_t*)v->as.string.bytes,v->as.string.length,&points);
       if(rc!=GUTC_OK)return rc;

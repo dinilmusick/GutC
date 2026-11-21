@@ -29,6 +29,7 @@
 #include <gutc/luth_client.h>
 #include <gutc/s3_client.h>
 #include <gutc/semantic_resolver.h>
+#include <gutc/js_number_format.h>
 #include <gutc_path.h>
 #include <gutc_trusted_api.h>
 #include <gut_string_predicates.h>
@@ -220,6 +221,9 @@ int main(void) {
     value=gutc_json_dom_get(response,"value",5);
     if(!value||value->kind!=GUTC_JSON_BOOLEAN||!value->as.boolean)return 101;
     gutc_json_dom_free(response);gutc_json_dom_free(request);}
+  {char out[128];size_t needed=0;
+    if(gutc_js_number_format(0.2,out,sizeof out,&needed)!=GUTC_OK)return 102;
+    if(needed!=3||strcmp(out,"0.2"))return 103;}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }

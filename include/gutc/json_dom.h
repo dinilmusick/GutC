@@ -29,8 +29,9 @@ gutc_status gutc_json_dom_parse(const unsigned char *text,size_t length,
                                 gutc_json_dom **output,size_t *error_offset);
 void gutc_json_dom_free(gutc_json_dom *root);
 /* Two-pass no-partial-write serialization, size excludes trailing NUL.
- * Nonfinite numbers serialize as null. Floats use %.17g, not shortest JS
- * formatting, so exact numeric serialization parity remains incomplete. */
+ * Nonfinite numbers serialize as null. IEEE-754 numbers use shortest-roundtrip
+ * ECMAScript-style output via gutc_js_number_format, subject to libc numeric
+ * C-locale/rounding preconditions and documented exhaustive-proof limitation. */
 gutc_status gutc_json_dom_stringify(const gutc_json_dom *root,
                                     char *output,size_t capacity,size_t *needed);
 const gutc_json_dom *gutc_json_dom_get(const gutc_json_dom *object,
