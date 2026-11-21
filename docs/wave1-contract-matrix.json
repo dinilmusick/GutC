@@ -1,0 +1,2546 @@
+{
+  "schema": "ultrst.wave1.parity-matrix.v1",
+  "upstream_repo": "dinilmusick/GutTS",
+  "upstream_sha": "3e2cbc0990ba29830ce91c5d1a1d552675d5334c",
+  "native_repo": "dinilmusick/GutC",
+  "native_baseline_sha": "af6e848ba738bb0b8d560e55991164a3652b54bf",
+  "classification_notice": "Conservative implementation classifications; code/test pointers are not evidence of full JS behavioral equivalence; independent ATAX verification still pending.",
+  "row_count": 195,
+  "contracts": [
+    {
+      "upstream_symbol": "JsonPrimitive",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_type_json_primitive; gutc_type_is_json_primitive`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "JsonValue",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_type_json_value; gutc_json_dom_is_json_value`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "JsonObject",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_type_json_object; gutc_type_is_json_object`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isJsonValue",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_json_dom_is_json_value`",
+      "native_source": "src/json_dom.c",
+      "executable_test": "tests/test_json_dom.c; api-dispatch.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Pure native JSON DOM value predicate; JS undefined and cyclic objects represented explicitly by host-specific constraints",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "parseJson",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_json_dom_parse`",
+      "native_source": "src/json_dom.c",
+      "executable_test": "tests/test_json_dom.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: owned tree; lone surrogate escapes rejected",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "tryParseJson",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_json_dom_parse`",
+      "native_source": "src/json_dom.c",
+      "executable_test": "tests/test_json_dom.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: C status contract, not JS undefined",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "stringifyJson",
+      "upstream_source": "src/json/json-concepts.ts",
+      "native_symbol": "`gutc_json_dom_stringify` + `gutc_js_number_format`",
+      "native_source": "src/json_dom.c; src/js_number_format.c",
+      "executable_test": "tests/test_json_dom.c; tests/test_js_number_format.c; json-numbers.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: 351 source-executed ECMAScript binary64 shortest-roundtrip and exponent fixtures; libc numeric locale and exhaustive float boundary proof still pending",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isBlank",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gut_is_blank_utf8`",
+      "native_source": "src/gut_string_predicates.c",
+      "executable_test": "tests/test_string_predicates.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native UTF-8; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isNonBlank",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gut_is_nonblank_utf8`",
+      "native_source": "src/gut_string_predicates.c",
+      "executable_test": "tests/test_string_predicates.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native UTF-8",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isEmail",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gutc_is_email_ascii`",
+      "native_source": "src/string_case.c",
+      "executable_test": "tests/test_string_case.c; strings.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial ASCII subset; explicit Unicode/validator.js extensions unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "startsWithAny",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gut_starts_with_any_utf8`",
+      "native_source": "src/gut_string_predicates.c",
+      "executable_test": "tests/test_string_predicates.c; contracts.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native UTF-8; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "endsWithAny",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gut_ends_with_any_utf8`",
+      "native_source": "src/gut_string_predicates.c",
+      "executable_test": "tests/test_string_predicates.c; contracts.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native UTF-8; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "capitalize",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gutc_string_transform_ascii`",
+      "native_source": "src/string_case.c",
+      "executable_test": "tests/test_string_case.c; strings.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial ASCII subset; explicit Unicode/validator.js extensions unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "camelCase",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gutc_string_transform_ascii`",
+      "native_source": "src/string_case.c",
+      "executable_test": "tests/test_string_case.c; strings.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial ASCII subset; explicit Unicode/validator.js extensions unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "kebabCase",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gutc_string_transform_ascii`",
+      "native_source": "src/string_case.c",
+      "executable_test": "tests/test_string_case.c; strings.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial ASCII subset; explicit Unicode/validator.js extensions unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "snakeCase",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gutc_string_transform_ascii`",
+      "native_source": "src/string_case.c",
+      "executable_test": "tests/test_string_case.c; strings.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial ASCII subset; explicit Unicode/validator.js extensions unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "truncate",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gut_truncate_utf8`",
+      "native_source": "src/gut_truncate.c",
+      "executable_test": "tests/test_truncate.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Lodash grapheme/UTF-16 segmentation",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "truncateWords",
+      "upstream_source": "src/strings/string-concepts.ts",
+      "native_symbol": "`gut_truncate_words_utf8_default`",
+      "native_source": "src/gut_truncate_words.c",
+      "executable_test": "tests/test_truncate_words.c; contracts.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native UTF-8; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "compact",
+      "upstream_source": "src/arrays/array-concepts.ts",
+      "native_symbol": "`gutc_array_compact`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native tagged values; JS reference constraints",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "unique",
+      "upstream_source": "src/arrays/array-concepts.ts",
+      "native_symbol": "`gutc_array_unique`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c; contracts.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native SameValueZero tagged values; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "chunk",
+      "upstream_source": "src/arrays/array-concepts.ts",
+      "native_symbol": "`gutc_array_chunks`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Native zero-copy borrowed views",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "flatten",
+      "upstream_source": "src/arrays/array-concepts.ts",
+      "native_symbol": "`gutc_array_flatten_once`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Native one-level borrowed values",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "last",
+      "upstream_source": "src/arrays/array-concepts.ts",
+      "native_symbol": "`gutc_array_last`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native optional output/found flag",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "hasOwn",
+      "upstream_source": "src/objects/object-concepts.ts",
+      "native_symbol": "`gutc_json_path_has`",
+      "native_source": "src/object_path.c",
+      "executable_test": "tests/test_object_path.c; objects.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: JSON deep-path support; no JS prototype or unusual syntax",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "pick",
+      "upstream_source": "src/objects/object-concepts.ts",
+      "native_symbol": "`gutc_json_pick_paths`",
+      "native_source": "src/object_path.c",
+      "executable_test": "tests/test_object_path.c; objects.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: JSON deep-path support; no JS prototype or unusual syntax",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "omit",
+      "upstream_source": "src/objects/object-concepts.ts",
+      "native_symbol": "`gutc_json_omit_paths`",
+      "native_source": "src/object_path.c",
+      "executable_test": "tests/test_object_path.c; objects.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: JSON deep-path support; no JS prototype or unusual syntax",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isPlainObject",
+      "upstream_source": "src/objects/object-concepts.ts",
+      "native_symbol": "`gutc_json_is_plain_object`",
+      "native_source": "src/object_path.c",
+      "executable_test": "tests/test_object_path.c; objects.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native JSON DOM object kind; no prototype chain",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "clamp",
+      "upstream_source": "src/numbers/number-concepts.ts",
+      "native_symbol": "`gutc_number_clamp`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c; contracts.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: C finite-only; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "inRange",
+      "upstream_source": "src/numbers/number-concepts.ts",
+      "native_symbol": "`gutc_number_in_range`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c; contracts.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: C finite-only; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "roundTo",
+      "upstream_source": "src/numbers/number-concepts.ts",
+      "native_symbol": "`gutc_number_round_to`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: difficult IEEE-754/Lodash ties",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isFiniteNumber",
+      "upstream_source": "src/numbers/number-concepts.ts",
+      "native_symbol": "`gutc_number_is_finite`",
+      "native_source": "src/collections.c",
+      "executable_test": "tests/test_collections.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: C double, not JS unknown type",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "sum",
+      "upstream_source": "src/numbers/number-concepts.ts",
+      "native_symbol": "`gutc_number_sum`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c; contracts.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Native finite-only; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isUrl",
+      "upstream_source": "src/urls/url-concepts.ts",
+      "native_symbol": "`gutc_url_is_http_url`",
+      "native_source": "src/url_query.c",
+      "executable_test": "tests/test_url_query.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: HTTP(S) absolute only, not WHATWG URL constructor",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "joinUrl",
+      "upstream_source": "src/urls/url-concepts.ts",
+      "native_symbol": "`gutc_join_url`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c; contracts.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native bounded strings; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "getQueryParam",
+      "upstream_source": "src/urls/url-concepts.ts",
+      "native_symbol": "`gutc_url_get_query_param`",
+      "native_source": "src/url_query.c",
+      "executable_test": "tests/test_url_query.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: HTTP(S) + UTF-8; strict malformed percent errors",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "setQueryParam",
+      "upstream_source": "src/urls/url-concepts.ts",
+      "native_symbol": "`gutc_url_set_query_param`",
+      "native_source": "src/url_query.c",
+      "executable_test": "tests/test_url_query.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: URLSearchParams form encoding, but raw URL origin not WHATWG canonicalized",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "normalizeStoragePath",
+      "upstream_source": "src/urls/path-safety.ts",
+      "native_symbol": "`gutc_normalize_storage_path`",
+      "native_source": "src/gutc_path.c",
+      "executable_test": "tests/test_path.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native validation; legacy errors",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "encodeSafePathSegments",
+      "upstream_source": "src/urls/path-safety.ts",
+      "native_symbol": "`gutc_encode_safe_path_segments`",
+      "native_source": "src/safe_path.c",
+      "executable_test": "tests/test_safe_path.c; contracts.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native bounded UTF-8; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveTrustedApiUrl",
+      "upstream_source": "src/urls/path-safety.ts",
+      "native_symbol": "`gutc_resolve_trusted_api_url`",
+      "native_source": "src/trusted_api.c",
+      "executable_test": "tests/trusted_api_test.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: WHATWG URL normalization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApiDefinition",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_type_api_definition`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApiExample",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_type_api_example`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApiParameter",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_type_api_parameter`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApiSemantics",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_type_api_semantics`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "JsonSchema",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_type_json_schema`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "defineApi",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_define_api`",
+      "native_source": "src/api_definition.c",
+      "executable_test": "tests/test_api_definition.c; api-definition.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native owned JSON metadata definition and input schema, not API dispatch or model execution",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "guttsApiDefinitions",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_api_registry_list`",
+      "native_source": "src/api_registry.c",
+      "executable_test": "tests/test_api_registry.c; api-catalog.json",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Full 38 pinned definitions metadata; FOD catalog computed; no model execution",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "guttsApiById",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_api_registry_lookup`",
+      "native_source": "src/api_registry.c",
+      "executable_test": "tests/test_api_registry.c; api-catalog.json",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Full 38 pinned definitions metadata; FOD catalog computed; no model execution",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "guttsFodNodeDefinitions",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_api_registry_fod_nodes`",
+      "native_source": "src/api_registry.c",
+      "executable_test": "tests/test_api_registry.c; api-catalog.json",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Full 38 pinned definitions metadata; FOD catalog computed; no model execution",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "guttsApiToFodNode",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_api_to_fod_node`",
+      "native_source": "src/fod_node.c",
+      "executable_test": "tests/test_fod_node.c; fod.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Native metadata-only, owned JSON DOM; no dispatch or host model runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "executeGuttsApi",
+      "upstream_source": "src/api/index.ts",
+      "native_symbol": "`gutc_execute_api`",
+      "native_source": "src/api_dispatch.c; src/api_dispatch_text.c",
+      "executable_test": "tests/test_api_dispatch.c; api-dispatch.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: 33 portable utility IDs on JSON DOM; 5 model IDs require actual host callback; Unicode/WHATWG/JS edge exceptions explicitly return unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "Identifier",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_identifier`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ProviderKind",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_provider_kind`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "RepositoryRef",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_repository_ref`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "WorkspaceRef",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_workspace_ref`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ExecutionRequest",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_execution_request`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ExecutionResult",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_execution_result`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "VerificationCheck",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_verification_check`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "VerificationReport",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_verification_report`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ArtifactRef",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_artifact_ref`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EngineeringCapability",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_capability`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "CapabilityGrant",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_capability_grant`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EngineeringOperationContext",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_operation_context`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ProvenanceRecord",
+      "upstream_source": "src/engineering/engineering-types.ts",
+      "native_symbol": "`gutc_eng_provenance_record`",
+      "native_source": "include/gutc/engineering_types.h; src/engineering_types.c",
+      "executable_test": "tests/test_engineering_types.c; engineering-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned caller-borrowed C11 structural view, optional fields and exact literal enums; no execution or authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "DeploymentEnvironment",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_environment`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthDeploymentRecord",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_deployment_record`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthAuthClientConfig",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_auth_client_config`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthAuthTokenStore",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_auth_token_store`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "RegisterApplicationResult",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_registration_result`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthUser",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_user`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthSession",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_session`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthSessionResult",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_session_result`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Typed native fields supplement source-verified application-session validator",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EmailSignInCredentials",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_email_sign_in`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EmailSignUpData",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_email_sign_up`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "GoogleSignInOptions",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_google_sign_in`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthAuthError",
+      "upstream_source": "src/auth/luthAuthTypes.ts",
+      "native_symbol": "`gutc_luth_auth_error`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Typed native fields supplement source-verified application-session validator",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveRuntimeAppUrl",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_resolve_runtime_app_url`",
+      "native_source": "src/runtime_app_url.c",
+      "executable_test": "tests/test_runtime_app_url.c; runtime-app-url.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Host-injected location.origin / process.env.APP_URL, exact ECMAScript String.trim UTF-8; no ambient globals",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveClientOrigin",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_luth_resolve_client_origin`",
+      "native_source": "src/luth_origin.c",
+      "executable_test": "tests/test_luth_origin.c; luth-origin.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveClientEnvironment",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_luth_resolve_client_environment`",
+      "native_source": "src/luth_origin.c",
+      "executable_test": "tests/test_luth_origin.c; luth-origin.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "DEFAULT_LUTH_URL",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_luth_default_url`",
+      "native_source": "src/luth_origin.c",
+      "executable_test": "tests/test_luth_origin.c; luth-origin.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: canonical ASCII HTTP(S) normalization with host-supplied location, unsupported WHATWG schemes and IDNA rejected",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "hydrateLuthTokenFromUrl",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_luth_hydrate_callback_token`",
+      "native_source": "src/luth_callback_token.c",
+      "executable_test": "tests/test_luth_callback_token.c; luth-callback-token.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Host-injected token store/history effects and 33 canonical URLSearchParams cases; malformed percent/UTF-8 replacement and arbitrary WHATWG location canonicalization require host",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "LuthAuthClient",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_luth_client_init/register/get_session/refresh_session/sign_in_email/sign_up_email/sign_in_google/sign_out`",
+      "native_source": "src/luth_client.c",
+      "executable_test": "tests/test_luth_client.c; luth-client.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: real trusted host HTTP contract, bounded failover and token store; requires external transport/TLS, no browser sessionStorage or live Luth deployment certification",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "createLuthAuthClient",
+      "upstream_source": "src/auth/luthAuthClient.ts",
+      "native_symbol": "`gutc_luth_client_init/register/get_session/refresh_session/sign_in_email/sign_up_email/sign_in_google/sign_out`",
+      "native_source": "src/luth_client.c",
+      "executable_test": "tests/test_luth_client.c; luth-client.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: real trusted host HTTP contract, bounded failover and token store; requires external transport/TLS, no browser sessionStorage or live Luth deployment certification",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ULTRST_APP_CONTRACT_VERSION",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_app_contract_version`",
+      "native_source": "src/contract_primitives.c",
+      "executable_test": "tests/test_contract_primitives.c; contract-primitives.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Source-matched portable JSON DOM predicate, no target authentication or grant authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "OAuthPlatform",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_oauth_platform`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "OAuthClientRegistrationV1",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_auth_oauth_registration_v1`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ContractCheck",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_auth_contract_check`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "contractRecord",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_contract_record`",
+      "native_source": "src/contract_primitives.c",
+      "executable_test": "tests/test_contract_primitives.c; contract-primitives.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Source-matched portable JSON DOM predicate, no target authentication or grant authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "contractId",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_contract_id`",
+      "native_source": "src/contract_primitives.c",
+      "executable_test": "tests/test_contract_primitives.c; contract-primitives.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Source-matched portable JSON DOM predicate, no target authentication or grant authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "contractAppId",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_contract_app_id`",
+      "native_source": "src/contract_primitives.c",
+      "executable_test": "tests/test_contract_primitives.c; contract-primitives.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Source-matched portable JSON DOM predicate, no target authentication or grant authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "contractExactKeys",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_contract_exact_keys`",
+      "native_source": "src/contract_primitives.c",
+      "executable_test": "tests/test_contract_primitives.c; contract-primitives.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Source-matched portable JSON DOM predicate, no target authentication or grant authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "validateOAuthRedirectUri",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_validate_oauth_redirect_v1`",
+      "native_source": "src/oauth_contracts.c",
+      "executable_test": "tests/test_oauth_contracts.c; oauth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: canonical ASCII http(s), no WHATWG/IDNA generality",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "validateOAuthClientRegistration",
+      "upstream_source": "src/auth/oauthClientContract.ts",
+      "native_symbol": "`gutc_validate_oauth_registration_v1`",
+      "native_source": "src/oauth_contracts.c",
+      "executable_test": "tests/test_oauth_contracts.c; oauth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Pure schema/PKCE/callback shape; no ownership authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "CapabilityParameterKind",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_auth_parameter_kind`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "CapabilityParameterV1",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_auth_capability_parameter_v1`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "CapabilityBaseV1",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_auth_capability_base_v1`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "StaticCapabilityV1",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_auth_static_capability_v1`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "WorkflowPublicationV1",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_auth_workflow_publication_v1`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "CapabilityDescriptorV1",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_auth_capability_descriptor_v1`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "validateCapabilityDescriptor",
+      "upstream_source": "src/auth/capabilityContract.ts",
+      "native_symbol": "`gutc_validate_capability_descriptor_v1`",
+      "native_source": "src/auth_contracts.c",
+      "executable_test": "tests/test_auth_contracts.c; auth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Pure schema; not authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ScopedInvocationV1",
+      "upstream_source": "src/auth/invocationContract.ts",
+      "native_symbol": "`gutc_invocation_budget`",
+      "native_source": "include/gutc/gutc.h",
+      "executable_test": "tests/test_gutc.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: budget subset of schema",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "validateScopedInvocation",
+      "upstream_source": "src/auth/invocationContract.ts",
+      "native_symbol": "`gutc_validate_scoped_invocation_v1`",
+      "native_source": "src/auth_contracts.c",
+      "executable_test": "tests/test_auth_contracts.c; auth.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Pure schema; not authentication",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "checkInvocationBudget",
+      "upstream_source": "src/auth/invocationContract.ts",
+      "native_symbol": "`gutc_invocation_budget_check`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: budget subset, not full envelope",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "advanceInvocationBudget",
+      "upstream_source": "src/auth/invocationContract.ts",
+      "native_symbol": "`gutc_invocation_budget_advance`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: remaining calls only",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "consumeInvocationRetry",
+      "upstream_source": "src/auth/invocationContract.ts",
+      "native_symbol": "`gutc_invocation_budget_retry`",
+      "native_source": "src/identity.c",
+      "executable_test": "tests/test_identity.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: remaining retries only",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "validateInvocationAgainstDescriptor",
+      "upstream_source": "src/auth/invocationContract.ts",
+      "native_symbol": "`gutc_match_invocation_descriptor_v1`",
+      "native_source": "src/auth_contracts.c",
+      "executable_test": "tests/test_auth_contracts.c; auth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Pure version/workspace match; not authorization",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "IDENTITY_KINDS",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_identity_kind_valid`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Six published tag strings",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "IdentityKind",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_identity_kind`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "IdentityId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_identity_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApplicationId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_application_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "DeploymentId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_deployment_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "OAuthClientId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_oauth_client_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "UserId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_user_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "WorkspaceId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_workspace_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "UiSessionId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_ui_session_id`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "IdentityRef",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_auth_identity_ref`",
+      "native_source": "include/gutc/auth_types.h; src/auth_types.c",
+      "executable_test": "tests/test_auth_types.c; auth-types.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Typed caller-borrowed native structural fields; metadata alone never verifies a grant, identity, token or OAuth origin",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "isIdentityKind",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_identity_kind_valid`",
+      "native_source": "src/gutc.c",
+      "executable_test": "tests/test_gutc.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Six published tags",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "parseIdentityId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_identity_id_valid`",
+      "native_source": "src/gutc.c",
+      "executable_test": "identity.tsv; contracts.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Validation only; golden checked",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "requireIdentityId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_identity_ref_parse`",
+      "native_source": "src/identity.c",
+      "executable_test": "tests/test_identity.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: C status instead of JS throw",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "identityRef",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_identity_ref_parse`",
+      "native_source": "src/identity.c",
+      "executable_test": "tests/test_identity.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Borrowed tagged ref",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "parseIdentityRef",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_identity_ref_parse`",
+      "native_source": "src/identity.c",
+      "executable_test": "tests/test_identity.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: direct typed spans, not arbitrary map",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "parseLegacyApplicationId",
+      "upstream_source": "src/auth/identityIds.ts",
+      "native_symbol": "`gutc_legacy_application_id`",
+      "native_source": "src/identity.c",
+      "executable_test": "tests/test_identity.c",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Native explicit map; conflict rejection",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApplicationAuthClientConfig",
+      "upstream_source": "src/auth/applicationAuthClient.ts",
+      "native_symbol": "`gutc_app_auth_host; gutc_application_auth_init`",
+      "native_source": "src/application_auth.c",
+      "executable_test": "tests/test_application_auth.c; application-auth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Host-injected config preserves first-party fetch/navigation requirements",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ApplicationAuthClient",
+      "upstream_source": "src/auth/applicationAuthClient.ts",
+      "native_symbol": "`gutc_application_auth_client`",
+      "native_source": "src/application_auth.c",
+      "executable_test": "tests/test_application_auth.c; application-auth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Real callback-driven GET session, POST logout, verification and navigation; host deployment not exercised",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "createApplicationAuthClient",
+      "upstream_source": "src/auth/applicationAuthClient.ts",
+      "native_symbol": "`gutc_application_auth_init`",
+      "native_source": "src/application_auth.c",
+      "executable_test": "tests/test_application_auth.c; application-auth.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Caller-owned native client initialization, no ambient browser environment",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelMetadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup; gutc_model_library.metadata`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelLoadContext",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_load_context`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelRuntime",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_runtime_host`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelLease",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_lease`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelLoader",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_loader`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelUnloader",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_unloader`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Typed native borrowed/owned model lifecycle representation; host must supply real inference runtime",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelResidency",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_residency_acquire; gutc_model_lease_release`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Synchronous nested leases, real host load/unload; JS async promise dedup requires host adapter",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ModelLibrary",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_library_init; gutc_model_library_invoke; gutc_model_library_destroy`",
+      "native_source": "include/gutc/model_runtime.h; src/model_runtime.c",
+      "executable_test": "tests/test_model_runtime.c; model-residency.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: Source-matched load-operation-unload with actual host invocation, no inferred or generated model output",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "guttsModelDefinitions",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_list`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "All eight pinned model metadata definitions available; runtime loading/inference is host-dependent",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "guttsModelById",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "All eight pinned model metadata definitions available; runtime loading/inference is host-dependent",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "Needle3",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "needle3CompleteApi",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "needle3Metadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SmolLM2",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "smolLM2GenerateApi",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "smolLM2Metadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "Whistle",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "whistleTranscribeApi",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "whistleMetadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EttinReranker",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EttinReranker17M",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EttinReranker32M",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EttinReranker68M",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "EttinReranker150M",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ettinRerankApi",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ettinReranker17MMetadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ettinReranker32MMetadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ettinReranker68MMetadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ettinReranker150MMetadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "MiniLM",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "miniLMSimilarityApi",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_client_init/call/destroy; gutc_model_family`",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c; model-operations.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: strict native typed host-bound load/invoke/unload; no model weights bundled, no browser/JS Promise behavior, external inference runtime required",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "miniLML6Metadata",
+      "upstream_source": "src/models/index.ts",
+      "native_symbol": "`gutc_model_registry_lookup`",
+      "native_source": "src/model_registry.c",
+      "executable_test": "tests/test_model_registry.c; model-catalog.json",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Exact pinned metadata; no fake inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputSchema",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_schema`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputContext",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_context`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputErrorCode",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_error_code`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputRisk",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_risk`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputProgress",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_progress`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputEvent",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_event`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputModelPolicy",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_model_policy`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputPolicy",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_policy`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputProvenanceStore",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_provenance_store`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputProvenanceRecord",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_provenance_record`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputProvenance",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_provenance`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputCandidate",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_candidate`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputEvidence",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_evidence`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputClarification",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_clarification`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputResolution",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_resolution`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputCacheKey",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`const char *key, size_t length`",
+      "native_source": "src/semantic_cache.c",
+      "executable_test": "tests/test_semantic_cache.c; semantic-cache.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Explicit UTF-8 byte span with embedded NUL; JS lone-surrogate keys unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputCache",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_cache_init/set/get/clear/size/destroy`",
+      "native_source": "src/semantic_cache.c",
+      "executable_test": "tests/test_semantic_cache.c; semantic-cache.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Full LRU sequence behavior; C heap ownership and external synchronization instead of JS Map references",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "SemanticInputRequest",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_request`",
+      "native_source": "include/gutc/portable_types.h; src/portable_types.c",
+      "executable_test": "tests/test_portable_types.c; portable-type-kinds.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Source-pinned borrowed C11 structural contract; enum discriminants verified where applicable, no live model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveDeterministicSemanticInput",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_resolve_deterministic_semantic`",
+      "native_source": "src/semantic_deterministic.c",
+      "executable_test": "tests/test_semantic_deterministic.c; semantic.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: deterministic enums, string format, booleans, numeric input; JS RegExp pattern unsupported, decimal locale subtleties",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "rankSemanticInputCandidates",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_semantic_rank_with_host` / `gutc_semantic_rank_order`",
+      "native_source": "src/semantic_rank.c",
+      "executable_test": "tests/test_semantic_rank.c; semantic-rank.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: full stable scored-candidate comparator; real host MiniLM+Ettin callbacks required; non-simple ASCII collation tie explicitly unsupported",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveSemanticInput",
+      "upstream_source": "src/semantic-input/index.ts",
+      "native_symbol": "`gutc_resolve_semantic_input`",
+      "native_source": "src/semantic_resolver.c",
+      "executable_test": "tests/test_semantic_resolver.c; semantic-resolver.tsv",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: source-pinned deterministic input; real host MiniLM/Ettin/Needle completion, candidate ranking, ambiguity and errors; JS Promises, provenance/cache/events, locale/RegExp need host-specific support",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "resolveServerRuntimeAppUrl",
+      "upstream_source": "src/server/auth.ts",
+      "native_symbol": "`gutc_resolve_server_runtime_app_url`",
+      "native_source": "src/runtime_app_url.c",
+      "executable_test": "tests/test_runtime_app_url.c; runtime-app-url.tsv",
+      "classification": "implemented_needs_verification",
+      "missing_or_limit": "Host-injected location.origin / process.env.APP_URL, exact ECMAScript String.trim UTF-8; no ambient globals",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "S3Client",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "GetObjectCommand",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "HeadObjectCommand",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "ListObjectsV2Command",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "PutObjectCommand",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "CopyObjectCommand",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "DeleteObjectCommand",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "DeleteObjectsCommand",
+      "upstream_source": "src/storage/s3.ts",
+      "native_symbol": "`gutc_s3_client_execute; gutc_s3_command`",
+      "native_source": "src/s3_client.c",
+      "executable_test": "tests/test_s3_client.c; s3-commands.tsv",
+      "classification": "platform_exception",
+      "missing_or_limit": "Host-specific exception: GutTS reexports external AWS JavaScript SDK; portable C has validated binary host-backed command ABI, real SigV4/IO/streaming supplied by host, no native JS class equivalence",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "GoogleApisModule",
+      "upstream_source": "src/storage/google-drive.ts",
+      "native_symbol": "none (Node-only googleapis module shape)",
+      "native_source": "none",
+      "executable_test": "none",
+      "classification": "platform_exception",
+      "missing_or_limit": "Platform-specific exception: TypeScript-only GoogleApisModule type/SDK boundary; no portable C JavaScript SDK module",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "loadGoogleApis",
+      "upstream_source": "src/storage/google-drive.ts",
+      "native_symbol": "none (Node dynamic import)",
+      "native_source": "none",
+      "executable_test": "none",
+      "classification": "platform_exception",
+      "missing_or_limit": "Platform-specific exception: Node dynamic import does not exist in C11; integration requires explicit host Google Drive provider",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "createGoogleDriveClient",
+      "upstream_source": "src/storage/google-drive.ts",
+      "native_symbol": "none (host must provide Drive operations)",
+      "native_source": "none",
+      "executable_test": "none",
+      "classification": "unimplemented",
+      "missing_or_limit": "Unimplemented native Google Drive SDK client; exact GutTS `googleapis` adapter cannot be represented as an implemented C host callback",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "nodeCactusNeedle3Runtime",
+      "upstream_source": "src/server/models.ts",
+      "native_symbol": "gutc_model_client_init/call/destroy (host-injected)",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: true host-native Needle3 provider must be wired, loaded and independently executed; C callback is not model inference",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "nodeCactusWhistleRuntime",
+      "upstream_source": "src/server/models.ts",
+      "native_symbol": "gutc_model_client_init/call/destroy (host-injected)",
+      "native_source": "src/model_operations.c",
+      "executable_test": "tests/test_model_operations.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Partial: true host-native Whistle provider must be wired, loaded and independently executed; C callback is not transcription",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "rootExports",
+      "upstream_source": "src/worker.ts",
+      "native_symbol": "GutC::gutc",
+      "native_source": "CMakeLists.txt",
+      "executable_test": "tests/installed-consumer",
+      "classification": "platform_exception",
+      "missing_or_limit": "Platform-specific exception: source entrypoint composition row, not a named runtime symbol; C11 installed package/headers substitute JS root bundling",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "browserExports",
+      "upstream_source": "src/worker.ts",
+      "native_symbol": "none (no browser DOM/Web APIs in native C11)",
+      "native_source": "none",
+      "executable_test": "none",
+      "classification": "platform_exception",
+      "missing_or_limit": "Platform-specific exception: source entrypoint composition row; native C11 does not emulate browser APIs",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "workerExports",
+      "upstream_source": "src/worker.ts",
+      "native_symbol": "none (no Cloudflare JS Worker runtime in native C11)",
+      "native_source": "none",
+      "executable_test": "none",
+      "classification": "platform_exception",
+      "missing_or_limit": "Platform-specific exception: source entrypoint composition row; no Worker JS execution claimed",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    },
+    {
+      "upstream_symbol": "serverExports",
+      "upstream_source": "src/worker.ts",
+      "native_symbol": "GutC::gutc with explicit host adapters",
+      "native_source": "CMakeLists.txt; src/luth_client.c; src/s3_client.c",
+      "executable_test": "tests/installed-consumer",
+      "classification": "platform_exception",
+      "missing_or_limit": "Platform-specific exception: source entrypoint composition row, not a named runtime symbol; C11 host adapters are separate and require real providers",
+      "evidence": [
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
+        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+      ]
+    }
+  ]
+}
