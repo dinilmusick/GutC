@@ -37,7 +37,7 @@ jobs:
       - name: Verify separately installed C11 ICU consumer target
         shell: bash
         run: |
-          cmake -S tests/icu-consumer -B build-consumer -DCMAKE_PREFIX_PATH="$PWD/installed:$CMAKE_PREFIX_PATH"
+          cmake -S tests/icu-consumer -B build-consumer -DCMAKE_PREFIX_PATH="$PWD/installed;$CMAKE_PREFIX_PATH"
           cmake --build build-consumer
           ctest --test-dir build-consumer --output-on-failure
       - uses: actions/checkout@v4
