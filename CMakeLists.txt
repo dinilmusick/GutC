@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(GutC VERSION 0.1.0 LANGUAGES C)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
-add_library(gutc STATIC src/gutc.c src/json.c src/json_dom.c src/js_number_format.c src/api_definition.c src/api_registry.c src/model_registry.c src/model_runtime.c src/model_operations.c src/api_dispatch.c src/api_dispatch_text.c src/fod_node.c src/semantic_deterministic.c src/semantic_resolver.c src/semantic_cache.c src/semantic_rank.c src/url_query.c src/auth_contracts.c src/oauth_contracts.c src/auth_types.c src/portable_types.c src/contract_primitives.c src/engineering_types.c src/runtime_app_url.c src/application_auth.c src/luth_client.c src/s3_client.c src/luth_origin.c src/luth_callback_token.c src/string_case.c
+add_library(gutc STATIC src/gutc.c src/json.c src/json_dom.c src/js_number_format.c src/api_definition.c src/api_registry.c src/model_registry.c src/model_runtime.c src/model_operations.c src/api_dispatch.c src/api_dispatch_text.c src/fod_node.c src/semantic_deterministic.c src/semantic_resolver.c src/semantic_cache.c src/semantic_rank.c src/url_query.c src/auth_contracts.c src/oauth_contracts.c src/auth_types.c src/portable_types.c src/contract_primitives.c src/engineering_types.c src/runtime_app_url.c src/application_auth.c src/luth_client.c src/s3_client.c src/google_drive.c src/luth_origin.c src/luth_callback_token.c src/string_case.c
   src/gutc_path.c src/trusted_api.c src/collections.c src/object_path.c src/safe_path.c src/identity.c
   src/gut_string_predicates.c src/gut_truncate.c src/gut_truncate_words.c)
 add_library(GutC::gutc ALIAS gutc)
@@ -170,6 +170,9 @@ if(BUILD_TESTING)
   target_compile_definitions(gutc_luth_client_test PRIVATE
     GUTC_LUTH_GOLDEN_PATH="${CMAKE_CURRENT_SOURCE_DIR}/testdata/upstream-golden/luth-client.tsv")
   add_test(NAME gutc_luth_client COMMAND gutc_luth_client_test)
+  add_executable(gutc_google_drive_test tests/test_google_drive.c)
+  target_link_libraries(gutc_google_drive_test PRIVATE GutC::gutc)
+  add_test(NAME gutc_google_drive COMMAND gutc_google_drive_test)
   add_executable(gutc_s3_client_test tests/test_s3_client.c)
   target_link_libraries(gutc_s3_client_test PRIVATE GutC::gutc)
   target_compile_definitions(gutc_s3_client_test PRIVATE
@@ -192,7 +195,7 @@ if(BUILD_TESTING)
     target_link_libraries(gutc_${name}_test PRIVATE GutC::gutc)
     add_test(NAME gutc_${name} COMMAND gutc_${name}_test)
   endforeach()
-  foreach(check_target IN ITEMS gutc_js_number_format_test gutc_semantic_resolver_test gutc_s3_client_test gutc_luth_client_test gutc_model_operations_test gutc_portable_types_test gutc_auth_types_test gutc_model_runtime_test gutc_engineering_types_test gutc_semantic_cache_test gutc_application_auth_test gutc_luth_callback_token_test gutc_runtime_app_url_test gutc_semantic_rank_test gutc_contract_primitives_test gutc_luth_origin_test gutc_model_registry_test gutc_api_dispatch_test gutc_api_registry_test gutc_fod_node_test gutc_semantic_test gutc_api_definition_test gutc_object_paths_test gutc_test gutc_json_test gutc_json_dom_test gutc_url_query_test gutc_auth_contracts_test gutc_oauth_contracts_test gutc_strings_test gutc_collections_test gutc_safe_path_test gutc_identity_test gutc_cross_language_test gutc_path_test
+  foreach(check_target IN ITEMS gutc_google_drive_test gutc_js_number_format_test gutc_semantic_resolver_test gutc_s3_client_test gutc_luth_client_test gutc_model_operations_test gutc_portable_types_test gutc_auth_types_test gutc_model_runtime_test gutc_engineering_types_test gutc_semantic_cache_test gutc_application_auth_test gutc_luth_callback_token_test gutc_runtime_app_url_test gutc_semantic_rank_test gutc_contract_primitives_test gutc_luth_origin_test gutc_model_registry_test gutc_api_dispatch_test gutc_api_registry_test gutc_fod_node_test gutc_semantic_test gutc_api_definition_test gutc_object_paths_test gutc_test gutc_json_test gutc_json_dom_test gutc_url_query_test gutc_auth_contracts_test gutc_oauth_contracts_test gutc_strings_test gutc_collections_test gutc_safe_path_test gutc_identity_test gutc_cross_language_test gutc_path_test
       gutc_trusted_api_test gutc_string_predicates_test gutc_truncate_test gutc_truncate_words_test)
     if(MSVC)
       target_compile_options(${check_target} PRIVATE /UNDEBUG)
