@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.16)
+project(gutc_optional_icu_consumer LANGUAGES C)
+find_package(GutC CONFIG REQUIRED)
+add_executable(optional_icu_consumer main.c)
+target_link_libraries(optional_icu_consumer PRIVATE GutC::gutc_icu)
+set_target_properties(optional_icu_consumer PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRED YES C_EXTENSIONS NO)
+enable_testing()
+add_test(NAME optional_installed_icu_consumer COMMAND optional_icu_consumer)
