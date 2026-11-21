@@ -2454,14 +2454,14 @@
     {
       "upstream_symbol": "createGoogleDriveClient",
       "upstream_source": "src/storage/google-drive.ts",
-      "native_symbol": "none (host must provide Drive operations)",
-      "native_source": "none",
-      "executable_test": "none",
-      "classification": "unimplemented",
-      "missing_or_limit": "Unimplemented native Google Drive SDK client; exact GutTS `googleapis` adapter cannot be represented as an implemented C host callback",
+      "native_symbol": "gutc_drive_client_init + gutc_drive_execute",
+      "native_source": "include/gutc/google_drive.h; src/google_drive.c",
+      "executable_test": "tests/test_google_drive.c; tests/consumer/main.c",
+      "classification": "partially_implemented",
+      "missing_or_limit": "Real portable C11 Google Drive files v3 GET/list/metadata/streaming-media request construction and OAuth-borrowed trusted host HTTP dispatch; exact Node googleapis factory/class hierarchy, authenticated live Drive service and callback host semantics are not identical or independently verified.",
       "evidence": [
-        "https://github.com/dinilmusick/GutC/actions/runs/44872119297",
-        "https://github.com/dinilmusick/GutC/actions/runs/44872119396"
+        "https://developers.google.com/workspace/drive/api/reference/rest/v3/files/list",
+        "https://github.com/dinilmusick/GutC/actions/workflows/ci.yml"
       ]
     },
     {
