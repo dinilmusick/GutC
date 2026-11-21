@@ -17,7 +17,7 @@ for(const line of lines){
  if(actual!==expected)throw Error(JSON.stringify({literal,actual,expected}));
  checked++;
 }
-if(checked!==61)throw Error("Expected 61 pinned JS numeric cases");
+if(checked!==351)throw Error("Expected 351 pinned JS numeric cases");
 if(stringifyJson(NaN)!=="null"||stringifyJson(Infinity)!=="null"||
    stringifyJson(-Infinity)!=="null"||stringifyJson(-0)!=="0")
  throw Error("Pinned non-finite or negative-zero numeric JSON behavior changed");

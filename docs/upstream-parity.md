@@ -61,7 +61,7 @@ Source: GutTS `3e2cbc0990ba29830ce91c5d1a1d552675d5334c`; `src/index.ts`, packag
 | `isJsonValue` | `gutc_json_dom_is_json_value` | src/json_dom.c | tests/test_json_dom.c; api-dispatch.tsv | Pure native JSON DOM value predicate; JS undefined and cyclic objects represented explicitly by host-specific constraints |
 | `parseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: owned tree; lone surrogate escapes rejected |
 | `tryParseJson` | `gutc_json_dom_parse` | src/json_dom.c | tests/test_json_dom.c | Partial: C status contract, not JS undefined |
-| `stringifyJson` | `gutc_json_dom_stringify` + `gutc_js_number_format` | src/json_dom.c; src/js_number_format.c | tests/test_json_dom.c; tests/test_js_number_format.c; json-numbers.tsv | Partial: 61 source-executed ECMAScript binary64 shortest-roundtrip and exponent fixtures; libc numeric locale and exhaustive float boundary proof still pending |
+| `stringifyJson` | `gutc_json_dom_stringify` + `gutc_js_number_format` | src/json_dom.c; src/js_number_format.c | tests/test_json_dom.c; tests/test_js_number_format.c; json-numbers.tsv | Partial: 351 source-executed ECMAScript binary64 shortest-roundtrip and exponent fixtures; libc numeric locale and exhaustive float boundary proof still pending |
 
 ### Strings: src/strings/string-concepts.ts
 

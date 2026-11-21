@@ -45,7 +45,7 @@ int main(void){
   tab=strchr(line,'\t');assert(tab);*tab++='\0';
   test_case(line,tab,count);count++;
  }
- fclose(f);assert(count==61);
+ fclose(f);assert(count==351);
  {char out[64];size_t n;
   assert(gutc_js_number_format(NAN,out,sizeof out,&n)==GUTC_OK);
   assert(!strcmp(out,"null"));
