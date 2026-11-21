@@ -21,10 +21,10 @@ int main(void){
  accepted("abcdef",10,"...", "abcdef");
  accepted("abc",3,"...", "abc");
  accepted("abc",1,"", "a");
- accepted("a\xCC\x81bc",2,"...","...");
- accepted("a\xCC\x81bc",2,"…","a\xCC\x81…");
+ accepted("a\xCC\x81" "bc",2,"...","...");
+ accepted("a\xCC\x81" "bc",2,"…","a\xCC\x81…");
  accepted("\xF0\x9F\x87\xAE\xF0\x9F\x87\xB3" "X",1,"…","…");
- accepted("\xF0\x9F\x87\xAE\xF0\x9F\x87\xB3" "X",2,"…","\xF0\x9F\x87\xAE\xF0\x9F\x87\xB3…");
+ accepted("\xF0\x9F\x87\xAE\xF0\x9F\x87\xB3" "XY",2,"…","\xF0\x9F\x87\xAE\xF0\x9F\x87\xB3…");
  accepted("👩‍👩‍👧‍👦.txt",2,"…","👩‍👩‍👧‍👦…");
  accepted("👩‍👩‍👧‍👦.txt",20,"…","👩‍👩‍👧‍👦.txt");
  accepted("a",0,"",""); 
