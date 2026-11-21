@@ -28,6 +28,7 @@
 #include <gutc/model_operations.h>
 #include <gutc/luth_client.h>
 #include <gutc/s3_client.h>
+#include <gutc/google_drive.h>
 #include <gutc/semantic_resolver.h>
 #include <gutc/js_number_format.h>
 #include <gutc_path.h>
@@ -224,6 +225,11 @@ int main(void) {
   {char out[128];size_t needed=0;
     if(gutc_js_number_format(0.2,out,sizeof out,&needed)!=GUTC_OK)return 102;
     if(needed!=3||strcmp(out,"0.2"))return 103;}
+  {gutc_drive_client drive={0};gutc_drive_response response={0};gutc_drive_request request={0};
+    request.operation=GUTC_DRIVE_LIST_FILES;request.access_token="borrowed";request.access_token_length=8;
+    if(gutc_drive_client_init(&drive,NULL)!=GUTC_OK)return 104;
+    if(gutc_drive_execute(&drive,&request,&response)!=GUTC_UNSUPPORTED)return 105;
+    gutc_drive_response_clear(&response);}
   puts("GutC multi-module installed consumer passed");
   return 0;
 }
