@@ -64,4 +64,10 @@ jobs:
         run: |
           cmake -S gutc -B gutc-build -DCMAKE_BUILD_TYPE=Debug
           cmake --build gutc-build
-          ctest --test-dir gutc-build --output-on-failure -R "gutc_cross_language|gutc_auth_contracts|gutc_oauth_contracts|gutc_strings|gutc_object_paths|gutc_api_definition|gutc_semantic_deterministic|gutc_fod_node|gutc_api_registry|gutc_api_dispatch|gutc_model_registry|gutc_luth_origin|gutc_contract_primitives|gutc_semantic_rank|gutc_runtime_app_url|gutc_luth_callback_token|gutc_application_auth|gutc_semantic_cache|gutc_engineering_types|gutc_model_runtime|gutc_auth_types|gutc_portable_types|gutc_model_operations|gutc_luth_client|gutc_s3_client|gutc_semantic_resolver|gutc_js_number_format"
+          ctest --test-dir gutc-build --output-on-failure -R "gutc_cross_language|gutc_auth_contracts|gutc_oauth_contracts|gutc_strings|gutc_object_paths|gutc_api_definition|gutc_semantic_deterministic|gutc_fod_node|gutc_api_registry|gutc_api_dispatch|gutc_model_registry|gutc_luth_origin|gutc_contract_primitives|gutc_semantic_rank|gutc_runtime_app_url|gutc_luth_callback_token|gutc_application_auth|gutc_semantic_cache|gutc_engineering_types|gutc_model_runtime|gutc_auth_types|gutc_portable_types|gutc_model_operations|gutc_luth_client|gutc_s3_client|gutc_semantic_resolver|gutc_js_number_format|gutc_url_pr2_contracts"
+      - name: Cross-language original pinned GutTS joinUrl differential
+        shell: bash
+        env:
+          GUTTS_DIST: ${{ github.workspace }}/upstream/dist
+          GUTC_JOIN_URL_RUNNER: ${{ github.workspace }}/gutc-build/gutc_join_url_differential_runner
+        run: node gutc/scripts/verify-join-url-differential.mjs
